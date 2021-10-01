@@ -50,5 +50,4 @@ function FavoritesScreenEmpty(): JSX.Element {
   );
 }
 
-
 export default FavoritesScreenEmpty;
