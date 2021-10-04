@@ -1,4 +1,6 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import PrivateRoute from '../private-route/private-rout';
 import MainPage from '../main-page/main-page';
 import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -14,16 +16,20 @@ function App({ placeCardCount }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact>
+        <Route path={AppRoute.Main} exact>
           <MainPage placeCardCount={placeCardCount} />
         </Route>
-        <Route path="/login" exact>
+        <Route path={AppRoute.Login} exact>
           <LoginScreen />
         </Route>
-        <Route path="/favorites" exact>
-          <FavoritesScreen />
-        </Route>
-        <Route path="/offer/:id" exact>
+        <PrivateRoute
+          exact
+          path={AppRoute.Favorites}
+          render={() => <FavoritesScreen />}
+          authorizationStatus={AuthorizationStatus.NoAuth}
+        >
+        </PrivateRoute>
+        <Route path={AppRoute.Offer} exact>
           <PropertyScreenNotLogged />
         </Route>
         <Route
