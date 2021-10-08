@@ -1,6 +1,6 @@
-import { Reviews } from '../types/reviews';
+import { Review } from '../types/review';
 
-const reviews: Reviews[] = [
+const reviews: Review[] = [
   {
     offersID: 1111,
     comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',

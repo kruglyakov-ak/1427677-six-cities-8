@@ -6,18 +6,19 @@ import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PropertyScreenNotLogged from '../property-screen-not-logged/property-screen-not-logged';
 import MainPage404 from '../main-page-404/main-page-404';
+import { Offer } from '../../types/offer';
 
 
 type AppProps = {
-  placeCardCount: number;
+  offers: Offer[];
 }
 
-function App({ placeCardCount }: AppProps): JSX.Element {
+function App({ offers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage placeCardCount={placeCardCount} />
+          <MainPage offers={offers} />
         </Route>
         <Route path={AppRoute.Login} exact>
           <LoginScreen />

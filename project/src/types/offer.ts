@@ -1,4 +1,4 @@
-type Offers = {
+type Offer = {
   bedrooms: number,
   description: string,
   goods: string[],
@@ -18,4 +18,4 @@ type Offers = {
   type: string,
 };
 
-export type { Offers };
+export type { Offer };

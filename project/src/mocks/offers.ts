@@ -1,6 +1,6 @@
-import { Offers } from '../types/offers';
+import { Offer } from '../types/offer';
 
-const offers: Offers[] = [
+const offers: Offer[] = [
   {
     bedrooms: 3,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -14,7 +14,7 @@ const offers: Offers[] = [
     isFavorite: false,
     isPremium: false,
     maxAdults: 4,
-    previewImage: 'img/apartment-03.jpg',
+    previewImage: 'img/apartment-01.jpg',
     price: 120,
     rating: 4.8,
     title: 'Beautiful & luxurious studio at great location',
@@ -33,7 +33,7 @@ const offers: Offers[] = [
     isFavorite: true,
     isPremium: false,
     maxAdults: 5,
-    previewImage: 'img/studio-01.jpg',
+    previewImage: 'img/apartment-02.jpg',
     price: 50,
     rating: 5,
     title: 'Wood and stone place',
@@ -52,7 +52,7 @@ const offers: Offers[] = [
     isFavorite: false,
     isPremium: true,
     maxAdults: 3,
-    previewImage: 'img/apartment-02.jpg',
+    previewImage: 'img/apartment-03.jpg',
     price: 470,
     rating: 4.1,
     title: 'Canal View Prinsengracht',
@@ -71,7 +71,7 @@ const offers: Offers[] = [
     isFavorite: true,
     isPremium: true,
     maxAdults: 2,
-    previewImage: 'img/apartment-01.jpg',
+    previewImage: 'img/room.jpg',
     price: 300,
     rating: 3.2,
     title: 'Nice, cozy, warm big bed apartment',
