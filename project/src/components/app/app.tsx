@@ -7,13 +7,15 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import PropertyScreenNotLogged from '../property-screen-not-logged/property-screen-not-logged';
 import MainPage404 from '../main-page-404/main-page-404';
 import { Offer } from '../../types/offer';
+import { Review } from '../../types/review';
 
 
 type AppProps = {
-  offers: Offer[];
+  offers: Offer[],
+  reviews: Review[],
 }
 
-function App({ offers }: AppProps): JSX.Element {
+function App({ offers, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -31,7 +33,7 @@ function App({ offers }: AppProps): JSX.Element {
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
-          <PropertyScreenNotLogged />
+          <PropertyScreenNotLogged offer={offers[2]} offers={offers} reviews={reviews}/>
         </Route>
         <Route
           render={(props) => (

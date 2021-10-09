@@ -9,7 +9,7 @@ const reviews: Review[] = [
     rating: 4,
     userAvatarUrl: 'img/avatar-angelina.jpg',
     userId: 4,
-    userIsPro: true,
+    userIsPro: false,
     userName: 'Angelina',
   },
   {
@@ -31,7 +31,7 @@ const reviews: Review[] = [
     rating: 3,
     userAvatarUrl: 'img/avatar-angelina.jpg',
     userId: 4,
-    userIsPro: true,
+    userIsPro: false,
     userName: 'Angelina',
   },
   {
@@ -53,7 +53,7 @@ const reviews: Review[] = [
     rating: 3,
     userAvatarUrl: 'img/avatar-angelina.jpg',
     userId: 4,
-    userIsPro: true,
+    userIsPro: false,
     userName: 'Angelina',
   },
   {
@@ -75,7 +75,7 @@ const reviews: Review[] = [
     rating: 2,
     userAvatarUrl: 'img/avatar-angelina.jpg',
     userId: 4,
-    userIsPro: true,
+    userIsPro: false,
     userName: 'Angelina',
   },
 ];
