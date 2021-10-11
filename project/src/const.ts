@@ -11,7 +11,20 @@ const enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+const OfferType: {
+  [apartment: string]: string,
+  room: string,
+  house: string,
+  hotel: string,
+} = {
+  apartment: 'Apartment',
+  room: 'Private Room',
+  house: 'House',
+  hotel: 'Hotel',
+};
+
 export {
+  OfferType,
   AppRoute,
   AuthorizationStatus
 };

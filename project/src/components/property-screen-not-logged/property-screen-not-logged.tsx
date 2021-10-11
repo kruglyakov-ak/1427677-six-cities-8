@@ -3,18 +3,12 @@ import { nanoid } from 'nanoid';
 import OffersList from '../offers-list/offers-list';
 import { Review } from '../../types/review';
 import ReviewsList from '../reviews-list/reviews-list';
+import { OfferType } from '../../const';
 
 type PropertyScreenNotLoggedProps = {
   offer: Offer,
   offers: Offer[],
   reviews: Review[],
-}
-
-enum OfferType {
-  apartment = 'Apartment',
-  room = 'Private Room',
-  house = 'House',
-  hotel = 'Hotel',
 }
 
 function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLoggedProps): JSX.Element {
@@ -27,7 +21,7 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
     isFavorite,
     rating,
     title,
-    // type,
+    type,
     goods,
     hostName,
     hostIsPro,
@@ -99,7 +93,7 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {OfferType['room']}
+                  {OfferType[type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Bedrooms

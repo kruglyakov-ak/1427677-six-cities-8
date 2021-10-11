@@ -33,7 +33,7 @@ function App({ offers, reviews }: AppProps): JSX.Element {
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
-          <PropertyScreenNotLogged offer={offers[2]} offers={offers} reviews={reviews}/>
+          <PropertyScreenNotLogged offer={offers[3]} offers={offers} reviews={reviews}/>
         </Route>
         <Route
           render={(props) => (
