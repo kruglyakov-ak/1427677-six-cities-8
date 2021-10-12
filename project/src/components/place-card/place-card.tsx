@@ -2,9 +2,11 @@ import { Offer } from '../../types/offer';
 
 type PlaceCardTypes = {
   offer: Offer,
+  onPlaceCardSelect: any,
+  onPlaceCardUnselect: any,
 }
 
-function PlaceCard({ offer }: PlaceCardTypes): JSX.Element {
+function PlaceCard({ offer, onPlaceCardSelect, onPlaceCardUnselect}: PlaceCardTypes): JSX.Element {
   const {
     isPremium,
     previewImage,
@@ -17,7 +19,10 @@ function PlaceCard({ offer }: PlaceCardTypes): JSX.Element {
   } = offer;
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card"
+      onMouseEnter={() => onPlaceCardSelect(offer)}
+      onMouseLeave={() => onPlaceCardUnselect()}
+    >
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
@@ -42,7 +47,7 @@ function PlaceCard({ offer }: PlaceCardTypes): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${20*Math.round(rating)}%` }}></span>
+            <span style={{ width: `${20 * Math.round(rating)}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
