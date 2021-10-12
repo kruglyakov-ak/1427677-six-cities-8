@@ -1,38 +1,33 @@
 import { Offer } from '../../types/offer';
 
-type PlaceCardTypes = {
+type FavoritePlaceCardProps = {
   offer: Offer,
-  onPlaceCardSelect: (offer: Offer) => void,
-  onPlaceCardUnselect: () => void,
 }
 
-function PlaceCard({ offer, onPlaceCardSelect, onPlaceCardUnselect}: PlaceCardTypes): JSX.Element {
+function FavoritePlaceCard({ offer }: FavoritePlaceCardProps): JSX.Element {
   const {
-    isPremium,
     previewImage,
     price,
     isFavorite,
+    isPremium,
     rating,
     title,
-    type,
     id,
+    type,
   } = offer;
 
   return (
-    <article className="cities__place-card place-card"
-      onMouseEnter={() => onPlaceCardSelect(offer)}
-      onMouseLeave={() => onPlaceCardUnselect()}
-    >
+    <article className="favorites__card place-card">
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div> : ''}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href={`/offer/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place card" />
+          <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place card" />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -42,7 +37,7 @@ function PlaceCard({ offer, onPlaceCardSelect, onPlaceCardUnselect}: PlaceCardTy
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -60,5 +55,4 @@ function PlaceCard({ offer, onPlaceCardSelect, onPlaceCardUnselect}: PlaceCardTy
   );
 }
 
-
-export default PlaceCard;
+export default FavoritePlaceCard;

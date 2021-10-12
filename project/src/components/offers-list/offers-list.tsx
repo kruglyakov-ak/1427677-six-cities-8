@@ -8,18 +8,15 @@ type OffersListProps = {
 }
 
 function OffersList({ offers }: OffersListProps): JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
 
   const handleActiveOfferSelect = (offer: Offer): void => {
     setActivePlaceCard(offer);
-    // eslint-disable-next-line no-console
-    console.log(activePlaceCard);
   };
 
   const handleDeactiveOfferSelect = (): void => {
     setActivePlaceCard(null);
-    // eslint-disable-next-line no-console
-    console.log(activePlaceCard);
   };
 
   return (

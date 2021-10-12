@@ -3,6 +3,7 @@ import { Offer } from '../types/offer';
 const offers: Offer[] = [
   {
     bedrooms: 3,
+    cityName: 'Cologne',
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     hostAvatarUrl: 'img/avatar-max.jpg',
@@ -11,7 +12,7 @@ const offers: Offer[] = [
     hostName: 'Max',
     id: 1111,
     images: ['img/studio-01.jpg', 'img/room.jpg', 'img/apartment-02.jpg', 'img/apartment-01.jpg', 'img/apartment-03.jpg', 'img/apartment-01.jpg'],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     maxAdults: 4,
     previewImage: 'img/apartment-01.jpg',
@@ -22,6 +23,7 @@ const offers: Offer[] = [
   },
   {
     bedrooms: 4,
+    cityName: 'Amsterdam',
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Coffee machine', 'Dishwasher'],
     hostAvatarUrl: 'img/avatar-angelina.jpg',
@@ -41,6 +43,7 @@ const offers: Offer[] = [
   },
   {
     bedrooms: 2,
+    cityName: 'Amsterdam',
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     hostAvatarUrl: 'img/avatar-max.jpg',
@@ -60,8 +63,9 @@ const offers: Offer[] = [
   },
   {
     bedrooms: 1,
+    cityName: 'Amsterdam',
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine' ],
+    goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine'],
     hostAvatarUrl: 'img/avatar-angelina.jpg',
     hostId: 4,
     hostIsPro: true,

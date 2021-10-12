@@ -1,5 +1,6 @@
 type Offer = {
   bedrooms: number,
+  cityName: string,
   description: string,
   goods: string[],
   hostAvatarUrl: string,
