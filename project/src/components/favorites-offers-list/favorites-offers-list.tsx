@@ -1,5 +1,7 @@
 import { Offer } from '../../types/offer';
 import FavoritePlaceCard from '../favorite-place-card/favorite-place-card';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 type FavoritesOffersLstProps = {
   offers: Offer[],
@@ -11,9 +13,9 @@ function FavoritesOffersLst({ offers, location }: FavoritesOffersLstProps): JSX.
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="/">
+          <Link className="locations__item-link" to={AppRoute.Main}>
             <span>{location}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">
