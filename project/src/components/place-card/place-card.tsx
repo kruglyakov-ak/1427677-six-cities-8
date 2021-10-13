@@ -2,13 +2,13 @@ import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-type PlaceCardTypes = {
+type PlaceCardProps = {
   offer: Offer,
   onPlaceCardSelect: (offer: Offer) => void,
   onPlaceCardUnselect: () => void,
 }
 
-function PlaceCard({ offer, onPlaceCardSelect, onPlaceCardUnselect }: PlaceCardTypes): JSX.Element {
+function PlaceCard({ offer, onPlaceCardSelect, onPlaceCardUnselect }: PlaceCardProps): JSX.Element {
   const {
     isPremium,
     previewImage,
