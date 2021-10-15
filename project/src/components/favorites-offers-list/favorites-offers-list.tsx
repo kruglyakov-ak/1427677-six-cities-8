@@ -19,7 +19,9 @@ function FavoritesOffersLst({ offers, location }: FavoritesOffersLstProps): JSX.
         </div>
       </div>
       <div className="favorites__places">
-        {offers.slice().filter((offer) => offer.cityName === location && offer.isFavorite).map((offer) => <FavoritePlaceCard offer={offer} key={offer.id}/>)}
+        {offers
+          .filter((offer) => offer.cityName === location && offer.isFavorite)
+          .map((offer) => <FavoritePlaceCard offer={offer} key={offer.id} />)}
       </div>
     </li>
   );

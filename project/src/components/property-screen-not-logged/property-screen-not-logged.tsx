@@ -5,6 +5,7 @@ import { Review } from '../../types/review';
 import ReviewsList from '../reviews-list/reviews-list';
 import { AppRoute, OfferType } from '../../const';
 import { Link } from 'react-router-dom';
+import { getRatingStarsWidth } from '../../uttils';
 
 type PropertyScreenNotLoggedProps = {
   offer: Offer,
@@ -87,7 +88,7 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: `${20 * Math.round(rating)}%` }}></span>
+                  <span style={{ width: `${getRatingStarsWidth(rating)}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>

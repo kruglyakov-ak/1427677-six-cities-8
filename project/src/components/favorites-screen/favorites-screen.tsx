@@ -1,4 +1,3 @@
-import { nanoid } from '@reduxjs/toolkit';
 import { Offer } from '../../types/offer';
 import FavoritesOffersLst from '../favorites-offers-list/favorites-offers-list';
 import { Link } from 'react-router-dom';
@@ -10,7 +9,11 @@ type FavoritesScreenProps = {
 
 function FavoritesScreen({ offers }: FavoritesScreenProps): JSX.Element {
   const favoriteLocations: Set<string> = new Set();
-  offers.slice().filter((offer) => offer.isFavorite).forEach((offer) => favoriteLocations.add(offer.cityName));
+  offers.forEach((offer) => {
+    if (offer.isFavorite) {
+      favoriteLocations.add(offer.cityName);
+    }
+  });
 
   return (
     <div className="page">
@@ -51,7 +54,7 @@ function FavoritesScreen({ offers }: FavoritesScreenProps): JSX.Element {
                 <FavoritesOffersLst
                   offers={offers}
                   location={location}
-                  key={nanoid()}
+                  key={location}
                 />))}
             </ul>
           </section>

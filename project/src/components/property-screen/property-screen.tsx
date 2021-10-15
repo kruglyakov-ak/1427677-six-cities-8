@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, OfferType } from '../../const';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
+import { getRatingStarsWidth } from '../../uttils';
 import OffersList from '../offers-list/offers-list';
 import ReviewsList from '../reviews-list/reviews-list';
 import SubmitCommentForm from '../submit-comment-form/submit-comment-form';
@@ -102,7 +103,7 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: `${20 * Math.round(rating)}%` }}></span>
+                  <span style={{ width: `${getRatingStarsWidth(rating)}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
