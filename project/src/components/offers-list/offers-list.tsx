@@ -10,12 +10,8 @@ type OffersListProps = {
 function OffersList({ offers }: OffersListProps): JSX.Element {
   const [, setActivePlaceCard] = useState<Offer | null>(null);
 
-  const handleActiveOfferSelect = (offer?: Offer): void => {
-    if (offer) {
-      setActivePlaceCard(offer);
-      return;
-    }
-    setActivePlaceCard(null);
+  const handleActiveOfferSelect = (offer: Offer | null): void => {
+    setActivePlaceCard(offer);
   };
 
   return (
