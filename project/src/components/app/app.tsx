@@ -4,20 +4,23 @@ import PrivateRoute from '../private-route/private-rout';
 import MainPage from '../main-page/main-page';
 import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
-import PropertyScreenNotLogged from '../property-screen-not-logged/property-screen-not-logged';
 import MainPage404 from '../main-page-404/main-page-404';
+import { Offer } from '../../types/offer';
+import { Review } from '../../types/review';
+import PropertyScreen from '../property-screen/property-screen';
 
 
 type AppProps = {
-  placeCardCount: number;
+  offers: Offer[],
+  reviews: Review[],
 }
 
-function App({ placeCardCount }: AppProps): JSX.Element {
+function App({ offers, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage placeCardCount={placeCardCount} />
+          <MainPage offers={offers} />
         </Route>
         <Route path={AppRoute.Login} exact>
           <LoginScreen />
@@ -25,12 +28,12 @@ function App({ placeCardCount }: AppProps): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <FavoritesScreen />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          render={() => <FavoritesScreen offers={offers} />}
+          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
-          <PropertyScreenNotLogged />
+          <PropertyScreen offer={offers[3]} offers={offers} reviews={reviews}/>
         </Route>
         <Route
           render={(props) => (
