@@ -4,7 +4,10 @@ import { Offer } from '../types/offer';
 const offers: Offer[] = [
   {
     bedrooms: 3,
-    cityName: 'Cologne',
+    cityName: 'Amsterdam',
+    latitude: 52.3909553943508,
+    longitude: 4.85309666406198,
+    zoom: 10,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     hostAvatarUrl: 'img/avatar-max.jpg',
@@ -25,6 +28,9 @@ const offers: Offer[] = [
   {
     bedrooms: 4,
     cityName: 'Amsterdam',
+    latitude: 52.369553943508,
+    longitude: 4.85309666406198,
+    zoom: 10,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Coffee machine', 'Dishwasher'],
     hostAvatarUrl: 'img/avatar-angelina.jpg',
@@ -45,6 +51,9 @@ const offers: Offer[] = [
   {
     bedrooms: 2,
     cityName: 'Amsterdam',
+    latitude: 52.3909553943508,
+    longitude: 4.929309666406198,
+    zoom: 10,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     hostAvatarUrl: 'img/avatar-max.jpg',
@@ -65,6 +74,9 @@ const offers: Offer[] = [
   {
     bedrooms: 1,
     cityName: 'Amsterdam',
+    latitude: 52.3809553943508,
+    longitude: 4.939309666406198,
+    zoom: 10,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine'],
     hostAvatarUrl: 'img/avatar-angelina.jpg',

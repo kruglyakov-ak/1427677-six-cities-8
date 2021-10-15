@@ -3,6 +3,9 @@ import { OfferType } from '../const';
 type Offer = {
   bedrooms: number,
   cityName: string,
+  latitude: number,
+  longitude: number,
+  zoom: number,
   description: string,
   goods: string[],
   hostAvatarUrl: string,
