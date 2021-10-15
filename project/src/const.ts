@@ -11,20 +11,28 @@ const enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-const OfferType: {
-  [apartment: string]: string,
-  room: string,
-  house: string,
-  hotel: string,
-} = {
-  apartment: 'Apartment',
-  room: 'Private Room',
-  house: 'House',
-  hotel: 'Hotel',
+const enum OfferType {
+  Apartment = 'apartment',
+  Room = 'room',
+  House = 'house',
+  Hotel = 'hotel',
+}
+
+const offerTypeToReadable = {
+  [OfferType.Apartment]: 'Apartment',
+  [OfferType.Room]: 'Private Room',
+  [OfferType.House]: 'House',
+  [OfferType.Hotel]: 'Hotel',
 };
+
+const MIN_OFFER_IN_NEIGHBOURHOOD = 0;
+const MAX_OFFER_IN_NEIGHBOURHOOD = 0;
 
 export {
   OfferType,
   AppRoute,
-  AuthorizationStatus
+  AuthorizationStatus,
+  MIN_OFFER_IN_NEIGHBOURHOOD,
+  MAX_OFFER_IN_NEIGHBOURHOOD,
+  offerTypeToReadable
 };

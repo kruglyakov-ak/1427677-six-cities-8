@@ -9,7 +9,7 @@ type ReviewsListProps = {
 }
 
 function ReviewsList({ reviews, offer }: ReviewsListProps): JSX.Element {
-  const reviewsOnPlace = reviews.filter((review) => offer.id === review.offersID);
+  const reviewsOnPlace = reviews.filter((review) => offer.id === review.offersId);
 
   return (
     <>

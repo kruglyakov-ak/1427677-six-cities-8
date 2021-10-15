@@ -1,7 +1,11 @@
-import { nanoid } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute, OfferType } from '../../const';
+import {
+  AppRoute,
+  MAX_OFFER_IN_NEIGHBOURHOOD,
+  MIN_OFFER_IN_NEIGHBOURHOOD,
+  offerTypeToReadable
+} from '../../const';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 import { getRatingStarsWidth } from '../../uttils';
@@ -16,10 +20,8 @@ type PropertyScreenProps = {
 }
 
 function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [commentStarValue, setCommentStarValue] = useState<string | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [commentTextValue, setCommentTextValue] = useState<string | null>(null);
+  const [, setCommentStarValue] = useState<string | null>('');
+  const [, setCommentTextValue] = useState<string | null>('');
 
   const handleRatingStarSelect = (value: string): void => {
     setCommentStarValue(value);
@@ -46,10 +48,10 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
     // id,
   } = offer;
 
-  const placesInNeighbourhood = offers.slice(0, 3);
+  const placesInNeighbourhood = offers.slice(MIN_OFFER_IN_NEIGHBOURHOOD, MAX_OFFER_IN_NEIGHBOURHOOD);
 
   return (
-    <div className="page">
+    <div className="page">s
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -78,7 +80,7 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {images.map((image) => (
-                <div className="property__image-wrapper" key={nanoid()}>
+                <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={`${image}`} alt="Room" />
                 </div>),
               )}
@@ -86,10 +88,10 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremium ?
+              {isPremium &&
                 <div className="property__mark">
                   <span>Premium</span>
-                </div> : ''}
+                </div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -110,7 +112,7 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {OfferType[type]}
+                  {offerTypeToReadable[type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Bedrooms
@@ -127,7 +129,7 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {goods.map((good) => (
-                    <li className="property__inside-item" key={nanoid()}>
+                    <li className="property__inside-item" key={good}>
                       {good}
                     </li>))};
                 </ul>
@@ -142,10 +144,10 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
                     {hostName}
                   </span>
 
-                  {hostIsPro ?
+                  {hostIsPro &&
                     <span className="property__user-status">
                       Pro
-                    </span> : ''}
+                    </span>}
 
                 </div>
                 <div className="property__description">

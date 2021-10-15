@@ -1,9 +1,13 @@
 import { Offer } from '../../types/offer';
-import { nanoid } from 'nanoid';
 import OffersList from '../offers-list/offers-list';
 import { Review } from '../../types/review';
 import ReviewsList from '../reviews-list/reviews-list';
-import { AppRoute, OfferType } from '../../const';
+import {
+  AppRoute,
+  MAX_OFFER_IN_NEIGHBOURHOOD,
+  MIN_OFFER_IN_NEIGHBOURHOOD,
+  offerTypeToReadable
+} from '../../const';
 import { Link } from 'react-router-dom';
 import { getRatingStarsWidth } from '../../uttils';
 
@@ -31,7 +35,7 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
     // id,
   } = offer;
 
-  const placesInNeighbourhood = offers.slice(0, 3);
+  const placesInNeighbourhood = offers.slice(MIN_OFFER_IN_NEIGHBOURHOOD, MAX_OFFER_IN_NEIGHBOURHOOD);
 
   return (
     <div className="page">
@@ -63,7 +67,7 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {images.map((image) => (
-                <div className="property__image-wrapper" key={nanoid()}>
+                <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={`${image}`} alt="Room" />
                 </div>),
               )}
@@ -71,10 +75,10 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremium ?
+              {isPremium &&
                 <div className="property__mark">
                   <span>Premium</span>
-                </div> : ''}
+                </div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -95,7 +99,7 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {OfferType[type]}
+                  {offerTypeToReadable[type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Bedrooms
@@ -112,7 +116,7 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {goods.map((good) => (
-                    <li className="property__inside-item" key={nanoid()}>
+                    <li className="property__inside-item" key={good}>
                       {good}
                     </li>))};
                 </ul>
@@ -127,10 +131,10 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
                     {hostName}
                   </span>
 
-                  {hostIsPro ?
+                  {hostIsPro &&
                     <span className="property__user-status">
                       Pro
-                    </span> : ''}
+                    </span>}
 
                 </div>
                 <div className="property__description">

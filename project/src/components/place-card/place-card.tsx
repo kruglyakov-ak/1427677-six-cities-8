@@ -5,11 +5,10 @@ import { getRatingStarsWidth } from '../../uttils';
 
 type PlaceCardProps = {
   offer: Offer,
-  onPlaceCardSelect: (offer: Offer) => void,
-  onPlaceCardUnselect: () => void,
+  onPlaceCardSelect: (offer?: Offer) => void,
 }
 
-function PlaceCard({ offer, onPlaceCardSelect, onPlaceCardUnselect }: PlaceCardProps): JSX.Element {
+function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
   const {
     isPremium,
     previewImage,
@@ -20,10 +19,17 @@ function PlaceCard({ offer, onPlaceCardSelect, onPlaceCardUnselect }: PlaceCardP
     type,
   } = offer;
 
+  const handleMouseEnter = () => {
+    onPlaceCardSelect(offer);
+  };
+  const handleMouseLeave = () => {
+    onPlaceCardSelect();
+  };
+
   return (
     <article className="cities__place-card place-card"
-      onMouseEnter={() => onPlaceCardSelect(offer)}
-      onMouseLeave={() => onPlaceCardUnselect()}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isPremium &&
         <div className="place-card__mark">

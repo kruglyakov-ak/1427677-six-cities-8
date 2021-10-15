@@ -1,3 +1,4 @@
+import { OfferType } from '../const';
 import { Offer } from '../types/offer';
 
 const offers: Offer[] = [
@@ -19,7 +20,7 @@ const offers: Offer[] = [
     price: 120,
     rating: 4.8,
     title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
+    type: OfferType.Apartment,
   },
   {
     bedrooms: 4,
@@ -39,7 +40,7 @@ const offers: Offer[] = [
     price: 50,
     rating: 5,
     title: 'Wood and stone place',
-    type: 'hotel',
+    type: OfferType.Hotel,
   },
   {
     bedrooms: 2,
@@ -59,7 +60,7 @@ const offers: Offer[] = [
     price: 470,
     rating: 4.1,
     title: 'Canal View Prinsengracht',
-    type: 'house',
+    type: OfferType.House,
   },
   {
     bedrooms: 1,
@@ -79,7 +80,7 @@ const offers: Offer[] = [
     price: 300,
     rating: 3.2,
     title: 'Nice, cozy, warm big bed apartment',
-    type: 'room',
+    type: OfferType.Room,
   },
 ];
 

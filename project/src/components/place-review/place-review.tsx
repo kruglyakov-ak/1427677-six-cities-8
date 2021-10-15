@@ -24,7 +24,7 @@ function PlaceReview({ review }: PlaceReviewProps): JSX.Element {
         <span className="reviews__user-name">
           {userName}
         </span>
-        {userIsPro ? <span className="property__user-status">Pro</span> : ''}
+        {userIsPro && <span className="property__user-status">Pro</span>}
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
