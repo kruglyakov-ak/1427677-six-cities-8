@@ -10,6 +10,8 @@ import {
 } from '../../const';
 import { Link } from 'react-router-dom';
 import { getRatingStarsWidth } from '../../uttils';
+import { useState } from 'react';
+import Map from '../map/map';
 
 type PropertyScreenNotLoggedProps = {
   offer: Offer,
@@ -36,6 +38,12 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
   } = offer;
 
   const placesInNeighbourhood = offers.slice(MIN_OFFER_IN_NEIGHBOURHOOD, MAX_OFFER_IN_NEIGHBOURHOOD);
+
+  const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
+
+  const handleActiveOfferSelect = (PlaceCard: Offer | null): void => {
+    setActivePlaceCard(PlaceCard);
+  };
 
   return (
     <div className="page">
@@ -151,13 +159,15 @@ function PropertyScreenNotLogged({ offer, offers, reviews }: PropertyScreenNotLo
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map offers={offers} activePlaceCard={activePlaceCard} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList offers={placesInNeighbourhood} />
+              <OffersList offers={placesInNeighbourhood} handleActiveOfferSelect={handleActiveOfferSelect} />
             </div>
           </section>
         </div>

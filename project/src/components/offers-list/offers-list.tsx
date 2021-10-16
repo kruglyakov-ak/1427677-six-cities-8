@@ -1,18 +1,13 @@
 import PlaceCard from '../place-card/place-card';
 import { Offer } from '../../types/offer';
-import { useState } from 'react';
-
 
 type OffersListProps = {
-  offers: Offer[];
+  offers: Offer[],
+  handleActiveOfferSelect: (offer: Offer | null) => void,
 }
 
-function OffersList({ offers }: OffersListProps): JSX.Element {
-  const [, setActivePlaceCard] = useState<Offer | null>(null);
+function OffersList({ offers, handleActiveOfferSelect }: OffersListProps): JSX.Element {
 
-  const handleActiveOfferSelect = (offer: Offer | null): void => {
-    setActivePlaceCard(offer);
-  };
 
   return (
     <>
