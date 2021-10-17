@@ -1,7 +1,8 @@
 import {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
+import markerDefault from './img/pin.svg';
+import markerCurrent from './img/pin-active.svg';
 import useMap from '../../hooks/useMap';
 import { City } from '../../types/city';
 import { Offer } from '../../types/offer';
@@ -13,15 +14,15 @@ type MapProps = {
 };
 
 const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconUrl: markerDefault,
+  iconSize: [27, 39],
+  iconAnchor: [13.5, 39],
 });
 
 const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconUrl: markerCurrent,
+  iconSize: [27, 39],
+  iconAnchor: [13.5, 39],
 });
 
 function Map(props: MapProps): JSX.Element {

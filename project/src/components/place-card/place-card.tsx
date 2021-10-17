@@ -5,7 +5,7 @@ import { getRatingStarsWidth } from '../../uttils';
 
 type PlaceCardProps = {
   offer: Offer,
-  onPlaceCardSelect: (offer: Offer | null) => void,
+  onPlaceCardSelect?: (offer: Offer | null) => void,
 }
 
 function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
@@ -20,10 +20,14 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
   } = offer;
 
   const handleMouseEnter = () => {
-    onPlaceCardSelect(offer);
+    if (onPlaceCardSelect) {
+      onPlaceCardSelect(offer);
+    }
   };
   const handleMouseLeave = () => {
-    onPlaceCardSelect(null);
+    if (onPlaceCardSelect) {
+      onPlaceCardSelect(null);
+    }
   };
 
   return (

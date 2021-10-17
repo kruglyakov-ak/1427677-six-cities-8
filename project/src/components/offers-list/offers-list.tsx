@@ -3,7 +3,7 @@ import { Offer } from '../../types/offer';
 
 type OffersListProps = {
   offers: Offer[],
-  handleActiveOfferSelect: (offer: Offer | null) => void,
+  handleActiveOfferSelect?: (offer: Offer | null) => void,
 }
 
 function OffersList({ offers, handleActiveOfferSelect }: OffersListProps): JSX.Element {

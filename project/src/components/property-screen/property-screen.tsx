@@ -25,11 +25,6 @@ type PropertyScreenProps = {
 function PropertyScreen({ offer, offers, reviews, city }: PropertyScreenProps): JSX.Element {
   const [, setCommentStarValue] = useState<string | null>('');
   const [, setCommentTextValue] = useState<string | null>('');
-  const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
-
-  const handleActiveOfferSelect = (PlaceCard: Offer | null): void => {
-    setActivePlaceCard(PlaceCard);
-  };
 
   const handleRatingStarSelect = (value: string): void => {
     setCommentStarValue(value);
@@ -177,14 +172,14 @@ function PropertyScreen({ offer, offers, reviews, city }: PropertyScreenProps): 
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={placesInNeighbourhood} city={city} activePlaceCard={activePlaceCard} />
+            <Map offers={placesInNeighbourhood} city={city} activePlaceCard={null} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList offers={placesInNeighbourhood} handleActiveOfferSelect={handleActiveOfferSelect} />
+              <OffersList offers={placesInNeighbourhood} />
             </div>
           </section>
         </div>
