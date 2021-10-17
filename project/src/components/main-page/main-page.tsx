@@ -2,13 +2,22 @@ import OffersList from '../offers-list/offers-list';
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import Map from '../map/map';
+import { useState } from 'react';
+import { City } from '../../types/city';
 
 
 type MainPageProps = {
-  offers: Offer[];
+  offers: Offer[],
+  city: City,
 }
 
-function MainPage({ offers }: MainPageProps): JSX.Element {
+function MainPage({ offers, city }: MainPageProps): JSX.Element {
+  const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
+
+  const handleActiveOfferSelect = (offer: Offer | null): void => {
+    setActivePlaceCard(offer);
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -99,11 +108,13 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersList offers={offers} />
+                <OffersList offers={offers} handleActiveOfferSelect={handleActiveOfferSelect}/>
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map offers={offers} city={city} activePlaceCard={activePlaceCard}/>
+              </section>
             </div>
           </div>
         </div>

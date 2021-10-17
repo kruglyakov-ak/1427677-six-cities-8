@@ -26,7 +26,7 @@ const offerTypeToReadable = {
 };
 
 const MIN_OFFER_IN_NEIGHBOURHOOD = 0;
-const MAX_OFFER_IN_NEIGHBOURHOOD = 0;
+const MAX_OFFER_IN_NEIGHBOURHOOD = 3;
 
 export {
   OfferType,

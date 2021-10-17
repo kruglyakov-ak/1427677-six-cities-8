@@ -6,7 +6,7 @@ type SubmitCommentFormProps = {
 }
 
 function SubmitCommentForm({ handleRatingStarSelect, handleCommentTextInput }: SubmitCommentFormProps): JSX.Element {
-  const ratingInputChangeHandler = (evt: { target: { value: string; }; }) => {
+  const ratingInputChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     handleRatingStarSelect(evt.target.value);
   };
 
