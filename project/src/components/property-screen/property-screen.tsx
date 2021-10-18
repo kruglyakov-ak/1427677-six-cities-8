@@ -52,6 +52,7 @@ function PropertyScreen({ offer, offers, reviews, city }: PropertyScreenProps): 
   } = offer;
 
   const placesInNeighbourhood = offers.slice(MIN_OFFER_IN_NEIGHBOURHOOD, MAX_OFFER_IN_NEIGHBOURHOOD);
+  const reviewsOnPlace = reviews.filter((review) => offer.id === review.offersId);
 
   return (
     <div className="page">s
@@ -160,9 +161,9 @@ function PropertyScreen({ offer, offers, reviews, city }: PropertyScreenProps): 
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews · <span className="reviews__amount">1</span></h2>
+                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{reviewsOnPlace.length}</span></h2>
                 <ul className="reviews__list">
-                  <ReviewsList reviews={reviews} offer={offer} />
+                  <ReviewsList reviews={reviewsOnPlace} />
                 </ul>
                 <SubmitCommentForm
                   handleRatingStarSelect={handleRatingStarSelect}
