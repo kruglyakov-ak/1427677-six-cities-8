@@ -1,3 +1,6 @@
+const MIN_OFFER_IN_NEIGHBOURHOOD = 0;
+const MAX_OFFER_IN_NEIGHBOURHOOD = 3;
+
 const enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -18,6 +21,15 @@ const enum OfferType {
   Hotel = 'hotel',
 }
 
+const enum Citys {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
+
 const offerTypeToReadable = {
   [OfferType.Apartment]: 'Apartment',
   [OfferType.Room]: 'Private Room',
@@ -25,8 +37,6 @@ const offerTypeToReadable = {
   [OfferType.Hotel]: 'Hotel',
 };
 
-const MIN_OFFER_IN_NEIGHBOURHOOD = 0;
-const MAX_OFFER_IN_NEIGHBOURHOOD = 3;
 
 export {
   OfferType,
@@ -34,5 +44,6 @@ export {
   AuthorizationStatus,
   MIN_OFFER_IN_NEIGHBOURHOOD,
   MAX_OFFER_IN_NEIGHBOURHOOD,
-  offerTypeToReadable
+  offerTypeToReadable,
+  Citys
 };
