@@ -49,7 +49,7 @@ function Map(props: MapProps): JSX.Element {
     }
   }, [map, offers, activePlaceCard]);
 
-  return <div style={{height: '500px'}} ref={mapRef}></div>;
+  return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
 
 export default Map;

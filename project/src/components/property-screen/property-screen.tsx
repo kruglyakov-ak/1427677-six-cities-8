@@ -55,7 +55,7 @@ function PropertyScreen({ offer, offers, reviews, city }: PropertyScreenProps): 
   const reviewsOnPlace = reviews.filter((review) => offer.id === review.offersId);
 
   return (
-    <div className="page">s
+    <div className="page">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">

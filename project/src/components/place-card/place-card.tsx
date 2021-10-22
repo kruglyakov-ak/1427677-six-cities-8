@@ -19,12 +19,12 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
     type,
   } = offer;
 
-  const handleMouseEnter = () => {
+  const handleCardSelect = () => {
     if (onPlaceCardSelect) {
       onPlaceCardSelect(offer);
     }
   };
-  const handleMouseLeave = () => {
+  const handleCardUnselect  = () => {
     if (onPlaceCardSelect) {
       onPlaceCardSelect(null);
     }
@@ -32,8 +32,10 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
 
   return (
     <article className="cities__place-card place-card"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onFocus={handleCardSelect}
+      onBlur={handleCardUnselect}
+      onMouseEnter={handleCardSelect}
+      onMouseLeave={handleCardUnselect}
     >
       {isPremium &&
         <div className="place-card__mark">
