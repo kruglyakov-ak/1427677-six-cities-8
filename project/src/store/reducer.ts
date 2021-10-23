@@ -1,5 +1,5 @@
 import { Citys } from '../const';
-import { Actions, ActionType } from '../types/actions';
+import { Actions, ActionType } from '../types/action';
 import { State } from '../types/state';
 
 const initialState = {

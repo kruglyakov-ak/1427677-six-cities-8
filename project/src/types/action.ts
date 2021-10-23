@@ -3,16 +3,15 @@ enum ActionType {
   GetOffers = 'getOffers',
 }
 
-type ChangeCity = {
+type ChangeCityAction = {
   type: ActionType.ChangeCity;
-  payload: number;
 };
 
-type GetOffers = {
+type GetOffersAction = {
   type: ActionType.GetOffers;
 };
 
-type Actions = ChangeCity | GetOffers;
+type Actions = ChangeCityAction | GetOffersAction;
 
 export {
   ActionType
@@ -20,6 +19,6 @@ export {
 
 export type {
   Actions,
-  ChangeCity,
-  GetOffers
+  ChangeCityAction,
+  GetOffersAction
 };

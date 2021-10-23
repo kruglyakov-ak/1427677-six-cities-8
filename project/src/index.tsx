@@ -7,7 +7,7 @@ import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { reducer } from './store/reducer';
 import { Provider } from 'react-redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const store = createStore(
   reducer,
