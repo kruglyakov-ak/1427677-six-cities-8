@@ -8,7 +8,6 @@ import MainPage404 from '../main-page-404/main-page-404';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 import PropertyScreen from '../property-screen/property-screen';
-import FavoritesScreenEmpty from '../favorites-screen-empty/favorites-screen-empty';
 
 type AppProps = {
   offers: Offer[],
@@ -17,32 +16,6 @@ type AppProps = {
 }
 
 function App({ offers, reviews, offersByCity }: AppProps): JSX.Element {
-  if (offers.length === 0) {
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route path={AppRoute.Main} exact>
-            <MainPage />
-          </Route>
-          <Route path={AppRoute.Login} exact>
-            <LoginScreen />
-          </Route>
-          <PrivateRoute
-            exact
-            path={AppRoute.Favorites}
-            render={() => <FavoritesScreenEmpty />}
-            authorizationStatus={AuthorizationStatus.Auth}
-          >
-          </PrivateRoute>
-          <Route
-            render={(props) => (
-              <MainPage404 />
-            )}
-          />
-        </Switch>
-      </BrowserRouter>);
-  }
-
   return (
     <BrowserRouter>
       <Switch>
