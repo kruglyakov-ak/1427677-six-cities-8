@@ -4,9 +4,9 @@ import { Actions, ActionType } from '../types/action';
 import { State } from '../types/state';
 
 const initialState: State = {
-  currentCity: Citys.Cologne,
+  currentCity: Citys.Paris,
   offers: offers,
-  offersByCity: offers.filter((offer) => offer.cityName === Citys.Cologne),
+  offersByCity: offers.filter((offer) => offer.cityName === Citys.Paris),
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
