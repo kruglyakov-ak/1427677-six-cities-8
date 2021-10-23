@@ -21,7 +21,7 @@ const enum OfferType {
   Hotel = 'hotel',
 }
 
-const enum Citys {
+enum Citys {
   Paris = 'Paris',
   Cologne = 'Cologne',
   Brussels = 'Brussels',

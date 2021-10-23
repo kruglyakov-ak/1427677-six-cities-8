@@ -1,7 +1,33 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Dispatch } from 'redux';
 import { AppRoute } from '../../const';
+import { ChangeCity, GetOffersByCity } from '../../store/action';
+import { Actions } from '../../types/action';
+import { Offer } from '../../types/offer';
+import { State } from '../../types/state';
+import CitysList from '../citys-list/citys-list';
 
-function MainPageEmpty(): JSX.Element {
+const mapStateToProps = ({ currentCity }: State) => ({
+  currentCity,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onLoadMainPage(offers: Offer[] | null) {
+    dispatch(GetOffersByCity(offers));
+  },
+  onChangeCity() {
+    dispatch(ChangeCity());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux;
+
+function MainPageEmpty(props: ConnectedComponentProps): JSX.Element {
+  const { currentCity } = props;
 
   return (
     <div className="page page--gray page--main">
@@ -36,40 +62,7 @@ function MainPageEmpty(): JSX.Element {
       <main className="page__main page__main--index page__main--index-empty">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Paris</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Cologne</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Brussels</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Amsterdam</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Hamburg</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item tabs__item--active" to={AppRoute.Main}>
-                  <span>Dusseldorf</span>
-                </Link>
-              </li>
-            </ul>
-          </section>
+          <CitysList currentCity={currentCity} />
         </div>
         <div className="cities">
           <div className="cities__places-container cities__places-container--empty container">
@@ -87,4 +80,4 @@ function MainPageEmpty(): JSX.Element {
   );
 }
 
-export default MainPageEmpty;
+export default connector (MainPageEmpty);

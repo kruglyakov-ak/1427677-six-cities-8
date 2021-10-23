@@ -4,7 +4,7 @@ import { Actions, ActionType } from '../types/action';
 import { State } from '../types/state';
 
 const initialState: State = {
-  city: Citys.Amsterdam,
+  currentCity: Citys.Amsterdam,
   offers: offers,
   offersByCity: offers.filter((offer) => offer.cityName === Citys.Amsterdam),
 };
@@ -12,12 +12,12 @@ const initialState: State = {
 const reducer = (state: State = initialState, action: Actions): State => {
   switch (action.type) {
     case ActionType.ChangeCity:
-      return { ...state, city: state.city };
+      return { ...state, currentCity: state.currentCity };
     case ActionType.GetOffersByCity: {
       if (!action.payload) {
         return { ...state, offers: null };
       }
-      return { ...state, offers: action.payload.filter((offer) => offer.cityName === state.city) };
+      return { ...state, offers: action.payload.filter((offer) => offer.cityName === state.currentCity) };
     }
     default:
       return state;

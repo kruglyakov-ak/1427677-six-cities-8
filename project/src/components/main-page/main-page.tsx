@@ -9,13 +9,14 @@ import { Dispatch } from 'redux';
 import { Actions } from '../../types/action';
 import { ChangeCity, GetOffersByCity } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
+import CitysList from '../citys-list/citys-list';
 
 type MainPageProps = {
   offers: Offer[] | null;
 }
 
-const mapStateToProps = ({ city, offersByCity }: State) => ({
-  city,
+const mapStateToProps = ({ currentCity, offersByCity }: State) => ({
+  currentCity,
   offersByCity,
 });
 
@@ -34,7 +35,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & MainPageProps;
 
 function MainPage(props: ConnectedComponentProps): JSX.Element {
-  const { offersByCity, offers } = props;
+  const { currentCity, offersByCity, offers } = props;
 
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
 
@@ -75,40 +76,7 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Paris</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Cologne</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Brussels</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item tabs__item--active" to={AppRoute.Main}>
-                  <span>Amsterdam</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Hamburg</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to={AppRoute.Main}>
-                  <span>Dusseldorf</span>
-                </Link>
-              </li>
-            </ul>
-          </section>
+          <CitysList currentCity={currentCity} />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
