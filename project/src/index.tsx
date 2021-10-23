@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import App from './components/app/app';
-import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { reducer } from './store/reducer';
 import { Provider } from 'react-redux';
@@ -17,7 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        offers={offers}
+        offers={store.getState().offers}
         reviews={reviews}
       />
     </Provider>

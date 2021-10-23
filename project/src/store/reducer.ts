@@ -3,7 +3,7 @@ import { Actions, ActionType } from '../types/action';
 import { State } from '../types/state';
 
 const initialState = {
-  city: Citys.Amsterdam,
+  city: Citys.Paris,
   offers: null,
 };
 
