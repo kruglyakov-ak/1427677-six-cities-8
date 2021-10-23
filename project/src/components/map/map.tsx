@@ -4,11 +4,9 @@ import { useEffect, useRef } from 'react';
 import markerDefault from './img/pin.svg';
 import markerCurrent from './img/pin-active.svg';
 import useMap from '../../hooks/useMap';
-import { City } from '../../types/city';
 import { Offer } from '../../types/offer';
 
 type MapProps = {
-  city: City;
   offers: Offer[],
   activePlaceCard: Offer | null;
 };
@@ -26,9 +24,9 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { city, activePlaceCard, offers } = props;
+  const { activePlaceCard, offers } = props;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, offers[0]);
 
   useEffect(() => {
     if (map) {

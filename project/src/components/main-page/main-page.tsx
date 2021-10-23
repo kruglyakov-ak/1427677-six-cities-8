@@ -4,15 +4,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Map from '../map/map';
 import { useState } from 'react';
-import { City } from '../../types/city';
-
 
 type MainPageProps = {
   offers: Offer[],
-  city: City,
 }
 
-function MainPage({ offers, city }: MainPageProps): JSX.Element {
+function MainPage({ offers }: MainPageProps): JSX.Element {
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
 
   const handleActiveOfferSelect = (offer: Offer | null): void => {
@@ -113,7 +110,7 @@ function MainPage({ offers, city }: MainPageProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers} city={city} activePlaceCard={activePlaceCard}/>
+                <Map offers={offers} activePlaceCard={activePlaceCard}/>
               </section>
             </div>
           </div>

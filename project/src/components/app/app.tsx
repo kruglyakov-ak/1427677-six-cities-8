@@ -8,21 +8,18 @@ import MainPage404 from '../main-page-404/main-page-404';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 import PropertyScreen from '../property-screen/property-screen';
-import { City } from '../../types/city';
-
 
 type AppProps = {
   offers: Offer[],
   reviews: Review[],
-  city: City,
 }
 
-function App({ offers, reviews, city }: AppProps): JSX.Element {
+function App({ offers, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage offers={offers} city={city}/>
+          <MainPage offers={offers} />
         </Route>
         <Route path={AppRoute.Login} exact>
           <LoginScreen />
@@ -35,7 +32,7 @@ function App({ offers, reviews, city }: AppProps): JSX.Element {
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
-          <PropertyScreen offer={offers[3]} offers={offers} reviews={reviews} city={city}/>
+          <PropertyScreen offer={offers[3]} offers={offers} reviews={reviews} />
         </Route>
         <Route
           render={(props) => (
