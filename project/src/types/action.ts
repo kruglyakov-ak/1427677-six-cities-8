@@ -7,11 +7,12 @@ enum ActionType {
 
 type ChangeCityAction = {
   type: ActionType.ChangeCity;
+  payload: string;
 };
 
 type GetOffersByCityAction = {
   type: ActionType.GetOffersByCity;
-  payload: Offer[] | null,
+  payload: Offer[],
 };
 
 type Actions = ChangeCityAction | GetOffersByCityAction;

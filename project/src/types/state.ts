@@ -1,9 +1,8 @@
-import { Citys } from '../const';
 import { Offer } from './offer';
 
 type State = {
-  currentCity: Citys,
-  offers: Offer[] | null,
+  currentCity: string,
+  offers: Offer[],
   offersByCity: Offer[],
 };
 

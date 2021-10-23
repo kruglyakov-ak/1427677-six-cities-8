@@ -16,7 +16,8 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        offers={store.getState().offersByCity}
+        offers={store.getState().offers}
+        offersByCity={store.getState().offersByCity}
         reviews={reviews}
       />
     </Provider>

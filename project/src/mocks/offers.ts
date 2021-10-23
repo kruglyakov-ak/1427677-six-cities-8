@@ -4,7 +4,7 @@ import { Offer } from '../types/offer';
 const offers: Offer[] = [
   {
     bedrooms: 3,
-    cityName: 'Amsterdam',
+    cityName: 'Paris',
     cityLatitude: 52.370216,
     cityLongitude: 4.895168,
     cityZoom: 10,

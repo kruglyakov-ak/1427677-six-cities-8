@@ -7,13 +7,9 @@ import { useState } from 'react';
 import { State } from '../../types/state';
 import { Dispatch } from 'redux';
 import { Actions } from '../../types/action';
-import { ChangeCity, GetOffersByCity } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
 import CitysList from '../citys-list/citys-list';
-
-type MainPageProps = {
-  offers: Offer[] | null;
-}
+import MainPageEmpty from '../main-page-empty/main-page-empty';
 
 const mapStateToProps = ({ currentCity, offersByCity }: State) => ({
   currentCity,
@@ -21,28 +17,23 @@ const mapStateToProps = ({ currentCity, offersByCity }: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onLoadMainPage(offers: Offer[] | null) {
-    dispatch(GetOffersByCity(offers));
-  },
-  onChangeCity() {
-    dispatch(ChangeCity());
-  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & MainPageProps;
 
-function MainPage(props: ConnectedComponentProps): JSX.Element {
-  const { currentCity, offersByCity, offers } = props;
-
+function MainPage({ currentCity, offersByCity }: PropsFromRedux): JSX.Element {
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
 
   const handleActiveOfferSelect = (offer: Offer | null): void => {
     setActivePlaceCard(offer);
   };
-  GetOffersByCity(offers);
+
+  if (offersByCity.length === 0) {
+    return <MainPageEmpty currentCity={currentCity}/>;
+  }
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -76,13 +67,13 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CitysList currentCity={currentCity} />
+          <CitysList />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersByCity.length} places to stay in Amsterdam</b>
+              <b className="places__found">{offersByCity.length} places to stay in {currentCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
