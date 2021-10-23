@@ -12,13 +12,12 @@ import MainPageEmpty from '../main-page-empty/main-page-empty';
 import FavoritesScreenEmpty from '../favorites-screen-empty/favorites-screen-empty';
 
 type AppProps = {
-  offers: Offer[] | null,
+  offers: Offer[],
   reviews: Review[],
 }
 
 function App({ offers, reviews }: AppProps): JSX.Element {
-
-  if (!offers) {
+  if (offers.length === 0) {
     return (
       <BrowserRouter>
         <Switch>
@@ -42,34 +41,35 @@ function App({ offers, reviews }: AppProps): JSX.Element {
           />
         </Switch>
       </BrowserRouter>);
+  } else {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path={AppRoute.Main} exact>
+            <MainPage offers={offers}/>
+          </Route>
+          <Route path={AppRoute.Login} exact>
+            <LoginScreen />
+          </Route>
+          <PrivateRoute
+            exact
+            path={AppRoute.Favorites}
+            render={() => <FavoritesScreen offers={offers} />}
+            authorizationStatus={AuthorizationStatus.Auth}
+          >
+          </PrivateRoute>
+          <Route path={AppRoute.Offer} exact>
+            <PropertyScreen offer={offers[3]} offers={offers} reviews={reviews} />
+          </Route>
+          <Route
+            render={(props) => (
+              <MainPage404 />
+            )}
+          />
+        </Switch>
+      </BrowserRouter>
+    );
   }
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path={AppRoute.Main} exact>
-          <MainPage offers={offers} />
-        </Route>
-        <Route path={AppRoute.Login} exact>
-          <LoginScreen />
-        </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.Favorites}
-          render={() => <FavoritesScreen offers={offers} />}
-          authorizationStatus={AuthorizationStatus.Auth}
-        >
-        </PrivateRoute>
-        <Route path={AppRoute.Offer} exact>
-          <PropertyScreen offer={offers[3]} offers={offers} reviews={reviews} />
-        </Route>
-        <Route
-          render={(props) => (
-            <MainPage404 />
-          )}
-        />
-      </Switch>
-    </BrowserRouter>
-  );
 }
 
 export default App;

@@ -1,10 +1,12 @@
 import { Citys } from '../const';
+import { offers } from '../mocks/offers';
 import { Actions, ActionType } from '../types/action';
 import { State } from '../types/state';
 
-const initialState = {
+const initialState: State = {
   city: Citys.Amsterdam,
-  offers: null,
+  offers: offers,
+  offersByCity: offers.filter((offer) => offer.cityName === Citys.Amsterdam),
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {

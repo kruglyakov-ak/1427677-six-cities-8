@@ -5,22 +5,43 @@ import { AppRoute } from '../../const';
 import Map from '../map/map';
 import { useState } from 'react';
 import { State } from '../../types/state';
+import { Dispatch } from 'redux';
+import { Actions } from '../../types/action';
+import { ChangeCity, GetOffersByCity } from '../../store/action';
+import { connect, ConnectedProps } from 'react-redux';
 
 type MainPageProps = {
-  offers: Offer[],
+  offers: Offer[] | null;
 }
 
-const mapStateToProps = ({city}: State) => ({
+const mapStateToProps = ({ city, offersByCity }: State) => ({
   city,
+  offersByCity,
 });
 
-function MainPage({ offers }: MainPageProps): JSX.Element {
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onLoadMainPage(offers: Offer[] | null) {
+    dispatch(GetOffersByCity(offers));
+  },
+  onChangeCity() {
+    dispatch(ChangeCity());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MainPageProps;
+
+function MainPage(props: ConnectedComponentProps): JSX.Element {
+  const { offersByCity, offers } = props;
+
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
 
   const handleActiveOfferSelect = (offer: Offer | null): void => {
     setActivePlaceCard(offer);
   };
-
+  GetOffersByCity(offers);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -93,7 +114,7 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{offersByCity.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -110,12 +131,12 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersList offers={offers} handleActiveOfferSelect={handleActiveOfferSelect}/>
+                <OffersList offers={offersByCity} handleActiveOfferSelect={handleActiveOfferSelect} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers} activePlaceCard={activePlaceCard}/>
+                <Map offers={offersByCity} activePlaceCard={activePlaceCard} />
               </section>
             </div>
           </div>
@@ -125,4 +146,4 @@ function MainPage({ offers }: MainPageProps): JSX.Element {
   );
 }
 
-export default MainPage;
+export default connector (MainPage);
