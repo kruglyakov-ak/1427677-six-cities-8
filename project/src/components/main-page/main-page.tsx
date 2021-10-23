@@ -4,10 +4,15 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Map from '../map/map';
 import { useState } from 'react';
+import { State } from '../../types/state';
 
 type MainPageProps = {
   offers: Offer[],
 }
+
+const mapStateToProps = ({city}: State) => ({
+  city,
+});
 
 function MainPage({ offers }: MainPageProps): JSX.Element {
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
