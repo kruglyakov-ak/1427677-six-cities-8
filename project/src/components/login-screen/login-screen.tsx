@@ -1,7 +1,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import { AppRoute, Citys } from '../../const';
+import { AppRoute, City } from '../../const';
 import { ChangeCity, GetOffersByCity } from '../../store/action';
 import { Actions } from '../../types/action';
 import { Offer } from '../../types/offer';
@@ -24,10 +24,10 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function LoginScreen({ offers, onChangeCurrentCity }: PropsFromRedux): JSX.Element {
-  const getRandomCity = () => Object.keys(Citys)[getRandomNumberInRange(0, Object.keys(Citys).length)];
+  const getRandomCity = () => Object.keys(City)[getRandomNumberInRange(0, Object.keys(City).length)];
   const randomCity = getRandomCity();
 
-  const onClickCityHandler = () => {
+  const handleCityClick = () => {
     onChangeCurrentCity(randomCity, offers);
   };
 
@@ -62,8 +62,8 @@ function LoginScreen({ offers, onChangeCurrentCity }: PropsFromRedux): JSX.Eleme
             </form>
           </section>
           <section className="locations locations--login locations--current">
-            <div className="locations__item" onClick={onClickCityHandler}>
-              <Link className="locations__item-link" to={AppRoute.Main}>
+            <div className="locations__item">
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleCityClick}>
                 <span>{randomCity}</span>
               </Link>
             </div>

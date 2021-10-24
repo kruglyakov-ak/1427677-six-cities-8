@@ -21,7 +21,7 @@ const enum OfferType {
   Hotel = 'hotel',
 }
 
-enum Citys {
+enum City {
   Paris = 'Paris',
   Cologne = 'Cologne',
   Brussels = 'Brussels',
@@ -45,5 +45,5 @@ export {
   MIN_OFFER_IN_NEIGHBOURHOOD,
   MAX_OFFER_IN_NEIGHBOURHOOD,
   offerTypeToReadable,
-  Citys
+  City
 };

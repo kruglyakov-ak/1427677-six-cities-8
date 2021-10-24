@@ -32,8 +32,6 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
 
   return (
     <article className="cities__place-card place-card"
-      onFocus={handleCardSelect}
-      onBlur={handleCardUnselect}
       onMouseEnter={handleCardSelect}
       onMouseLeave={handleCardUnselect}
     >

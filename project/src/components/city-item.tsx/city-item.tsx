@@ -29,16 +29,17 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & CityItemProps;
 
 function CityItem({ city, currentCity, offers, onChangeCurrentCity }: ConnectedComponentProps): JSX.Element {
-  const onClickCityHandler = () => {
+  const handleCityClick = () => {
     onChangeCurrentCity(city, offers);
   };
 
   return (
-    <li className="locations__item" onClick={onClickCityHandler}>
+    <li className="locations__item">
       <Link
         className={city === currentCity ?
           'locations__item-link tabs__item--active' :
           'locations__item-link tabs__item'} to={AppRoute.Main}
+        onClick={handleCityClick}
       >
         <span>{city}</span>
       </Link>

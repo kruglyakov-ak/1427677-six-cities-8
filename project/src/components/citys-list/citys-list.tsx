@@ -1,11 +1,11 @@
-import { Citys } from '../../const';
+import { City } from '../../const';
 import CityItem from '../city-item.tsx/city-item';
 
 function CitysList(): JSX.Element {
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
-        {Object.keys(Citys).map((city) => (
+        {Object.keys(City).map((city) => (
           <CityItem
             city={city}
             key={city}
