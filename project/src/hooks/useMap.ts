@@ -4,12 +4,12 @@ import { Offer } from '../types/offer';
 
 function useMap(
   mapRef: React.MutableRefObject<HTMLElement | null>,
-  offer: Offer | undefined,
+  offer: Offer,
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
-    if (mapRef.current !== null && map === null && offer !== undefined) {
+    if (mapRef.current !== null && map === null) {
       const instance = new Map(mapRef.current, {
         center: {
           lat: offer.cityLatitude,
@@ -31,6 +31,13 @@ function useMap(
       setMap(instance);
     }
   }, [mapRef, map, offer]);
+
+  useEffect(() => {
+    map?.setView({
+      lat: offer.cityLatitude,
+      lng: offer.cityLongitude,
+    });
+  });
 
   return map;
 }

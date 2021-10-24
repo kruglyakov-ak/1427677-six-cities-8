@@ -1,8 +1,7 @@
 import {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
-import markerDefault from './img/pin.svg';
-import markerCurrent from './img/pin-active.svg';
+import { MarkerIconUrl } from '../../const';
 import useMap from '../../hooks/useMap';
 import { Offer } from '../../types/offer';
 
@@ -12,13 +11,13 @@ type MapProps = {
 };
 
 const defaultCustomIcon = new Icon({
-  iconUrl: markerDefault,
+  iconUrl: MarkerIconUrl.markerDefault,
   iconSize: [27, 39],
   iconAnchor: [13.5, 39],
 });
 
 const currentCustomIcon = new Icon({
-  iconUrl: markerCurrent,
+  iconUrl: MarkerIconUrl.markerCurrent,
   iconSize: [27, 39],
   iconAnchor: [13.5, 39],
 });
@@ -29,6 +28,8 @@ function Map(props: MapProps): JSX.Element {
   const map = useMap(mapRef, offers[0]);
 
   useEffect(() => {
+    const markers: Marker[] = [];
+
     if (map) {
       offers.forEach((offer) => {
         const marker = new Marker({
@@ -36,6 +37,7 @@ function Map(props: MapProps): JSX.Element {
           lng: offer.longitude,
         });
 
+        markers.push(marker);
         marker
           .setIcon(
             activePlaceCard !== null && offer.id === activePlaceCard.id
@@ -45,6 +47,7 @@ function Map(props: MapProps): JSX.Element {
           .addTo(map);
       });
     }
+    return () => markers.forEach((marker) => marker.remove());
   }, [map, offers, activePlaceCard]);
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
