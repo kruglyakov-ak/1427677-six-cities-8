@@ -26,6 +26,13 @@ const enum OfferType {
   Hotel = 'hotel',
 }
 
+enum SortType {
+ Popular = 'Popular',
+ LowToHighPrice = 'Price: low to high',
+ HighToLowPrice = 'Price: high to low',
+ TopRated = 'Top rated first',
+}
+
 enum City {
   Paris = 'Paris',
   Cologne = 'Cologne',
@@ -42,7 +49,6 @@ const offerTypeToReadable = {
   [OfferType.Hotel]: 'Hotel',
 };
 
-
 export {
   OfferType,
   AppRoute,
@@ -51,5 +57,6 @@ export {
   MAX_OFFER_IN_NEIGHBOURHOOD,
   offerTypeToReadable,
   City,
-  MarkerIconUrl
+  MarkerIconUrl,
+  SortType
 };
