@@ -3,7 +3,7 @@ import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Map from '../map/map';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { State } from '../../types/state';
 import { Dispatch } from 'redux';
 import { Actions } from '../../types/action';
@@ -12,9 +12,10 @@ import CitysList from '../citys-list/citys-list';
 import MainPageEmpty from '../main-page-empty/main-page-empty';
 import SortOptionsList from '../sort-options-list/sort-options-list';
 
-const mapStateToProps = ({ currentCity, offersByCity }: State) => ({
+const mapStateToProps = ({ currentCity, offersByCity, currentSortType }: State) => ({
   currentCity,
   offersByCity,
+  currentSortType,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -24,7 +25,13 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function MainPage({ currentCity, offersByCity }: PropsFromRedux): JSX.Element {
+function MainPage(props: PropsFromRedux): JSX.Element {
+  const {
+    currentCity,
+    offersByCity,
+    currentSortType,
+  } = props;
+
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
   const [isSortOptionsOpen, setIsSortOptionsOpen] = useState<boolean>(false);
 
@@ -35,6 +42,8 @@ function MainPage({ currentCity, offersByCity }: PropsFromRedux): JSX.Element {
   const handleSortOptionOpen = ():void => {
     setIsSortOptionsOpen(!isSortOptionsOpen);
   };
+
+  useEffect(() => setIsSortOptionsOpen(false), [currentSortType, currentCity]);
 
   if (offersByCity.length === 0) {
     return <MainPageEmpty currentCity={currentCity} />;
@@ -83,12 +92,14 @@ function MainPage({ currentCity, offersByCity }: PropsFromRedux): JSX.Element {
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by </span>
                 <span className="places__sorting-type" tabIndex={0} onClick={handleSortOptionOpen}>
-                  Popular
+                  {currentSortType}
                   <svg className="places__sorting-arrow" width="7" height="4">
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
-                <SortOptionsList isSortOptionsOpen={isSortOptionsOpen}/>
+                <SortOptionsList
+                  isSortOptionsOpen={isSortOptionsOpen}
+                />
               </form>
               <div className="cities__places-list places__list tabs__content">
                 <OffersList offers={offersByCity} handleActiveOfferSelect={handleActiveOfferSelect} />

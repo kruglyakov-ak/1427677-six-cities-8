@@ -21,16 +21,32 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.ChangeSortType: {
       switch (action.payload) {
         case SortType.LowToHighPrice: {
-          return { ...state, offersByCity: state.offersByCity.sort((prev, next) => next.price - prev.price) };
+          return {
+            ...state,
+            offersByCity: state.offersByCity.sort((prev, next) => prev.price - next.price),
+            currentSortType: SortType.LowToHighPrice,
+          };
         }
         case SortType.HighToLowPrice: {
-          return { ...state, offersByCity: state.offersByCity.sort((prev, next) => prev.price - next.price) };
+          return {
+            ...state,
+            offersByCity: state.offersByCity.sort((prev, next) => next.price - prev.price),
+            currentSortType: SortType.HighToLowPrice,
+          };
         }
         case SortType.TopRated: {
-          return { ...state, offersByCity: state.offersByCity.sort((prev, next) => prev.rating - next.rating) };
+          return {
+            ...state,
+            offersByCity: state.offersByCity.sort((prev, next) => next.rating - prev.rating),
+            currentSortType: SortType.TopRated,
+          };
         }
         default:
-          return { ...state, offersByCity: state.offers.filter((offer) => offer.cityName === state.currentCity) };
+          return {
+            ...state,
+            offersByCity: state.offers.filter((offer) => offer.cityName === state.currentCity),
+            currentSortType: SortType.Popular,
+          };
       }
       break;
     }
