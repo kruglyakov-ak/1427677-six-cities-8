@@ -1,7 +1,7 @@
 import OffersList from '../offers-list/offers-list';
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, SortType } from '../../const';
 import Map from '../map/map';
 import { useEffect, useState } from 'react';
 import { State } from '../../types/state';
@@ -11,6 +11,22 @@ import { connect, ConnectedProps } from 'react-redux';
 import CitysList from '../citys-list/citys-list';
 import MainPageEmpty from '../main-page-empty/main-page-empty';
 import SortOptionsList from '../sort-options-list/sort-options-list';
+
+const sortOffers = (sortType: string, offers: Offer[]) => {
+  switch (sortType) {
+    case SortType.LowToHighPrice: {
+      return offers.slice().sort((prev, next) => prev.price - next.price);
+    }
+    case SortType.HighToLowPrice: {
+      return offers.slice().sort((prev, next) => next.price - prev.price);
+    }
+    case SortType.TopRated: {
+      return offers.slice().sort((prev, next) => next.rating - prev.rating);
+    }
+    default:
+      return offers;
+  }
+};
 
 const mapStateToProps = ({ currentCity, offersByCity, currentSortType }: State) => ({
   currentCity,
@@ -102,7 +118,7 @@ function MainPage(props: PropsFromRedux): JSX.Element {
                 />
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersList offers={offersByCity} handleActiveOfferSelect={handleActiveOfferSelect} />
+                <OffersList offers={sortOffers(currentSortType, offersByCity)} handleActiveOfferSelect={handleActiveOfferSelect} />
               </div>
             </section>
             <div className="cities__right-section">
