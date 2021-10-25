@@ -50,8 +50,9 @@ const reducer = (state: State = initialState, action: Actions): State => {
       }
       break;
     }
-    default:
+    default:{
       return state;
+    }
   }
 };
 

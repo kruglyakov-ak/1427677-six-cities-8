@@ -2,8 +2,8 @@ const MIN_OFFER_IN_NEIGHBOURHOOD = 0;
 const MAX_OFFER_IN_NEIGHBOURHOOD = 3;
 
 const enum MarkerIconUrl {
-  markerDefault = 'img/pin.svg',
-  markerCurrent = 'img/pin-active.svg',
+  MarkerDefault = 'img/pin.svg',
+  MarkerCurrent = 'img/pin-active.svg',
 }
 
 const enum AppRoute {
