@@ -1,7 +1,35 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { Dispatch } from 'redux';
+import { AppRoute, City } from '../../const';
+import { ChangeCity, GetOffersByCity } from '../../store/action';
+import { Actions } from '../../types/action';
+import { Offer } from '../../types/offer';
+import { State } from '../../types/state';
+import { getRandomNumberInRange } from '../../uttils';
 
-function LoginScreen(): JSX.Element {
+const mapStateToProps = ({ offers }: State) => ({
+  offers,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onChangeCurrentCity(city: string, offers: Offer[]) {
+    dispatch(ChangeCity(city));
+    dispatch(GetOffersByCity(offers));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function LoginScreen({ offers, onChangeCurrentCity }: PropsFromRedux): JSX.Element {
+  const getRandomCity = () => Object.keys(City)[getRandomNumberInRange(0, Object.keys(City).length)];
+  const randomCity = getRandomCity();
+
+  const handleCityClick = () => {
+    onChangeCurrentCity(randomCity, offers);
+  };
 
   return (
     <div className="page page--gray page--login">
@@ -35,8 +63,8 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main}>
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleCityClick}>
+                <span>{randomCity}</span>
               </Link>
             </div>
           </section>
@@ -46,4 +74,4 @@ function LoginScreen(): JSX.Element {
   );
 }
 
-export default LoginScreen;
+export default connector(LoginScreen);

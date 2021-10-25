@@ -2,6 +2,7 @@ import { Offer } from '../../types/offer';
 import FavoritesOffersLst from '../favorites-offers-list/favorites-offers-list';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import FavoritesScreenEmpty from '../favorites-screen-empty/favorites-screen-empty';
 
 type FavoritesScreenProps = {
   offers: Offer[],
@@ -14,6 +15,10 @@ function FavoritesScreen({ offers }: FavoritesScreenProps): JSX.Element {
       favoriteLocations.add(offer.cityName);
     }
   });
+
+  if (favoriteLocations.size === 0) {
+    return <FavoritesScreenEmpty />;
+  }
 
   return (
     <div className="page">

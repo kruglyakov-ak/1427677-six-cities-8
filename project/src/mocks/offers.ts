@@ -4,12 +4,12 @@ import { Offer } from '../types/offer';
 const offers: Offer[] = [
   {
     bedrooms: 3,
-    cityName: 'Amsterdam',
-    cityLatitude: 52.370216,
-    cityLongitude: 4.895168,
+    cityName: 'Paris',
+    cityLatitude: 48.8534,
+    cityLongitude: 2.3488,
     cityZoom: 10,
-    latitude: 52.3909553943508,
-    longitude: 4.85309666406198,
+    latitude: 48.8534,
+    longitude: 2.3488,
     zoom: 8,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],

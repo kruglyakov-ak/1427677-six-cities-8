@@ -6,7 +6,6 @@ import {
   MIN_OFFER_IN_NEIGHBOURHOOD,
   offerTypeToReadable
 } from '../../const';
-import { City } from '../../types/city';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 import { getRatingStarsWidth } from '../../uttils';
@@ -19,10 +18,9 @@ type PropertyScreenProps = {
   offer: Offer,
   offers: Offer[],
   reviews: Review[],
-  city: City,
 }
 
-function PropertyScreen({ offer, offers, reviews, city }: PropertyScreenProps): JSX.Element {
+function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.Element {
   const [, setCommentStarValue] = useState<string | null>('');
   const [, setCommentTextValue] = useState<string | null>('');
 
@@ -55,7 +53,7 @@ function PropertyScreen({ offer, offers, reviews, city }: PropertyScreenProps): 
   const reviewsOnPlace = reviews.filter((review) => offer.id === review.offersId);
 
   return (
-    <div className="page">s
+    <div className="page">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -173,7 +171,7 @@ function PropertyScreen({ offer, offers, reviews, city }: PropertyScreenProps): 
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={placesInNeighbourhood} city={city} activePlaceCard={null} />
+            <Map offers={placesInNeighbourhood} activePlaceCard={null} />
           </section>
         </section>
         <div className="container">
