@@ -11,13 +11,13 @@ type MapProps = {
 };
 
 const defaultCustomIcon = new Icon({
-  iconUrl: MarkerIconUrl.markerDefault,
+  iconUrl: MarkerIconUrl.MarkerDefault,
   iconSize: [27, 39],
   iconAnchor: [13.5, 39],
 });
 
 const currentCustomIcon = new Icon({
-  iconUrl: MarkerIconUrl.markerCurrent,
+  iconUrl: MarkerIconUrl.MarkerCurrent,
   iconSize: [27, 39],
   iconAnchor: [13.5, 39],
 });

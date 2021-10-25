@@ -37,7 +37,7 @@ function useMap(
       lat: offer.cityLatitude,
       lng: offer.cityLongitude,
     });
-  });
+  }, [map, offer]);
 
   return map;
 }

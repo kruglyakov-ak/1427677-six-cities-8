@@ -1,19 +1,37 @@
 import OffersList from '../offers-list/offers-list';
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, SortType } from '../../const';
 import Map from '../map/map';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { State } from '../../types/state';
 import { Dispatch } from 'redux';
 import { Actions } from '../../types/action';
 import { connect, ConnectedProps } from 'react-redux';
 import CitysList from '../citys-list/citys-list';
 import MainPageEmpty from '../main-page-empty/main-page-empty';
+import SortOptionsList from '../sort-options-list/sort-options-list';
 
-const mapStateToProps = ({ currentCity, offersByCity }: State) => ({
+const sortOffers = (sortType: string, offers: Offer[]) => {
+  switch (sortType) {
+    case SortType.LowToHighPrice: {
+      return offers.slice().sort((prev, next) => prev.price - next.price);
+    }
+    case SortType.HighToLowPrice: {
+      return offers.slice().sort((prev, next) => next.price - prev.price);
+    }
+    case SortType.TopRated: {
+      return offers.slice().sort((prev, next) => next.rating - prev.rating);
+    }
+    default:
+      return offers;
+  }
+};
+
+const mapStateToProps = ({ currentCity, offersByCity, currentSortType }: State) => ({
   currentCity,
   offersByCity,
+  currentSortType,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -23,15 +41,28 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function MainPage({ currentCity, offersByCity }: PropsFromRedux): JSX.Element {
+function MainPage(props: PropsFromRedux): JSX.Element {
+  const {
+    currentCity,
+    offersByCity,
+    currentSortType,
+  } = props;
+
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
+  const [isSortOptionsOpen, setIsSortOptionsOpen] = useState<boolean>(false);
 
   const handleActiveOfferSelect = (offer: Offer | null): void => {
     setActivePlaceCard(offer);
   };
 
+  const handleSortOptionOpen = ():void => {
+    setIsSortOptionsOpen(!isSortOptionsOpen);
+  };
+
+  useEffect(() => setIsSortOptionsOpen(false), [currentSortType, currentCity]);
+
   if (offersByCity.length === 0) {
-    return <MainPageEmpty currentCity={currentCity}/>;
+    return <MainPageEmpty currentCity={currentCity} />;
   }
 
   return (
@@ -75,22 +106,19 @@ function MainPage({ currentCity, offersByCity }: PropsFromRedux): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersByCity.length} places to stay in {currentCity}</b>
               <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
+                <span className="places__sorting-caption">Sort by </span>
+                <span className="places__sorting-type" tabIndex={0} onClick={handleSortOptionOpen}>
+                  {currentSortType}
                   <svg className="places__sorting-arrow" width="7" height="4">
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
+                <SortOptionsList
+                  isSortOptionsOpen={isSortOptionsOpen}
+                />
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersList offers={offersByCity} handleActiveOfferSelect={handleActiveOfferSelect} />
+                <OffersList offers={sortOffers(currentSortType, offersByCity)} handleActiveOfferSelect={handleActiveOfferSelect} />
               </div>
             </section>
             <div className="cities__right-section">
@@ -105,4 +133,4 @@ function MainPage({ currentCity, offersByCity }: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector (MainPage);
+export default connector(MainPage);
