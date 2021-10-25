@@ -23,8 +23,9 @@ const sortOffers = (sortType: string, offers: Offer[]) => {
     case SortType.TopRated: {
       return offers.slice().sort((prev, next) => next.rating - prev.rating);
     }
-    default:
+    default: {
       return offers;
+    }
   }
 };
 
@@ -55,7 +56,7 @@ function MainPage(props: PropsFromRedux): JSX.Element {
     setActivePlaceCard(offer);
   };
 
-  const handleSortOptionOpen = ():void => {
+  const handleSortOptionOpen = (): void => {
     setIsSortOptionsOpen(!isSortOptionsOpen);
   };
 
