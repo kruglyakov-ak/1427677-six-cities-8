@@ -5,6 +5,7 @@ type State = {
   offers: Offer[],
   offersByCity: Offer[],
   currentSortType: string;
+  isDataLoaded: boolean,
 };
 
 export type { State };

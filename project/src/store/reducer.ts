@@ -7,6 +7,7 @@ const initialState: State = {
   offers: [],
   offersByCity: [],
   currentSortType: SortType.Popular,
+  isDataLoaded: false,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
