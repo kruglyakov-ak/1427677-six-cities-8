@@ -5,8 +5,6 @@ import { AppRoute, SortType } from '../../const';
 import Map from '../map/map';
 import { useEffect, useState } from 'react';
 import { State } from '../../types/state';
-import { Dispatch } from 'redux';
-import { Actions } from '../../types/action';
 import { connect, ConnectedProps } from 'react-redux';
 import CitysList from '../citys-list/citys-list';
 import MainPageEmpty from '../main-page-empty/main-page-empty';
@@ -35,10 +33,7 @@ const mapStateToProps = ({ currentCity, offersByCity, currentSortType }: State) 
   currentSortType,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
