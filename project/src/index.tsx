@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import App from './components/app/app';
-import { reviews } from './mocks/reviews';
 import { reducer } from './store/reducer';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -18,7 +17,6 @@ ReactDOM.render(
       <App
         offers={store.getState().offers}
         offersByCity={store.getState().offersByCity}
-        reviews={reviews}
       />
     </Provider>
   </React.StrictMode>,

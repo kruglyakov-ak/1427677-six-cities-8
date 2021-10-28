@@ -7,12 +7,12 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import MainPage404 from '../main-page-404/main-page-404';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
-import PropertyScreen from '../property-screen/property-screen';
+// import PropertyScreen from '../property-screen/property-screen';
 
 type AppProps = {
   offers: Offer[],
   offersByCity: Offer[],
-  reviews: Review[],
+  reviews?: Review[],
 }
 
 function App({ offers, reviews, offersByCity }: AppProps): JSX.Element {
@@ -33,7 +33,7 @@ function App({ offers, reviews, offersByCity }: AppProps): JSX.Element {
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
-          <PropertyScreen offer={offersByCity[0]} offers={offersByCity} reviews={reviews} />
+          {/* <PropertyScreen offer={offersByCity[0]} offers={offersByCity} reviews={reviews} /> */}
         </Route>
         <Route
           render={(props) => (
