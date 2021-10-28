@@ -1,3 +1,4 @@
+import { AuthorizationStatus } from '../const';
 import { Offer } from './offer';
 
 type State = {
@@ -5,6 +6,7 @@ type State = {
   offers: Offer[],
   offersByCity: Offer[],
   currentSortType: string;
+  authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
 };
 

@@ -1,3 +1,4 @@
+import { AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
 import { Offer } from '../types/offer';
 
@@ -22,6 +23,11 @@ const loadOffers = (offers: Offer[]) => ({
     offers,
   },
 }) as const;
+
+export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
+  type: ActionType.RequireAuthorization,
+  payload: authStatus,
+} as const);
 
 export {
   changeCity,

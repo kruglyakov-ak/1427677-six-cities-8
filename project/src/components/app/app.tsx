@@ -1,21 +1,33 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import PrivateRoute from '../private-route/private-rout';
 import MainPage from '../main-page/main-page';
 import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import MainPage404 from '../main-page-404/main-page-404';
-import { Offer } from '../../types/offer';
-import { Review } from '../../types/review';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../types/state';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { isCheckedAuth } from '../../uttils';
 // import PropertyScreen from '../property-screen/property-screen';
 
-type AppProps = {
-  offers: Offer[],
-  offersByCity: Offer[],
-  reviews?: Review[],
-}
+const mapStateToProps = ({ authorizationStatus, isDataLoaded, offers }: State) => ({
+  authorizationStatus,
+  isDataLoaded,
+  offers,
+});
 
-function App({ offers, reviews, offersByCity }: AppProps): JSX.Element {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function App({ authorizationStatus, isDataLoaded, offers }: PropsFromRedux): JSX.Element {
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Switch>
@@ -29,7 +41,7 @@ function App({ offers, reviews, offersByCity }: AppProps): JSX.Element {
           exact
           path={AppRoute.Favorites}
           render={() => <FavoritesScreen offers={offers} />}
-          authorizationStatus={AuthorizationStatus.Auth}
+          authorizationStatus={authorizationStatus}
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
@@ -45,4 +57,5 @@ function App({ offers, reviews, offersByCity }: AppProps): JSX.Element {
   );
 }
 
-export default App;
+export { App };
+export default connector(App);

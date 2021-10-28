@@ -1,4 +1,4 @@
-import { City, SortType } from '../const';
+import { AuthorizationStatus, City, SortType } from '../const';
 import { Actions, ActionType } from '../types/action';
 import { State } from '../types/state';
 
@@ -7,6 +7,7 @@ const initialState: State = {
   offers: [],
   offersByCity: [],
   currentSortType: SortType.Popular,
+  authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
 };
 
@@ -21,7 +22,18 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.ChangeSortType: {
       return { ...state, currentSortType: action.payload };
     }
-    default:{
+    case ActionType.LoadOffers: {
+      const { offers } = action.payload;
+      return { ...state, offers };
+    }
+    case ActionType.RequireAuthorization: {
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+        isDataLoaded: true,
+      };
+    }
+    default: {
       return state;
     }
   }
