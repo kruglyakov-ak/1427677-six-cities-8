@@ -13,6 +13,13 @@ const enum AppRoute {
   Offer = '/offer/:id',
 }
 
+const enum APIRoute {
+  Hotels = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+
 const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -58,5 +65,6 @@ export {
   offerTypeToReadable,
   City,
   MarkerIconUrl,
-  SortType
+  SortType,
+  APIRoute
 };

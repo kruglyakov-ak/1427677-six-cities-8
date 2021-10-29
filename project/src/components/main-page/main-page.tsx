@@ -5,8 +5,6 @@ import { AppRoute, SortType } from '../../const';
 import Map from '../map/map';
 import { useEffect, useState } from 'react';
 import { State } from '../../types/state';
-import { Dispatch } from 'redux';
-import { Actions } from '../../types/action';
 import { connect, ConnectedProps } from 'react-redux';
 import CitysList from '../citys-list/citys-list';
 import MainPageEmpty from '../main-page-empty/main-page-empty';
@@ -23,30 +21,30 @@ const sortOffers = (sortType: string, offers: Offer[]) => {
     case SortType.TopRated: {
       return offers.slice().sort((prev, next) => next.rating - prev.rating);
     }
-    default:
+    default: {
       return offers;
+    }
   }
 };
 
-const mapStateToProps = ({ currentCity, offersByCity, currentSortType }: State) => ({
+const mapStateToProps = ({ currentCity, offers, currentSortType }: State) => ({
   currentCity,
-  offersByCity,
+  offers,
   currentSortType,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function MainPage(props: PropsFromRedux): JSX.Element {
   const {
     currentCity,
-    offersByCity,
+    offers,
     currentSortType,
   } = props;
+
+  const offersByCity = offers.filter((offer) => offer.cityName === currentCity);
 
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
   const [isSortOptionsOpen, setIsSortOptionsOpen] = useState<boolean>(false);
@@ -55,7 +53,7 @@ function MainPage(props: PropsFromRedux): JSX.Element {
     setActivePlaceCard(offer);
   };
 
-  const handleSortOptionOpen = ():void => {
+  const handleSortOptionOpen = (): void => {
     setIsSortOptionsOpen(!isSortOptionsOpen);
   };
 

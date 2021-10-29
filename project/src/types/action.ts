@@ -1,27 +1,33 @@
-import { Offer } from './offer';
+import { AxiosInstance } from 'axios';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { State } from './state';
+import {
+  changeCity,
+  getOffersByCity,
+  changeSortType,
+  loadOffers,
+  requireAuthorization
+} from '../store/action';
 
 enum ActionType {
-  ChangeCity = 'changeCity',
-  GetOffersByCity = 'getOffersByCity',
-  ChangeSortType = 'changeSortType'
+  ChangeCity = 'offer/changeCity',
+  GetOffersByCity = 'offer/getOffersByCity',
+  ChangeSortType = 'offer/changeSortType',
+  LoadOffers = 'data/loadOffers',
+  RequireAuthorization = 'user/requireAuthorization',
 }
 
-type ChangeCityAction = {
-  type: ActionType.ChangeCity,
-  payload: string,
-};
+type Actions =
+  | ReturnType<typeof changeCity>
+  | ReturnType<typeof getOffersByCity>
+  | ReturnType<typeof changeSortType>
+  | ReturnType<typeof loadOffers>
+  | ReturnType<typeof requireAuthorization>;
 
-type GetOffersByCityAction = {
-  type: ActionType.GetOffersByCity,
-  payload: Offer[],
-};
 
-type ChangeSortTypeAction = {
-  type: ActionType.ChangeSortType,
-  payload: string,
-}
+type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 
-type Actions = ChangeCityAction | GetOffersByCityAction | ChangeSortTypeAction;
+type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
 
 export {
   ActionType
@@ -29,7 +35,6 @@ export {
 
 export type {
   Actions,
-  ChangeCityAction,
-  GetOffersByCityAction,
-  ChangeSortTypeAction
+  ThunkActionResult,
+  ThunkAppDispatch
 };
