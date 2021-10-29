@@ -1,5 +1,5 @@
 import { AuthorizationStatus } from './const';
-import { dataOffer } from './types/data-offer';
+import { DataOffer } from './types/data-offer';
 import { Offer } from './types/offer';
 
 const getRatingStarsWidth = (rating: number): number => (20 * Math.round(rating));
@@ -14,7 +14,7 @@ const getRandomNumberInRange = (min = 0, max = 1, numberSymbolsAfterComma = 0): 
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
-const adaptOffers = (data: dataOffer[]): Offer[] =>
+const adaptOffers = (data: DataOffer[]): Offer[] =>
   data
     .map((offer) => {
       const adaptedOffer = {
