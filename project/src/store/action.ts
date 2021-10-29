@@ -24,7 +24,7 @@ const loadOffers = (offers: Offer[]) => ({
   },
 }) as const;
 
-export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
+const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
 } as const);
@@ -33,5 +33,6 @@ export {
   changeCity,
   getOffersByCity,
   changeSortType,
-  loadOffers
+  loadOffers,
+  requireAuthorization
 };
