@@ -9,7 +9,6 @@ import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../uttils';
-// import PropertyScreen from '../property-screen/property-screen';
 
 const mapStateToProps = ({ authorizationStatus, isDataLoaded, offers }: State) => ({
   authorizationStatus,
@@ -45,7 +44,6 @@ function App({ authorizationStatus, isDataLoaded, offers }: PropsFromRedux): JSX
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
-          {/* <PropertyScreen offer={offersByCity[0]} offers={offersByCity} reviews={reviews} /> */}
         </Route>
         <Route
           render={(props) => (

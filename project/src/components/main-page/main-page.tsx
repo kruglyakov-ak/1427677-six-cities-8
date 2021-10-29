@@ -27,9 +27,9 @@ const sortOffers = (sortType: string, offers: Offer[]) => {
   }
 };
 
-const mapStateToProps = ({ currentCity, offersByCity, currentSortType }: State) => ({
+const mapStateToProps = ({ currentCity, offers, currentSortType }: State) => ({
   currentCity,
-  offersByCity,
+  offers,
   currentSortType,
 });
 
@@ -40,9 +40,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 function MainPage(props: PropsFromRedux): JSX.Element {
   const {
     currentCity,
-    offersByCity,
+    offers,
     currentSortType,
   } = props;
+
+  const offersByCity = offers.filter((offer) => offer.cityName === currentCity);
 
   const [activePlaceCard, setActivePlaceCard] = useState<Offer | null>(null);
   const [isSortOptionsOpen, setIsSortOptionsOpen] = useState<boolean>(false);
