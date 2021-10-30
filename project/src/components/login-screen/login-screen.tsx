@@ -1,10 +1,11 @@
+import { FormEvent, useRef } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Dispatch } from 'redux';
+import { Link, useHistory } from 'react-router-dom';
 import { AppRoute, City } from '../../const';
-import { changeCity, getOffersByCity } from '../../store/action';
-import { Actions } from '../../types/action';
-import { Offer } from '../../types/offer';
+import { changeCity } from '../../store/action';
+import { loginAction } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
+import { AuthData } from '../../types/auth-data';
 import { State } from '../../types/state';
 import { getRandomNumberInRange } from '../../uttils';
 
@@ -12,10 +13,12 @@ const mapStateToProps = ({ offers }: State) => ({
   offers,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onChangeCurrentCity(city: string, offers: Offer[]) {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onChangeCurrentCity(city: string) {
     dispatch(changeCity(city));
-    dispatch(getOffersByCity(offers));
+  },
+  onSubmit(authData: AuthData) {
+    dispatch(loginAction(authData));
   },
 });
 
@@ -23,12 +26,28 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function LoginScreen({ offers, onChangeCurrentCity }: PropsFromRedux): JSX.Element {
+function LoginScreen({ onChangeCurrentCity, onSubmit }: PropsFromRedux): JSX.Element {
   const getRandomCity = () => Object.keys(City)[getRandomNumberInRange(0, Object.keys(City).length)];
   const randomCity = getRandomCity();
 
   const handleCityClick = () => {
-    onChangeCurrentCity(randomCity, offers);
+    onChangeCurrentCity(randomCity);
+  };
+
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const history = useHistory();
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      onSubmit({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      });
+    }
   };
 
   return (
@@ -49,16 +68,40 @@ function LoginScreen({ offers, onChangeCurrentCity }: PropsFromRedux): JSX.Eleme
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form
+              className="login__form form"
+              action="#" method="post"
+              onSubmit={handleSubmit}
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required />
+                <input
+                  ref={loginRef}
+                  className="login__input form__input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required />
+                <input
+                  ref={passwordRef}
+                  className="login__input form__input"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button
+                className="login__submit form__submit button"
+                type="submit"
+                onClick={() => history.push(AppRoute.Main)}
+              >
+                Sign in
+              </button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
@@ -74,4 +117,5 @@ function LoginScreen({ offers, onChangeCurrentCity }: PropsFromRedux): JSX.Eleme
   );
 }
 
+export { LoginScreen };
 export default connector(LoginScreen);

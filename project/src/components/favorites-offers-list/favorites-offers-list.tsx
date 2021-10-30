@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Dispatch } from 'redux';
 import { Actions } from '../../types/action';
-import { changeCity, getOffersByCity } from '../../store/action';
+import { changeCity } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
 
 type FavoritesOffersLstProps = {
@@ -15,7 +15,6 @@ type FavoritesOffersLstProps = {
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onChangeCurrentCity(city: string, offers: Offer[]) {
     dispatch(changeCity(city));
-    dispatch(getOffersByCity(offers));
   },
 });
 

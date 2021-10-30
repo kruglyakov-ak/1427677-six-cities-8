@@ -7,11 +7,6 @@ const changeCity = (city: string) => ({
   payload: city,
 }) as const;
 
-const getOffersByCity = (offers: Offer[]) => ({
-  type: ActionType.GetOffersByCity,
-  payload: offers,
-}) as const;
-
 const changeSortType = (type: string) => ({
   type: ActionType.ChangeSortType,
   payload: type,
@@ -29,10 +24,14 @@ const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   payload: authStatus,
 } as const);
 
+const requireLogout = () => ({
+  type: ActionType.RequireLogout,
+} as const);
+
 export {
   changeCity,
-  getOffersByCity,
   changeSortType,
   loadOffers,
-  requireAuthorization
+  requireAuthorization,
+  requireLogout
 };
