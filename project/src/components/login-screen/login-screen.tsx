@@ -47,6 +47,7 @@ function LoginScreen({ onChangeCurrentCity, onSubmit }: PropsFromRedux): JSX.Ele
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+      history.push(AppRoute.Main);
     }
   };
 
@@ -98,7 +99,6 @@ function LoginScreen({ onChangeCurrentCity, onSubmit }: PropsFromRedux): JSX.Ele
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                onClick={() => history.push(AppRoute.Main)}
               >
                 Sign in
               </button>

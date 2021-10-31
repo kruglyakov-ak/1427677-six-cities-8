@@ -1,5 +1,5 @@
 import { APIRoute, AuthorizationStatus } from '../const';
-import { dropToken, saveToken, Token } from '../services/token/token';
+import { dropToken, saveToken, Token } from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { DataOffer } from '../types/data-offer';

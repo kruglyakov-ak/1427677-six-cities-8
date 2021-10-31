@@ -6,7 +6,7 @@ import App from './components/app/app';
 import { reducer } from './store/reducer';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createAPI } from './services/api/api';
+import { createAPI } from './services/api';
 import { checkAuthAction, fetchOffersAction } from './store/api-actions';
 import { ThunkAppDispatch } from './types/action';
 import { requireAuthorization } from './store/action';

@@ -1,7 +1,7 @@
 import OffersList from '../offers-list/offers-list';
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
-import { AppRoute, SortType } from '../../const';
+import { AppRoute, AuthorizationStatus, SortType } from '../../const';
 import Map from '../map/map';
 import { useEffect, useState } from 'react';
 import { State } from '../../types/state';
@@ -9,6 +9,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import CitysList from '../citys-list/citys-list';
 import MainPageEmpty from '../main-page-empty/main-page-empty';
 import SortOptionsList from '../sort-options-list/sort-options-list';
+import { ThunkAppDispatch } from '../../types/action';
+import { logoutAction } from '../../store/api-actions';
 
 const sortOffers = (sortType: string, offers: Offer[]) => {
   switch (sortType) {
@@ -27,13 +29,20 @@ const sortOffers = (sortType: string, offers: Offer[]) => {
   }
 };
 
-const mapStateToProps = ({ currentCity, offers, currentSortType }: State) => ({
+const mapStateToProps = ({ currentCity, offers, currentSortType, authorizationStatus }: State) => ({
   currentCity,
   offers,
   currentSortType,
+  authorizationStatus,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLogout() {
+    dispatch(logoutAction());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -42,6 +51,8 @@ function MainPage(props: PropsFromRedux): JSX.Element {
     currentCity,
     offers,
     currentSortType,
+    authorizationStatus,
+    onLogout,
   } = props;
 
   const offersByCity = offers.filter((offer) => offer.cityName === currentCity);
@@ -75,18 +86,27 @@ function MainPage(props: PropsFromRedux): JSX.Element {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={AppRoute.Login}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
+                {authorizationStatus === AuthorizationStatus.Auth ?
+                  <>
+                    <li className="header__nav-item user">
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                        </div>
+                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                      </Link>
+                    </li>
+                    <li className="header__nav-item">
+                      <Link className="header__nav-link" to={AppRoute.Login}>
+                        <span className="header__signout" onClick={onLogout}>Sign out</span>
+                      </Link>
+                    </li>
+                  </>
+                  :
+                  <li className="header__nav-item user">
+                    <Link className="header__nav-link" to={AppRoute.Login}>
+                      <span className="header__signout">Sign in</span>
+                    </Link>
+                  </li>}
               </ul>
             </nav>
           </div>
