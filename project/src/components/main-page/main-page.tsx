@@ -71,7 +71,7 @@ function MainPage(props: PropsFromRedux): JSX.Element {
   useEffect(() => setIsSortOptionsOpen(false), [currentSortType, currentCity]);
 
   if (offersByCity.length === 0) {
-    return <MainPageEmpty currentCity={currentCity} />;
+    return <MainPageEmpty />;
   }
 
   return (

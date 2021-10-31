@@ -21,7 +21,7 @@ const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function App({ authorizationStatus, isDataLoaded, offers }: PropsFromRedux): JSX.Element {
+function App({ authorizationStatus, isDataLoaded }: PropsFromRedux): JSX.Element {
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
@@ -40,7 +40,7 @@ function App({ authorizationStatus, isDataLoaded, offers }: PropsFromRedux): JSX
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <FavoritesScreen offers={offers} />}
+          render={() => <FavoritesScreen />}
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>

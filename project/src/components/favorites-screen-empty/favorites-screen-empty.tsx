@@ -1,7 +1,20 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { logoutAction } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
 
-function FavoritesScreenEmpty(): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLogout() {
+    dispatch(logoutAction());
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function FavoritesScreenEmpty({ onLogout }: PropsFromRedux): JSX.Element {
 
   return (
     <div className="page page--favorites-empty">
@@ -24,7 +37,7 @@ function FavoritesScreenEmpty(): JSX.Element {
                 </li>
                 <li className="header__nav-item">
                   <Link className="header__nav-link" to={AppRoute.Login}>
-                    <span className="header__signout">Sign out</span>
+                    <span className="header__signout" onClick={onLogout}>Sign out</span>
                   </Link>
                 </li>
               </ul>
@@ -53,4 +66,5 @@ function FavoritesScreenEmpty(): JSX.Element {
   );
 }
 
-export default FavoritesScreenEmpty;
+export { FavoritesScreenEmpty };
+export default connector(FavoritesScreenEmpty);
