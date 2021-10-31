@@ -29,11 +29,12 @@ const sortOffers = (sortType: string, offers: Offer[]) => {
   }
 };
 
-const mapStateToProps = ({ currentCity, offers, currentSortType, authorizationStatus }: State) => ({
+const mapStateToProps = ({ currentCity, offers, currentSortType, authorizationStatus, currentLogin }: State) => ({
   currentCity,
   offers,
   currentSortType,
   authorizationStatus,
+  currentLogin,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -53,6 +54,7 @@ function MainPage(props: PropsFromRedux): JSX.Element {
     currentSortType,
     authorizationStatus,
     onLogout,
+    currentLogin,
   } = props;
 
   const offersByCity = offers.filter((offer) => offer.cityName === currentCity);
@@ -92,7 +94,7 @@ function MainPage(props: PropsFromRedux): JSX.Element {
                       <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
-                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                        <span className="header__user-name user__name">{currentLogin}</span>
                       </Link>
                     </li>
                     <li className="header__nav-item">

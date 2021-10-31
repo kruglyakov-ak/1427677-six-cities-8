@@ -28,10 +28,16 @@ const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
 
+const getCurrentLogin = (login: string) => ({
+  type: ActionType.GetCurrentLogin,
+  payload: login,
+} as const);
+
 export {
   changeCity,
   changeSortType,
   loadOffers,
   requireAuthorization,
-  requireLogout
+  requireLogout,
+  getCurrentLogin
 };

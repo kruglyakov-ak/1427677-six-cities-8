@@ -2,7 +2,7 @@ import { FormEvent, useRef } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { AppRoute, City } from '../../const';
-import { changeCity } from '../../store/action';
+import { changeCity, getCurrentLogin } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { AuthData } from '../../types/auth-data';
@@ -18,6 +18,7 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
     dispatch(changeCity(city));
   },
   onSubmit(authData: AuthData) {
+    dispatch(getCurrentLogin(authData.login));
     dispatch(loginAction(authData));
   },
 });

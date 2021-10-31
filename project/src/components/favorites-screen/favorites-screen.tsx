@@ -7,8 +7,9 @@ import { ThunkAppDispatch } from '../../types/action';
 import { connect, ConnectedProps } from 'react-redux';
 import { logoutAction } from '../../store/api-actions';
 
-const mapStateToProps = ({ offers }: State) => ({
+const mapStateToProps = ({ offers, currentLogin }: State) => ({
   offers,
+  currentLogin,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -21,7 +22,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function FavoritesScreen({ offers, onLogout }: PropsFromRedux): JSX.Element {
+function FavoritesScreen({ offers, onLogout, currentLogin }: PropsFromRedux): JSX.Element {
   const favoriteLocations: Set<string> = new Set();
   offers.forEach((offer) => {
     if (offer.isFavorite) {
@@ -49,7 +50,7 @@ function FavoritesScreen({ offers, onLogout }: PropsFromRedux): JSX.Element {
                   <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{currentLogin}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">

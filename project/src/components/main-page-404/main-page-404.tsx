@@ -5,8 +5,9 @@ import { logoutAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 
-const mapStateToProps = ({ authorizationStatus }: State) => ({
+const mapStateToProps = ({ authorizationStatus, currentLogin }: State) => ({
   authorizationStatus,
+  currentLogin,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -19,7 +20,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function MainPage404({ authorizationStatus, onLogout }: PropsFromRedux): JSX.Element {
+function MainPage404({ authorizationStatus, onLogout, currentLogin }: PropsFromRedux): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
@@ -39,7 +40,7 @@ function MainPage404({ authorizationStatus, onLogout }: PropsFromRedux): JSX.Ele
                       <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
-                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                        <span className="header__user-name user__name">{currentLogin}</span>
                       </Link>
                     </li>
                     <li className="header__nav-item">

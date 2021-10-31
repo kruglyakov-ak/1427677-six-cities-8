@@ -6,9 +6,10 @@ import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 import CitysList from '../citys-list/citys-list';
 
-const mapStateToProps = ({ currentCity, authorizationStatus }: State) => ({
+const mapStateToProps = ({ currentCity, authorizationStatus, currentLogin }: State) => ({
   authorizationStatus,
   currentCity,
+  currentLogin,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -21,7 +22,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function MainPageEmpty({ currentCity, authorizationStatus, onLogout }: PropsFromRedux): JSX.Element {
+function MainPageEmpty({ currentCity, authorizationStatus, onLogout, currentLogin }: PropsFromRedux): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -40,7 +41,7 @@ function MainPageEmpty({ currentCity, authorizationStatus, onLogout }: PropsFrom
                       <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
-                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                        <span className="header__user-name user__name">{currentLogin}</span>
                       </Link>
                     </li>
                     <li className="header__nav-item">

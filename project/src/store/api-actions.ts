@@ -4,7 +4,7 @@ import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { DataOffer } from '../types/data-offer';
 import { adaptOffers } from '../uttils';
-import { loadOffers, requireAuthorization, requireLogout } from './action';
+import { getCurrentLogin, loadOffers, requireAuthorization, requireLogout } from './action';
 
 const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -15,8 +15,9 @@ const fetchOffersAction = (): ThunkActionResult =>
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login)
-      .then(() => {
+      .then((response): void => {
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
+        dispatch(getCurrentLogin(response.data.email));
       });
   };
 

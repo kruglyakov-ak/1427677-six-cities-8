@@ -4,6 +4,7 @@ import { State } from './state';
 import {
   changeCity,
   changeSortType,
+  getCurrentLogin,
   loadOffers,
   requireAuthorization,
   requireLogout
@@ -14,7 +15,8 @@ enum ActionType {
   ChangeSortType = 'offer/changeSortType',
   LoadOffers = 'data/loadOffers',
   RequireAuthorization = 'user/requireAuthorization',
-  RequireLogout = 'user/requireLogout'
+  RequireLogout = 'user/requireLogout',
+  GetCurrentLogin = 'user/getCurrentLogin'
 }
 
 type Actions =
@@ -22,7 +24,8 @@ type Actions =
   | ReturnType<typeof changeSortType>
   | ReturnType<typeof loadOffers>
   | ReturnType<typeof requireAuthorization>
-  | ReturnType<typeof requireLogout>;
+  | ReturnType<typeof requireLogout>
+  | ReturnType<typeof getCurrentLogin>;
 
 
 type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
