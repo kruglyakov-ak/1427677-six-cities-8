@@ -1,5 +1,4 @@
 type Review = {
-  offersId: number,
   comment: string,
   date: string,
   id: number,

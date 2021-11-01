@@ -1,7 +1,7 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { getRatingStarsWidth } from '../../uttils';
-import { fetchNearbyOffers, fetchOfferByIdAction } from '../../store/api-actions';
+import { fetchComments, fetchNearbyOffers, fetchOfferByIdAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { connect, ConnectedProps } from 'react-redux';
 
@@ -14,6 +14,7 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onOfferClick(id: number) {
     dispatch(fetchOfferByIdAction(id));
     dispatch(fetchNearbyOffers(id));
+    dispatch(fetchComments(id));
   },
 });
 

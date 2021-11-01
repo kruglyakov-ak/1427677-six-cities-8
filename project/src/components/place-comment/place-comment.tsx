@@ -2,11 +2,11 @@ import dayjs from 'dayjs';
 import { Review } from '../../types/review';
 import { getRatingStarsWidth } from '../../uttils';
 
-type PlaceReviewProps = {
+type PlaceCommentProps = {
   review: Review;
 }
 
-function PlaceReview({ review }: PlaceReviewProps): JSX.Element {
+function PlaceComment({ review }: PlaceCommentProps): JSX.Element {
   const {
     comment,
     date,
@@ -43,4 +43,4 @@ function PlaceReview({ review }: PlaceReviewProps): JSX.Element {
   );
 }
 
-export default PlaceReview;
+export default PlaceComment;

@@ -1,30 +1,32 @@
 import { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { AuthorizationStatus, offerTypeToReadable, MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES } from '../../const';
-import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 import { getRatingStarsWidth } from '../../uttils';
+import CommentsList from '../comments-list/comments-list';
 import MainHeader from '../main-header/main-header';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
 import SubmitCommentForm from '../submit-comment-form/submit-comment-form';
 
-const mapStateToProps = ({ offers, authorizationStatus, offer, nearbyOffers }: State) => ({
+const mapStateToProps = (
+  { authorizationStatus,
+    offer,
+    nearbyOffers,
+    comments,
+  }: State) => ({
   offer,
-  offers,
   authorizationStatus,
   nearbyOffers,
+  comments,
 });
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
-function PropertyScreen({ offers, authorizationStatus, offer, nearbyOffers }: PropsFromRedux): JSX.Element {
+function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments }: PropsFromRedux): JSX.Element {
   const [, setCommentStarValue] = useState<string | null>('');
   const [, setCommentTextValue] = useState<string | null>('');
 
@@ -140,9 +142,9 @@ function PropertyScreen({ offers, authorizationStatus, offer, nearbyOffers }: Pr
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews · <span className="reviews__amount">0</span></h2>
+                  <h2 className="reviews__title">Reviews · <span className="reviews__amount">{comments? comments.length : ''}</span></h2>
                   <ul className="reviews__list">
-                    {/* <ReviewsList reviews={reviewsOnPlace} /> */}
+                    {comments? <CommentsList comments={comments} /> : ''}
                   </ul>
                   {authorizationStatus === AuthorizationStatus.Auth ?
                     <SubmitCommentForm
@@ -154,7 +156,7 @@ function PropertyScreen({ offers, authorizationStatus, offer, nearbyOffers }: Pr
               </div>
             </div>
             <section className="property__map map">
-              {nearbyOffers ? <Map offers={nearbyOffers} activePlaceCard={null} /> : ''}
+              <Map offers={nearbyOffers} activePlaceCard={null} />
             </section>
           </section>
           <div className="container">

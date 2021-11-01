@@ -2,9 +2,19 @@ import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import { dropToken, saveToken, Token } from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
+import { DataComment } from '../types/data-comment';
 import { DataOffer } from '../types/data-offer';
-import { adaptOffer } from '../uttils';
-import { getCurrentLogin, loadNearbyOffers, loadOfferById, loadOffers, redirectToRoute, requireAuthorization, requireLogout } from './action';
+import { adaptComment, adaptOffer } from '../uttils';
+import {
+  getCurrentLogin,
+  loadComments,
+  loadNearbyOffers,
+  loadOfferById,
+  loadOffers,
+  redirectToRoute,
+  requireAuthorization,
+  requireLogout
+} from './action';
 
 const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -23,6 +33,12 @@ const fetchNearbyOffers = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<DataOffer[]>(`${APIRoute.Hotels}/${id}/nearby`);
     dispatch(loadNearbyOffers(data.map((offer) => adaptOffer(offer))));
+  };
+
+const fetchComments = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.get<DataComment[]>(`${APIRoute.Comments}/${id}`);
+    dispatch(loadComments(data.map((comment) => adaptComment(comment))));
   };
 
 const checkAuthAction = (): ThunkActionResult =>
@@ -56,5 +72,6 @@ export {
   loginAction,
   logoutAction,
   fetchOfferByIdAction,
-  fetchNearbyOffers
+  fetchNearbyOffers,
+  fetchComments
 };

@@ -5,6 +5,7 @@ import {
   changeCity,
   changeSortType,
   getCurrentLogin,
+  loadComments,
   loadNearbyOffers,
   loadOfferById,
   loadOffers,
@@ -22,7 +23,8 @@ enum ActionType {
   GetCurrentLogin = 'user/getCurrentLogin',
   LoadOfferById = 'data/loadOfferById',
   RedirectToRoute = 'offer/redirectToRoute',
-  LoadNearbyOffers = 'data/loadNearbyOffers'
+  LoadNearbyOffers = 'data/loadNearbyOffers',
+  LoadComments = 'data/loadComments'
 }
 
 type Actions =
@@ -34,7 +36,8 @@ type Actions =
   | ReturnType<typeof getCurrentLogin>
   | ReturnType<typeof loadOfferById>
   | ReturnType<typeof redirectToRoute>
-  | ReturnType<typeof loadNearbyOffers>;
+  | ReturnType<typeof loadNearbyOffers>
+  | ReturnType<typeof loadComments>;
 
 
 type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

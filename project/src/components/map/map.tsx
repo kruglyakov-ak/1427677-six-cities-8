@@ -6,7 +6,7 @@ import useMap from '../../hooks/useMap';
 import { Offer } from '../../types/offer';
 
 type MapProps = {
-  offers: Offer[],
+  offers: Offer[] | undefined,
   activePlaceCard: Offer | null;
 };
 
@@ -25,12 +25,13 @@ const currentCustomIcon = new Icon({
 function Map(props: MapProps): JSX.Element {
   const { activePlaceCard, offers } = props;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, offers[0]);
+  const firstOffer = offers? offers[0] : undefined;
+  const map = useMap(mapRef, firstOffer);
 
   useEffect(() => {
     const markers: Marker[] = [];
 
-    if (map) {
+    if (map && offers) {
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.latitude,

@@ -1,6 +1,8 @@
 import { AuthorizationStatus } from './const';
+import { DataComment } from './types/data-comment';
 import { DataOffer } from './types/data-offer';
 import { Offer } from './types/offer';
+import { Review } from './types/review';
 
 const getRatingStarsWidth = (rating: number): number => (20 * Math.round(rating));
 
@@ -45,5 +47,26 @@ const adaptOffer = (offer: DataOffer): Offer => {
   return adaptedOffer;
 };
 
-export { getRatingStarsWidth, getRandomNumberInRange, isCheckedAuth, adaptOffer };
+const adaptComment = (review: DataComment): Review => {
+  const adaptedComment = {
+    comment: review.comment,
+    date: review.date,
+    id: review.id,
+    rating: review.rating,
+    userAvatarUrl: review.user.avatar_url,
+    userId: review.user.id,
+    userIsPro: review.user.is_pro,
+    userName: review.user.name,
+  };
+
+  return adaptedComment;
+};
+
+export {
+  getRatingStarsWidth,
+  getRandomNumberInRange,
+  isCheckedAuth,
+  adaptOffer,
+  adaptComment
+};
 

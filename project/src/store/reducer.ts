@@ -31,6 +31,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
       const { nearbyOffers } = action.payload;
       return { ...state, nearbyOffers: nearbyOffers };
     }
+    case ActionType.LoadComments: {
+      const { comments } = action.payload;
+      return { ...state, comments: comments };
+    }
     case ActionType.RequireAuthorization: {
       return {
         ...state,

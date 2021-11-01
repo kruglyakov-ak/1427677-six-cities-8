@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from '../const';
 import { Offer } from './offer';
+import { Review } from './review';
 
 type State = {
   currentCity: string,
@@ -10,6 +11,7 @@ type State = {
   currentLogin: string,
   offer?: Offer,
   nearbyOffers?: Offer[],
+  comments?: Review[],
 };
 
 export type { State };

@@ -1,6 +1,7 @@
 import { AppRoute, AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
 import { Offer } from '../types/offer';
+import { Review } from '../types/review';
 
 const changeCity = (city: string) => ({
   type: ActionType.ChangeCity,
@@ -33,6 +34,13 @@ const loadNearbyOffers = (nearbyOffers: Offer[]) => ({
   },
 }) as const;
 
+const loadComments = (comments: Review[]) => ({
+  type: ActionType.LoadComments,
+  payload: {
+    comments,
+  },
+}) as const;
+
 const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
@@ -61,5 +69,6 @@ export {
   getCurrentLogin,
   loadOfferById,
   redirectToRoute,
-  loadNearbyOffers
+  loadNearbyOffers,
+  loadComments
 };

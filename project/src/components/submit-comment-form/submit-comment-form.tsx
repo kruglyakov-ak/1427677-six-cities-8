@@ -1,5 +1,3 @@
-// import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
-
 type SubmitCommentFormProps = {
   handleRatingStarSelect: (value: string) => void,
   handleCommentTextInput: (value: string) => void,
