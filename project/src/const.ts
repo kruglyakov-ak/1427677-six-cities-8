@@ -1,3 +1,6 @@
+const MIN_COUNT_OFFER_IMAGES = 0;
+const MAX_COUNT_OFFER_IMAGES = 6;
+
 const enum MarkerIconUrl {
   MarkerDefault = 'img/pin.svg',
   MarkerCurrent = 'img/pin-active.svg',
@@ -31,10 +34,10 @@ const enum OfferType {
 }
 
 enum SortType {
- Popular = 'Popular',
- LowToHighPrice = 'Price: low to high',
- HighToLowPrice = 'Price: high to low',
- TopRated = 'Top rated first',
+  Popular = 'Popular',
+  LowToHighPrice = 'Price: low to high',
+  HighToLowPrice = 'Price: high to low',
+  TopRated = 'Top rated first',
 }
 
 enum City {
@@ -54,6 +57,8 @@ const offerTypeToReadable = {
 };
 
 export {
+  MIN_COUNT_OFFER_IMAGES,
+  MAX_COUNT_OFFER_IMAGES,
   OfferType,
   AppRoute,
   AuthorizationStatus,

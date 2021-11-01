@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { offerTypeToReadable } from '../../const';
+import { AuthorizationStatus, offerTypeToReadable, MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES } from '../../const';
 import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 import { getRatingStarsWidth } from '../../uttils';
@@ -8,8 +8,9 @@ import MainHeader from '../main-header/main-header';
 import Map from '../map/map';
 import SubmitCommentForm from '../submit-comment-form/submit-comment-form';
 
-const mapStateToProps = ({ offers }: State) => ({
+const mapStateToProps = ({ offers, authorizationStatus }: State) => ({
   offers,
+  authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -20,7 +21,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
-function PropertyScreen({ offers }: PropsFromRedux): JSX.Element {
+function PropertyScreen({ offers, authorizationStatus }: PropsFromRedux): JSX.Element {
   const [, setCommentStarValue] = useState<string | null>('');
   const [, setCommentTextValue] = useState<string | null>('');
 
@@ -57,7 +58,7 @@ function PropertyScreen({ offers }: PropsFromRedux): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image) => (
+              {images.slice(MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES).map((image) => (
                 <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={`${image}`} alt="Room" />
                 </div>),
@@ -139,10 +140,12 @@ function PropertyScreen({ offers }: PropsFromRedux): JSX.Element {
                 <ul className="reviews__list">
                   {/* <ReviewsList reviews={reviewsOnPlace} /> */}
                 </ul>
-                <SubmitCommentForm
-                  handleRatingStarSelect={handleRatingStarSelect}
-                  handleCommentTextInput={handleCommentTextInput}
-                />
+                {authorizationStatus === AuthorizationStatus.Auth ?
+                  <SubmitCommentForm
+                    handleRatingStarSelect={handleRatingStarSelect}
+                    handleCommentTextInput={handleCommentTextInput}
+                  />
+                  : ''}
               </section>
             </div>
           </div>
