@@ -1,12 +1,28 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { logoutAction } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
+import { State } from '../../types/state';
 import CitysList from '../citys-list/citys-list';
 
-type MainPageEmptyProps = {
-  currentCity: string,
-}
+const mapStateToProps = ({ currentCity, authorizationStatus, currentLogin }: State) => ({
+  authorizationStatus,
+  currentCity,
+  currentLogin,
+});
 
-function MainPageEmpty({ currentCity }: MainPageEmptyProps): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLogout() {
+    dispatch(logoutAction());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function MainPageEmpty({ currentCity, authorizationStatus, onLogout, currentLogin }: PropsFromRedux): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -19,18 +35,27 @@ function MainPageEmpty({ currentCity }: MainPageEmptyProps): JSX.Element {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={AppRoute.Login}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
+                {authorizationStatus === AuthorizationStatus.Auth ?
+                  <>
+                    <li className="header__nav-item user">
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                        </div>
+                        <span className="header__user-name user__name">{currentLogin}</span>
+                      </Link>
+                    </li>
+                    <li className="header__nav-item">
+                      <Link className="header__nav-link" to={AppRoute.Login}>
+                        <span className="header__signout" onClick={onLogout}>Sign out</span>
+                      </Link>
+                    </li>
+                  </>
+                  :
+                  <li className="header__nav-item user">
+                    <Link className="header__nav-link" to={AppRoute.Login}>
+                      <span className="header__signout">Sign in</span>
+                    </Link>
+                  </li>}
               </ul>
             </nav>
           </div>
@@ -58,4 +83,5 @@ function MainPageEmpty({ currentCity }: MainPageEmptyProps): JSX.Element {
   );
 }
 
-export default (MainPageEmpty);
+export { MainPageEmpty };
+export default connector(MainPageEmpty);

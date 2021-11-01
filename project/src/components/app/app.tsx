@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import PrivateRoute from '../private-route/private-rout';
 import MainPage from '../main-page/main-page';
@@ -9,6 +9,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../uttils';
+import browserHistory from '../../browser-history';
 
 const mapStateToProps = ({ authorizationStatus, isDataLoaded, offers }: State) => ({
   authorizationStatus,
@@ -20,7 +21,7 @@ const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function App({ authorizationStatus, isDataLoaded, offers }: PropsFromRedux): JSX.Element {
+function App({ authorizationStatus, isDataLoaded }: PropsFromRedux): JSX.Element {
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
@@ -28,7 +29,7 @@ function App({ authorizationStatus, isDataLoaded, offers }: PropsFromRedux): JSX
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.Main} exact>
           <MainPage />
@@ -39,8 +40,7 @@ function App({ authorizationStatus, isDataLoaded, offers }: PropsFromRedux): JSX
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <FavoritesScreen offers={offers} />}
-          authorizationStatus={authorizationStatus}
+          render={() => <FavoritesScreen />}
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>

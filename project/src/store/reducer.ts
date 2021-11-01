@@ -8,6 +8,7 @@ const initialState: State = {
   currentSortType: SortType.Popular,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
+  currentLogin: '',
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -28,6 +29,12 @@ const reducer = (state: State = initialState, action: Actions): State => {
         authorizationStatus: action.payload,
         isDataLoaded: true,
       };
+    }
+    case ActionType.RequireLogout: {
+      return { ...state, authorizationStatus: AuthorizationStatus.NoAuth };
+    }
+    case ActionType.GetCurrentLogin: {
+      return { ...state, currentLogin: action.payload };
     }
     default: {
       return state;

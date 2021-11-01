@@ -1,14 +1,28 @@
-import { Offer } from '../../types/offer';
 import FavoritesOffersLst from '../favorites-offers-list/favorites-offers-list';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import FavoritesScreenEmpty from '../favorites-screen-empty/favorites-screen-empty';
+import { State } from '../../types/state';
+import { ThunkAppDispatch } from '../../types/action';
+import { connect, ConnectedProps } from 'react-redux';
+import { logoutAction } from '../../store/api-actions';
 
-type FavoritesScreenProps = {
-  offers: Offer[],
-}
+const mapStateToProps = ({ offers, currentLogin }: State) => ({
+  offers,
+  currentLogin,
+});
 
-function FavoritesScreen({ offers }: FavoritesScreenProps): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLogout() {
+    dispatch(logoutAction());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function FavoritesScreen({ offers, onLogout, currentLogin }: PropsFromRedux): JSX.Element {
   const favoriteLocations: Set<string> = new Set();
   offers.forEach((offer) => {
     if (offer.isFavorite) {
@@ -36,12 +50,12 @@ function FavoritesScreen({ offers }: FavoritesScreenProps): JSX.Element {
                   <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{currentLogin}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">
                   <Link className="header__nav-link" to={AppRoute.Login}>
-                    <span className="header__signout">Sign out</span>
+                    <span className="header__signout" onClick={onLogout}>Sign out</span>
                   </Link>
                 </li>
               </ul>
@@ -74,4 +88,5 @@ function FavoritesScreen({ offers }: FavoritesScreenProps): JSX.Element {
   );
 }
 
-export default FavoritesScreen;
+export { FavoritesScreen };
+export default connector(FavoritesScreen);

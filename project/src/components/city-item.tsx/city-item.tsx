@@ -2,7 +2,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { AppRoute } from '../../const';
-import { changeCity, getOffersByCity } from '../../store/action';
+import { changeCity } from '../../store/action';
 import { Actions } from '../../types/action';
 import { Offer } from '../../types/offer';
 import { State } from '../../types/state';
@@ -19,7 +19,6 @@ const mapStateToProps = ({ currentCity, offers }: State) => ({
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onChangeCurrentCity(city: string, offers: Offer[]) {
     dispatch(changeCity(city));
-    dispatch(getOffersByCity(offers));
   },
 });
 
