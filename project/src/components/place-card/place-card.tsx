@@ -1,29 +1,13 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { getRatingStarsWidth } from '../../uttils';
-import { fetchComments, fetchNearbyOffers, fetchOfferByIdAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
-import { connect, ConnectedProps } from 'react-redux';
+import { AppRoute } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer,
   onPlaceCardSelect?: (offer: Offer | null) => void,
 }
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onOfferClick(id: number) {
-    dispatch(fetchOfferByIdAction(id));
-    dispatch(fetchNearbyOffers(id));
-    dispatch(fetchComments(id));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & PlaceCardProps;
-
-function PlaceCard({ offer, onPlaceCardSelect, onOfferClick }: ConnectedComponentProps): JSX.Element {
+function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
   const {
     isPremium,
     previewImage,
@@ -45,9 +29,6 @@ function PlaceCard({ offer, onPlaceCardSelect, onOfferClick }: ConnectedComponen
       onPlaceCardSelect(null);
     }
   };
-  const handleCardClick = () => {
-    onOfferClick(id);
-  };
 
   return (
     <article className="cities__place-card place-card"
@@ -59,11 +40,7 @@ function PlaceCard({ offer, onPlaceCardSelect, onOfferClick }: ConnectedComponen
           <span>Premium</span>
         </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link onClick={(evt) => {
-          evt.preventDefault();
-          handleCardClick();
-        }} to='/'
-        >
+        <Link to={AppRoute.Offer + id} >
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place card" />
         </Link>
       </div>
@@ -87,12 +64,7 @@ function PlaceCard({ offer, onPlaceCardSelect, onOfferClick }: ConnectedComponen
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link onClick={(evt) => {
-            evt.preventDefault();
-            handleCardClick();
-          }} to='/'
-          >{title}
-          </Link>
+          <Link to={AppRoute.Offer + id} >{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -100,6 +72,4 @@ function PlaceCard({ offer, onPlaceCardSelect, onOfferClick }: ConnectedComponen
   );
 }
 
-
-export { PlaceCard };
-export default connector(PlaceCard);
+export default PlaceCard;

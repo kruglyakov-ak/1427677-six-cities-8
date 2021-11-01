@@ -27,7 +27,7 @@ const fetchOfferByIdAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<DataOffer>(`${APIRoute.Hotels}/${id}`);
     dispatch(loadOfferById(adaptOffer(data)));
-    dispatch(redirectToRoute(AppRoute.Offer));
+    dispatch(redirectToRoute(AppRoute.Offer + id));
   };
 
 const fetchNearbyOffers = (id: number): ThunkActionResult =>

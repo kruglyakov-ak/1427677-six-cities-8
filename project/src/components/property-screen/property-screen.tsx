@@ -1,9 +1,14 @@
+import { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { AuthorizationStatus, offerTypeToReadable, MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES } from '../../const';
+import { fetchComments, fetchNearbyOffers, fetchOfferByIdAction } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 import { getRatingStarsWidth } from '../../uttils';
 import CommentsList from '../comments-list/comments-list';
 import MainHeader from '../main-header/main-header';
+import MainPage404 from '../main-page-404/main-page-404';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
 import SubmitCommentForm from '../submit-comment-form/submit-comment-form';
@@ -20,12 +25,28 @@ const mapStateToProps = (
   comments,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLoadPage(id: number) {
+    dispatch(fetchOfferByIdAction(id));
+    dispatch(fetchNearbyOffers(id));
+    dispatch(fetchComments(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
-function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments }: PropsFromRedux): JSX.Element {
+function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments, onLoadPage }: PropsFromRedux): JSX.Element {
+
+  const path = useLocation().pathname.slice(useLocation().pathname.lastIndexOf('/') + 1);
+  // eslint-disable-next-line no-console
+  console.log(path);
+  useEffect(() => {
+    onLoadPage(+path);
+  }, [onLoadPage, path]);
+
   if (offer) {
     const {
       images,
@@ -130,9 +151,9 @@ function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments }: 
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews · <span className="reviews__amount">{comments? comments.length : ''}</span></h2>
+                  <h2 className="reviews__title">Reviews · <span className="reviews__amount">{comments ? comments.length : ''}</span></h2>
                   <ul className="reviews__list">
-                    {comments? <CommentsList comments={comments} /> : ''}
+                    {comments ? <CommentsList comments={comments} /> : ''}
                   </ul>
                   {authorizationStatus === AuthorizationStatus.Auth ?
                     <SubmitCommentForm
@@ -160,11 +181,10 @@ function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments }: 
   }
 
   return (
-    <div className="page">
-      <MainHeader />
-    </div>
+    <MainPage404 />
   );
 }
 
 export { PropertyScreen };
 export default connector(PropertyScreen);
+

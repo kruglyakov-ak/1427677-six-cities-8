@@ -44,7 +44,7 @@ function App({ authorizationStatus, isDataLoaded }: PropsFromRedux): JSX.Element
           render={() => <FavoritesScreen />}
         >
         </PrivateRoute>
-        <Route path={AppRoute.Offer} exact>
+        <Route path={`${AppRoute.Offer}:id`} exact>
           <PropertyScreen />
         </Route>
         <Route

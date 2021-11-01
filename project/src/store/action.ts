@@ -1,4 +1,4 @@
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
 import { Offer } from '../types/offer';
 import { Review } from '../types/review';
@@ -55,7 +55,7 @@ const getCurrentLogin = (login: string) => ({
   payload: login,
 } as const);
 
-const redirectToRoute = (url: AppRoute) => ({
+const redirectToRoute = (url: string) => ({
   type: ActionType.RedirectToRoute,
   payload: url,
 } as const);
