@@ -2,6 +2,7 @@ import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import { dropToken, saveToken, Token } from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
+import { CommentPost } from '../types/comment-post';
 import { DataComment } from '../types/data-comment';
 import { DataOffer } from '../types/data-offer';
 import { adaptComment, adaptOffer } from '../uttils';
@@ -41,6 +42,12 @@ const fetchComments = (id: number): ThunkActionResult =>
     dispatch(loadComments(data.map((comment) => adaptComment(comment))));
   };
 
+const postComment = (id: number, { comment, rating }: CommentPost): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.post<DataComment[]>(`${APIRoute.Comments}/${id}`, { comment, rating });
+    dispatch(loadComments(data.map((review) => adaptComment(review))));
+  };
+
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login)
@@ -73,5 +80,6 @@ export {
   logoutAction,
   fetchOfferByIdAction,
   fetchNearbyOffers,
-  fetchComments
+  fetchComments,
+  postComment
 };

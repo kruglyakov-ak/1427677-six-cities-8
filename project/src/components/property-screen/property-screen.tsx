@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { AuthorizationStatus, offerTypeToReadable, MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES } from '../../const';
 import { State } from '../../types/state';
@@ -27,17 +26,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
 function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments }: PropsFromRedux): JSX.Element {
-  const [, setCommentStarValue] = useState<string | null>('');
-  const [, setCommentTextValue] = useState<string | null>('');
-
-  const handleRatingStarSelect = (value: string): void => {
-    setCommentStarValue(value);
-  };
-
-  const handleCommentTextInput = (value: string): void => {
-    setCommentTextValue(value);
-  };
-
   if (offer) {
     const {
       images,
@@ -53,7 +41,7 @@ function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments }: 
       hostName,
       hostIsPro,
       description,
-      // id,
+      id,
     } = offer;
 
     return (
@@ -148,8 +136,7 @@ function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments }: 
                   </ul>
                   {authorizationStatus === AuthorizationStatus.Auth ?
                     <SubmitCommentForm
-                      handleRatingStarSelect={handleRatingStarSelect}
-                      handleCommentTextInput={handleCommentTextInput}
+                      id={id}
                     />
                     : ''}
                 </section>
