@@ -8,6 +8,7 @@ type State = {
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
   currentLogin: string,
+  offer?: Offer,
 };
 
 export type { State };

@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
 import { Offer } from '../types/offer';
 
@@ -19,6 +19,13 @@ const loadOffers = (offers: Offer[]) => ({
   },
 }) as const;
 
+const loadOfferById = (offer: Offer) => ({
+  type: ActionType.LoadOfferById,
+  payload: {
+    offer,
+  },
+}) as const;
+
 const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
@@ -33,11 +40,18 @@ const getCurrentLogin = (login: string) => ({
   payload: login,
 } as const);
 
+const redirectToRoute = (url: AppRoute) => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
+} as const);
+
 export {
   changeCity,
   changeSortType,
   loadOffers,
   requireAuthorization,
   requireLogout,
-  getCurrentLogin
+  getCurrentLogin,
+  loadOfferById,
+  redirectToRoute
 };

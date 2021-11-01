@@ -1,11 +1,16 @@
+import { History } from 'history';
 import { connect, ConnectedProps } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { RouteProps } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { State } from '../../types/state';
 
+type RenderFuncProps = {
+  history: History<unknown>;
+}
+
 type PrivateRouteProps = RouteProps & {
-  render: () => JSX.Element;
+  render: (props: RenderFuncProps) => JSX.Element;
 }
 
 const mapStateToProps = ({ authorizationStatus }: State) => ({
@@ -24,9 +29,9 @@ function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
     <Route
       exact={exact}
       path={path}
-      render={() => (
+      render={(routeProps) => (
         authorizationStatus === AuthorizationStatus.Auth
-          ? render()
+          ? render(routeProps)
           : <Redirect to={AppRoute.Login} />
       )}
     />

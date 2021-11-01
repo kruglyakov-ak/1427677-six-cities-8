@@ -23,6 +23,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
       const { offers } = action.payload;
       return { ...state, offers };
     }
+    case ActionType.LoadOfferById: {
+      const { offer } = action.payload;
+      return { ...state, offer: offer};
+    }
     case ActionType.RequireAuthorization: {
       return {
         ...state,

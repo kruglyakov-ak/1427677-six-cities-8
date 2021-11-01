@@ -1,6 +1,6 @@
 import { FormEvent, useRef } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppRoute, City } from '../../const';
 import { changeCity, getCurrentLogin } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
@@ -38,8 +38,6 @@ function LoginScreen({ onChangeCurrentCity, onSubmit }: PropsFromRedux): JSX.Ele
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const history = useHistory();
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -48,7 +46,6 @@ function LoginScreen({ onChangeCurrentCity, onSubmit }: PropsFromRedux): JSX.Ele
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
-      history.push(AppRoute.Main);
     }
   };
 
