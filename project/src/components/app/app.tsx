@@ -10,6 +10,7 @@ import { State } from '../../types/state';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../uttils';
 import browserHistory from '../../browser-history';
+import PropertyScreen from '../property-screen/property-screen';
 
 const mapStateToProps = ({ authorizationStatus, isDataLoaded, offers }: State) => ({
   authorizationStatus,
@@ -44,9 +45,10 @@ function App({ authorizationStatus, isDataLoaded }: PropsFromRedux): JSX.Element
         >
         </PrivateRoute>
         <Route path={AppRoute.Offer} exact>
+          <PropertyScreen />
         </Route>
         <Route
-          render={(props) => (
+          render={() => (
             <MainPage404 />
           )}
         />

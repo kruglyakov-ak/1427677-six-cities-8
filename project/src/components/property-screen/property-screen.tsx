@@ -1,26 +1,26 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  AppRoute,
-  MAX_OFFER_IN_NEIGHBOURHOOD,
-  MIN_OFFER_IN_NEIGHBOURHOOD,
-  offerTypeToReadable
-} from '../../const';
-import { Offer } from '../../types/offer';
-import { Review } from '../../types/review';
+import { connect, ConnectedProps } from 'react-redux';
+import { offerTypeToReadable } from '../../const';
+import { ThunkAppDispatch } from '../../types/action';
+import { State } from '../../types/state';
 import { getRatingStarsWidth } from '../../uttils';
+import MainHeader from '../main-header/main-header';
 import Map from '../map/map';
-import OffersList from '../offers-list/offers-list';
-import ReviewsList from '../reviews-list/reviews-list';
 import SubmitCommentForm from '../submit-comment-form/submit-comment-form';
 
-type PropertyScreenProps = {
-  offer: Offer,
-  offers: Offer[],
-  reviews: Review[],
-}
+const mapStateToProps = ({ offers }: State) => ({
+  offers,
+});
 
-function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+
+function PropertyScreen({ offers }: PropsFromRedux): JSX.Element {
   const [, setCommentStarValue] = useState<string | null>('');
   const [, setCommentTextValue] = useState<string | null>('');
 
@@ -31,7 +31,7 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
   const handleCommentTextInput = (value: string): void => {
     setCommentTextValue(value);
   };
-
+  const offer = offers[0];
   const {
     images,
     isPremium,
@@ -49,33 +49,9 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
     // id,
   } = offer;
 
-  const placesInNeighbourhood = offers.slice(MIN_OFFER_IN_NEIGHBOURHOOD, MAX_OFFER_IN_NEIGHBOURHOOD);
-  const reviewsOnPlace = reviews.filter((review) => offer.id === review.offersId);
-
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to={AppRoute.Main}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__login">Sign in</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <MainHeader />
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -159,9 +135,9 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{reviewsOnPlace.length}</span></h2>
+                <h2 className="reviews__title">Reviews · <span className="reviews__amount">0</span></h2>
                 <ul className="reviews__list">
-                  <ReviewsList reviews={reviewsOnPlace} />
+                  {/* <ReviewsList reviews={reviewsOnPlace} /> */}
                 </ul>
                 <SubmitCommentForm
                   handleRatingStarSelect={handleRatingStarSelect}
@@ -171,14 +147,14 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={placesInNeighbourhood} activePlaceCard={null} />
+            <Map offers={offers} activePlaceCard={null} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList offers={placesInNeighbourhood} />
+              {/* <OffersList offers={placesInNeighbourhood} /> */}
             </div>
           </section>
         </div>
@@ -187,4 +163,5 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
   );
 }
 
-export default PropertyScreen;
+export { PropertyScreen };
+export default connector(PropertyScreen);
