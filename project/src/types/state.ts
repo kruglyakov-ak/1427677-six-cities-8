@@ -9,6 +9,7 @@ type State = {
   isDataLoaded: boolean,
   currentLogin: string,
   offer?: Offer,
+  nearbyOffers?: Offer[],
 };
 
 export type { State };

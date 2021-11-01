@@ -6,12 +6,14 @@ import { State } from '../../types/state';
 import { getRatingStarsWidth } from '../../uttils';
 import MainHeader from '../main-header/main-header';
 import Map from '../map/map';
+import OffersList from '../offers-list/offers-list';
 import SubmitCommentForm from '../submit-comment-form/submit-comment-form';
 
-const mapStateToProps = ({ offers, authorizationStatus, offer }: State) => ({
+const mapStateToProps = ({ offers, authorizationStatus, offer, nearbyOffers }: State) => ({
   offer,
   offers,
   authorizationStatus,
+  nearbyOffers,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -22,7 +24,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
-function PropertyScreen({ offers, authorizationStatus, offer }: PropsFromRedux): JSX.Element {
+function PropertyScreen({ offers, authorizationStatus, offer, nearbyOffers }: PropsFromRedux): JSX.Element {
   const [, setCommentStarValue] = useState<string | null>('');
   const [, setCommentTextValue] = useState<string | null>('');
 
@@ -152,14 +154,14 @@ function PropertyScreen({ offers, authorizationStatus, offer }: PropsFromRedux):
               </div>
             </div>
             <section className="property__map map">
-              <Map offers={offers} activePlaceCard={null} />
+              {nearbyOffers ? <Map offers={nearbyOffers} activePlaceCard={null} /> : ''}
             </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                {/* <OffersList offers={placesInNeighbourhood} /> */}
+                {nearbyOffers ? <OffersList offers={nearbyOffers} /> : ''}
               </div>
             </section>
           </div>

@@ -26,6 +26,13 @@ const loadOfferById = (offer: Offer) => ({
   },
 }) as const;
 
+const loadNearbyOffers = (nearbyOffers: Offer[]) => ({
+  type: ActionType.LoadNearbyOffers,
+  payload: {
+    nearbyOffers,
+  },
+}) as const;
+
 const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
@@ -53,5 +60,6 @@ export {
   requireLogout,
   getCurrentLogin,
   loadOfferById,
-  redirectToRoute
+  redirectToRoute,
+  loadNearbyOffers
 };

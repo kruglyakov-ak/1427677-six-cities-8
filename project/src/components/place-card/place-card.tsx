@@ -1,7 +1,7 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { getRatingStarsWidth } from '../../uttils';
-import { fetchOfferByIdAction } from '../../store/api-actions';
+import { fetchNearbyOffers, fetchOfferByIdAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { connect, ConnectedProps } from 'react-redux';
 
@@ -13,6 +13,7 @@ type PlaceCardProps = {
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onOfferClick(id: number) {
     dispatch(fetchOfferByIdAction(id));
+    dispatch(fetchNearbyOffers(id));
   },
 });
 

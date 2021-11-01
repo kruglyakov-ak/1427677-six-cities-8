@@ -4,7 +4,7 @@ import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { DataOffer } from '../types/data-offer';
 import { adaptOffer } from '../uttils';
-import { getCurrentLogin, loadOfferById, loadOffers, redirectToRoute, requireAuthorization, requireLogout } from './action';
+import { getCurrentLogin, loadNearbyOffers, loadOfferById, loadOffers, redirectToRoute, requireAuthorization, requireLogout } from './action';
 
 const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -17,6 +17,12 @@ const fetchOfferByIdAction = (id: number): ThunkActionResult =>
     const { data } = await api.get<DataOffer>(`${APIRoute.Hotels}/${id}`);
     dispatch(loadOfferById(adaptOffer(data)));
     dispatch(redirectToRoute(AppRoute.Offer));
+  };
+
+const fetchNearbyOffers = (id: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.get<DataOffer[]>(`${APIRoute.Hotels}/${id}/nearby`);
+    dispatch(loadNearbyOffers(data.map((offer) => adaptOffer(offer))));
   };
 
 const checkAuthAction = (): ThunkActionResult =>
@@ -49,5 +55,6 @@ export {
   checkAuthAction,
   loginAction,
   logoutAction,
-  fetchOfferByIdAction
+  fetchOfferByIdAction,
+  fetchNearbyOffers
 };

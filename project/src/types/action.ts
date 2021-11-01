@@ -5,6 +5,7 @@ import {
   changeCity,
   changeSortType,
   getCurrentLogin,
+  loadNearbyOffers,
   loadOfferById,
   loadOffers,
   redirectToRoute,
@@ -20,7 +21,8 @@ enum ActionType {
   RequireLogout = 'user/requireLogout',
   GetCurrentLogin = 'user/getCurrentLogin',
   LoadOfferById = 'data/loadOfferById',
-  RedirectToRoute = 'offer/redirectToRoute'
+  RedirectToRoute = 'offer/redirectToRoute',
+  LoadNearbyOffers = 'data/loadNearbyOffers'
 }
 
 type Actions =
@@ -31,7 +33,8 @@ type Actions =
   | ReturnType<typeof requireLogout>
   | ReturnType<typeof getCurrentLogin>
   | ReturnType<typeof loadOfferById>
-  | ReturnType<typeof redirectToRoute>;
+  | ReturnType<typeof redirectToRoute>
+  | ReturnType<typeof loadNearbyOffers>;
 
 
 type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
