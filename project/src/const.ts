@@ -10,7 +10,7 @@ const enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/',
+  Offer = '/offer/:id',
 }
 
 const enum APIRoute {

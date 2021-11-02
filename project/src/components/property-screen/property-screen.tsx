@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { AuthorizationStatus, offerTypeToReadable, MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES } from '../../const';
 import { fetchComments, fetchNearbyOffers, fetchOfferByIdAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
@@ -26,7 +26,7 @@ const mapStateToProps = (
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onLoadPage(id: number) {
+  onLoadPage(id: string) {
     dispatch(fetchOfferByIdAction(id));
     dispatch(fetchNearbyOffers(id));
     dispatch(fetchComments(id));
@@ -39,13 +39,14 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
 function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments, onLoadPage }: PropsFromRedux): JSX.Element {
+  interface RouteParams {
+    id: string
+  }
+  const { id } = useParams<RouteParams>();
 
-  const path = useLocation().pathname.slice(useLocation().pathname.lastIndexOf('/') + 1);
-  // eslint-disable-next-line no-console
-  console.log(path);
   useEffect(() => {
-    onLoadPage(+path);
-  }, [onLoadPage, path]);
+    onLoadPage(id);
+  }, [onLoadPage, id]);
 
   if (offer) {
     const {
@@ -62,7 +63,6 @@ function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments, on
       hostName,
       hostIsPro,
       description,
-      id,
     } = offer;
 
     return (
@@ -157,7 +157,7 @@ function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments, on
                   </ul>
                   {authorizationStatus === AuthorizationStatus.Auth ?
                     <SubmitCommentForm
-                      id={id}
+                      id={offer.id}
                     />
                     : ''}
                 </section>

@@ -23,20 +23,19 @@ const fetchOffersAction = (): ThunkActionResult =>
     dispatch(loadOffers(data.map((offer) => adaptOffer(offer))));
   };
 
-const fetchOfferByIdAction = (id: number): ThunkActionResult =>
+const fetchOfferByIdAction = (id: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<DataOffer>(`${APIRoute.Hotels}/${id}`);
     dispatch(loadOfferById(adaptOffer(data)));
-    dispatch(redirectToRoute(AppRoute.Offer + id));
   };
 
-const fetchNearbyOffers = (id: number): ThunkActionResult =>
+const fetchNearbyOffers = (id: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<DataOffer[]>(`${APIRoute.Hotels}/${id}/nearby`);
     dispatch(loadNearbyOffers(data.map((offer) => adaptOffer(offer))));
   };
 
-const fetchComments = (id: number): ThunkActionResult =>
+const fetchComments = (id: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<DataComment[]>(`${APIRoute.Comments}/${id}`);
     dispatch(loadComments(data.map((comment) => adaptComment(comment))));
