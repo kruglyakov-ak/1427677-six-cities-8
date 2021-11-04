@@ -12,6 +12,7 @@ type State = {
   offer: Offer | null,
   nearbyOffers: Offer[],
   comments: Review[],
+  favoriteOffers: Offer[],
 };
 
 export type { State };

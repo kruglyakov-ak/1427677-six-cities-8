@@ -1,32 +1,34 @@
-import { Offer } from '../../types/offer';
 import FavoritePlaceCard from '../favorite-place-card/favorite-place-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Dispatch } from 'redux';
-import { Actions } from '../../types/action';
+import { ThunkAppDispatch } from '../../types/action';
 import { changeCity } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
+import { State } from '../../types/state';
 
 type FavoritesOffersLstProps = {
-  offers: Offer[],
   location: string,
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onChangeCurrentCity(city: string, offers: Offer[]) {
+const mapStateToProps = ({ favoriteOffers }: State) => ({
+  favoriteOffers,
+});
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onChangeCurrentCity(city: string) {
     dispatch(changeCity(city));
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & FavoritesOffersLstProps;
 
-function FavoritesOffersLst({ offers, location, onChangeCurrentCity }: ConnectedComponentProps): JSX.Element {
+function FavoritesOffersLst({ favoriteOffers, location, onChangeCurrentCity }: ConnectedComponentProps): JSX.Element {
 
   const handleCityClick = () => {
-    onChangeCurrentCity(location, offers);
+    onChangeCurrentCity(location);
   };
 
   return (
@@ -39,7 +41,7 @@ function FavoritesOffersLst({ offers, location, onChangeCurrentCity }: Connected
         </div>
       </div>
       <div className="favorites__places">
-        {offers
+        {favoriteOffers
           .filter((offer) => offer.cityName === location && offer.isFavorite)
           .map((offer) => <FavoritePlaceCard offer={offer} key={offer.id} />)}
       </div>

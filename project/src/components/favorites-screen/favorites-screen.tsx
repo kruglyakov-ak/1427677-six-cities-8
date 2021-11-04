@@ -5,18 +5,30 @@ import FavoritesScreenEmpty from '../favorites-screen-empty/favorites-screen-emp
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import MainHeader from '../main-header/main-header';
+import { ThunkAppDispatch } from '../../types/action';
+import { fetchFavorite } from '../../store/api-actions';
+import { useEffect } from 'react';
 
-const mapStateToProps = ({ offers }: State) => ({
-  offers,
+const mapStateToProps = ({ favoriteOffers }: State) => ({
+  favoriteOffers,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  loadFavoriteOffers() {
+    dispatch(fetchFavorite());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function FavoritesScreen({ offers }: PropsFromRedux): JSX.Element {
+function FavoritesScreen({ loadFavoriteOffers, favoriteOffers }: PropsFromRedux): JSX.Element {
+  useEffect(() => loadFavoriteOffers(), [loadFavoriteOffers]);
+
   const favoriteLocations: Set<string> = new Set();
-  offers.forEach((offer) => {
+  favoriteOffers.forEach((offer) => {
     if (offer.isFavorite) {
       favoriteLocations.add(offer.cityName);
     }
@@ -37,7 +49,6 @@ function FavoritesScreen({ offers }: PropsFromRedux): JSX.Element {
             <ul className="favorites__list">
               {[...favoriteLocations].map((location) => (
                 <FavoritesOffersLst
-                  offers={offers}
                   location={location}
                   key={location}
                 />))}

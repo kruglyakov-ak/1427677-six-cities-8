@@ -60,6 +60,13 @@ const redirectToRoute = (url: string) => ({
   payload: url,
 } as const);
 
+const loadFavoriteOffers = (favoriteOffers: Offer[]) => ({
+  type: ActionType.LoadFavoriteOffers,
+  payload: {
+    favoriteOffers,
+  },
+} as const);
+
 export {
   changeCity,
   changeSortType,
@@ -70,5 +77,6 @@ export {
   loadOfferById,
   redirectToRoute,
   loadNearbyOffers,
-  loadComments
+  loadComments,
+  loadFavoriteOffers
 };

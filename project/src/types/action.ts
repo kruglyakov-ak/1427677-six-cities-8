@@ -6,6 +6,7 @@ import {
   changeSortType,
   getCurrentLogin,
   loadComments,
+  loadFavoriteOffers,
   loadNearbyOffers,
   loadOfferById,
   loadOffers,
@@ -24,7 +25,8 @@ enum ActionType {
   LoadOfferById = 'data/loadOfferById',
   RedirectToRoute = 'offer/redirectToRoute',
   LoadNearbyOffers = 'data/loadNearbyOffers',
-  LoadComments = 'data/loadComments'
+  LoadComments = 'data/loadComments',
+  LoadFavoriteOffers = 'data/loadFavoriteOffers'
 }
 
 type Actions =
@@ -37,6 +39,7 @@ type Actions =
   | ReturnType<typeof loadOfferById>
   | ReturnType<typeof redirectToRoute>
   | ReturnType<typeof loadNearbyOffers>
+  | ReturnType<typeof loadFavoriteOffers>
   | ReturnType<typeof loadComments>;
 
 
