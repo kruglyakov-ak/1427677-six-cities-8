@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from './const';
+import { AuthorizationStatus, SortType } from './const';
 import { DataComment } from './types/data-comment';
 import { DataOffer } from './types/data-offer';
 import { Offer } from './types/offer';
@@ -11,6 +11,23 @@ const getRandomNumberInRange = (min = 0, max = 1, numberSymbolsAfterComma = 0): 
   const upper = Math.max(Math.abs(min), Math.abs(max));
   const randomNumber = Math.random() * (upper - lower) + lower;
   return Number(randomNumber.toFixed(numberSymbolsAfterComma));
+};
+
+const sortOffers = (sortType: string, offers: Offer[]): Offer[] => {
+  switch (sortType) {
+    case SortType.LowToHighPrice: {
+      return offers.slice().sort((prev, next) => prev.price - next.price);
+    }
+    case SortType.HighToLowPrice: {
+      return offers.slice().sort((prev, next) => next.price - prev.price);
+    }
+    case SortType.TopRated: {
+      return offers.slice().sort((prev, next) => next.rating - prev.rating);
+    }
+    default: {
+      return offers;
+    }
+  }
 };
 
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
@@ -67,6 +84,7 @@ export {
   getRandomNumberInRange,
   isCheckedAuth,
   adaptOffer,
-  adaptComment
+  adaptComment,
+  sortOffers
 };
 

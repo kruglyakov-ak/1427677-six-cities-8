@@ -28,7 +28,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function LoginScreen({ onChangeCurrentCity, onSubmit }: PropsFromRedux): JSX.Element {
-  const getRandomCity = () => Object.keys(City)[getRandomNumberInRange(0, Object.keys(City).length)];
+  const getRandomCity = () => Object.keys(City)[getRandomNumberInRange(0, Object.keys(City).length - 1)];
   const randomCity = getRandomCity();
 
   const handleCityClick = () => {
