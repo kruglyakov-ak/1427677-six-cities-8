@@ -9,6 +9,9 @@ const initialState: State = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   currentLogin: '',
+  offer: null,
+  nearbyOffers: [],
+  comments: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {

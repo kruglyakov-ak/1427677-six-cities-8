@@ -4,7 +4,7 @@ import { Offer } from '../types/offer';
 
 function useMap(
   mapRef: React.MutableRefObject<HTMLElement | null>,
-  offer: Offer | undefined | null,
+  offer: Offer | null,
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
 

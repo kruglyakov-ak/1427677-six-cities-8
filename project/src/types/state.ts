@@ -9,9 +9,9 @@ type State = {
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
   currentLogin: string,
-  offer?: Offer,
-  nearbyOffers?: Offer[],
-  comments?: Review[],
+  offer: Offer | null,
+  nearbyOffers: Offer[],
+  comments: Review[],
 };
 
 export type { State };
