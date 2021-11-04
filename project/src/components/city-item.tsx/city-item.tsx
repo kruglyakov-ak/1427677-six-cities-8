@@ -46,6 +46,7 @@ function CityItem({ city, currentCity, offers, onChangeCurrentCity }: ConnectedC
   );
 }
 
+export { CityItem };
 export default connector(CityItem);
 
 

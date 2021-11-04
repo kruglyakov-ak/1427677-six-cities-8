@@ -30,7 +30,7 @@ function Map(props: MapProps): JSX.Element {
   useEffect(() => {
     const markers: Marker[] = [];
 
-    if (map) {
+    if (map && offers) {
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.latitude,

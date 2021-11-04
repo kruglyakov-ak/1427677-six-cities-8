@@ -9,6 +9,9 @@ const initialState: State = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   currentLogin: '',
+  offer: null,
+  nearbyOffers: [],
+  comments: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -22,6 +25,18 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.LoadOffers: {
       const { offers } = action.payload;
       return { ...state, offers };
+    }
+    case ActionType.LoadOfferById: {
+      const { offer } = action.payload;
+      return { ...state, offer: offer };
+    }
+    case ActionType.LoadNearbyOffers: {
+      const { nearbyOffers } = action.payload;
+      return { ...state, nearbyOffers: nearbyOffers };
+    }
+    case ActionType.LoadComments: {
+      const { comments } = action.payload;
+      return { ...state, comments: comments };
     }
     case ActionType.RequireAuthorization: {
       return {

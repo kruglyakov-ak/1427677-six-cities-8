@@ -1,13 +1,12 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import { getRatingStarsWidth } from '../../uttils';
+import { AppRoute } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer,
   onPlaceCardSelect?: (offer: Offer | null) => void,
 }
-
 function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
   const {
     isPremium,
@@ -17,6 +16,7 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
     rating,
     title,
     type,
+    id,
   } = offer;
 
   const handleCardSelect = () => {
@@ -24,7 +24,7 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
       onPlaceCardSelect(offer);
     }
   };
-  const handleCardUnselect  = () => {
+  const handleCardUnselect = () => {
     if (onPlaceCardSelect) {
       onPlaceCardSelect(null);
     }
@@ -40,7 +40,7 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
           <span>Premium</span>
         </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Offer}>
+        <Link to={`${AppRoute.Main}offer/${id}`} >
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place card" />
         </Link>
       </div>
@@ -64,13 +64,12 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Offer}>{title}</Link>
+          <Link to={`${AppRoute.Main}offer/${id}`} >{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
 }
-
 
 export default PlaceCard;

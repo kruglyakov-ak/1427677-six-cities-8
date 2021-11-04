@@ -1,36 +1,58 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  AppRoute,
-  MAX_OFFER_IN_NEIGHBOURHOOD,
-  MIN_OFFER_IN_NEIGHBOURHOOD,
-  offerTypeToReadable
-} from '../../const';
-import { Offer } from '../../types/offer';
-import { Review } from '../../types/review';
+import { useEffect } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { AuthorizationStatus, offerTypeToReadable, MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES } from '../../const';
+import { fetchComments, fetchNearbyOffers, fetchOfferByIdAction } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
+import { State } from '../../types/state';
 import { getRatingStarsWidth } from '../../uttils';
+import CommentsList from '../comments-list/comments-list';
+import MainHeader from '../main-header/main-header';
+import MainPage404 from '../main-page-404/main-page-404';
 import Map from '../map/map';
 import OffersList from '../offers-list/offers-list';
-import ReviewsList from '../reviews-list/reviews-list';
 import SubmitCommentForm from '../submit-comment-form/submit-comment-form';
-
-type PropertyScreenProps = {
-  offer: Offer,
-  offers: Offer[],
-  reviews: Review[],
+interface RouteParams {
+  id: string
 }
 
-function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.Element {
-  const [, setCommentStarValue] = useState<string | null>('');
-  const [, setCommentTextValue] = useState<string | null>('');
+const mapStateToProps = (
+  { authorizationStatus,
+    offer,
+    nearbyOffers,
+    comments,
+  }: State) => ({
+  offer,
+  authorizationStatus,
+  nearbyOffers,
+  comments,
+});
 
-  const handleRatingStarSelect = (value: string): void => {
-    setCommentStarValue(value);
-  };
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLoadPage(id: string) {
+    dispatch(fetchOfferByIdAction(id));
+    dispatch(fetchNearbyOffers(id));
+    dispatch(fetchComments(id));
+  },
+});
 
-  const handleCommentTextInput = (value: string): void => {
-    setCommentTextValue(value);
-  };
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+
+function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments, onLoadPage }: PropsFromRedux): JSX.Element {
+  const { id } = useParams<RouteParams>();
+
+  useEffect(() => {
+    onLoadPage(id);
+  }, [onLoadPage, id]);
+
+  if (!offer) {
+    return (
+      <MainPage404 />
+    );
+  }
 
   const {
     images,
@@ -46,42 +68,17 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
     hostName,
     hostIsPro,
     description,
-    // id,
   } = offer;
-
-  const placesInNeighbourhood = offers.slice(MIN_OFFER_IN_NEIGHBOURHOOD, MAX_OFFER_IN_NEIGHBOURHOOD);
-  const reviewsOnPlace = reviews.filter((review) => offer.id === review.offersId);
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to={AppRoute.Main}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__login">Sign in</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <MainHeader />
 
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image) => (
+              {images.slice(MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES).map((image: string) => (
                 <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={`${image}`} alt="Room" />
                 </div>),
@@ -159,32 +156,36 @@ function PropertyScreen({ offer, offers, reviews }: PropertyScreenProps): JSX.El
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{reviewsOnPlace.length}</span></h2>
+                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{comments ? comments.length : ''}</span></h2>
                 <ul className="reviews__list">
-                  <ReviewsList reviews={reviewsOnPlace} />
+                  {comments ? <CommentsList comments={comments} /> : ''}
                 </ul>
-                <SubmitCommentForm
-                  handleRatingStarSelect={handleRatingStarSelect}
-                  handleCommentTextInput={handleCommentTextInput}
-                />
+                {authorizationStatus === AuthorizationStatus.Auth ?
+                  <SubmitCommentForm
+                    id={offer.id}
+                  />
+                  : ''}
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={placesInNeighbourhood} activePlaceCard={null} />
+            {nearbyOffers ? <Map offers={nearbyOffers} activePlaceCard={null} /> : ''}
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList offers={placesInNeighbourhood} />
+              {nearbyOffers ? <OffersList offers={nearbyOffers} /> : ''}
             </div>
           </section>
         </div>
       </main>
     </div>
   );
+
 }
 
-export default PropertyScreen;
+export { PropertyScreen };
+export default connector(PropertyScreen);
+
