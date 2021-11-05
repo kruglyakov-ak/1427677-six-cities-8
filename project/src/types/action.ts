@@ -18,10 +18,10 @@ import {
 enum ActionType {
   ChangeCity = 'offer/changeCity',
   ChangeSortType = 'offer/changeSortType',
-  LoadOffers = 'data/loadOffers',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   GetCurrentLogin = 'user/getCurrentLogin',
+  LoadOffers = 'data/loadOffers',
   LoadOfferById = 'data/loadOfferById',
   RedirectToRoute = 'offer/redirectToRoute',
   LoadNearbyOffers = 'data/loadNearbyOffers',
