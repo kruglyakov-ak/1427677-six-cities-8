@@ -16,6 +16,7 @@ function FavoritePlaceCard({ offer }: FavoritePlaceCardProps): JSX.Element {
     rating,
     title,
     type,
+    id,
   } = offer;
 
   return (
@@ -25,7 +26,7 @@ function FavoritePlaceCard({ offer }: FavoritePlaceCardProps): JSX.Element {
           <span>Premium</span>
         </div>}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Offer}>
+        <Link to={`${AppRoute.Main}offer/${id}`}>
           <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place card" />
         </Link>
       </div>
@@ -49,7 +50,7 @@ function FavoritePlaceCard({ offer }: FavoritePlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Offer}>{title}</Link>
+          <Link to={`${AppRoute.Main}offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
