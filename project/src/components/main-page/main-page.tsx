@@ -11,13 +11,16 @@ import { ThunkAppDispatch } from '../../types/action';
 import { logoutAction } from '../../store/api-actions';
 import MainHeader from '../main-header/main-header';
 import { sortOffers } from '../../uttils';
+import { getCurrentCity, getCurrentSortType } from '../../store/offer-property/selectors';
+import { getOffers } from '../../store/offer-data/selectors';
+import { getAuthorizationStatus, getCurrentLogin } from '../../store/user-process/selectors';
 
-const mapStateToProps = ({ OFFER, DATA, USER }: State) => ({
-  currentCity: OFFER.currentCity,
-  currentSortType: OFFER.currentSortType,
-  offers: DATA.offers,
-  authorizationStatus: USER.authorizationStatus,
-  currentLogin: USER.currentLogin,
+const mapStateToProps = (state: State) => ({
+  currentCity: getCurrentCity(state),
+  currentSortType: getCurrentSortType(state),
+  offers: getOffers(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  currentLogin: getCurrentLogin(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

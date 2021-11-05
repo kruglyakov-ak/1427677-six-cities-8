@@ -6,12 +6,7 @@ import { changeCity, getCurrentLogin } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import { AuthData } from '../../types/auth-data';
-import { State } from '../../types/state';
 import { getRandomNumberInRange } from '../../uttils';
-
-const mapStateToProps = ({ offers }: State) => ({
-  offers,
-});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onChangeCurrentCity(city: string) {
@@ -23,7 +18,7 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(null, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

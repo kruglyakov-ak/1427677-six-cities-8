@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { AppRoute } from '../../const';
 import { changeCity } from '../../store/action';
+import { getCurrentCity } from '../../store/offer-property/selectors';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
 
@@ -10,8 +11,8 @@ type CityItemProps = {
   city: string;
 }
 
-const mapStateToProps = ({ OFFER }: State) => ({
-  currentCity: OFFER.currentCity,
+const mapStateToProps = (state: State) => ({
+  currentCity: getCurrentCity(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

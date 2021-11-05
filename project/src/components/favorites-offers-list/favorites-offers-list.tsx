@@ -5,13 +5,14 @@ import { ThunkAppDispatch } from '../../types/action';
 import { changeCity } from '../../store/action';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from '../../types/state';
+import { getFavoriteOffers } from '../../store/offer-data/selectors';
 
 type FavoritesOffersLstProps = {
   location: string,
 }
 
-const mapStateToProps = ({ DATA }: State) => ({
-  favoriteOffers: DATA.favoriteOffers,
+const mapStateToProps = (state: State) => ({
+  favoriteOffers: getFavoriteOffers(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

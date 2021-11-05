@@ -1,10 +1,11 @@
 import { connect, ConnectedProps } from 'react-redux';
+import { getCurrentCity } from '../../store/offer-property/selectors';
 import { State } from '../../types/state';
 import CitysList from '../citys-list/citys-list';
 import MainHeader from '../main-header/main-header';
 
-const mapStateToProps = ({ OFFER }: State) => ({
-  currentCity: OFFER.currentCity,
+const mapStateToProps = (state: State) => ({
+  currentCity: getCurrentCity(state),
 });
 
 const connector = connect(mapStateToProps);

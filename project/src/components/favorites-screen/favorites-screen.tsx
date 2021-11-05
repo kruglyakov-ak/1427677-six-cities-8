@@ -8,9 +8,10 @@ import MainHeader from '../main-header/main-header';
 import { ThunkAppDispatch } from '../../types/action';
 import { fetchFavorite } from '../../store/api-actions';
 import { useEffect } from 'react';
+import { getFavoriteOffers } from '../../store/offer-data/selectors';
 
-const mapStateToProps = ({ DATA }: State) => ({
-  favoriteOffers: DATA.favoriteOffers,
+const mapStateToProps = (state: State) => ({
+  favoriteOffers: getFavoriteOffers(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

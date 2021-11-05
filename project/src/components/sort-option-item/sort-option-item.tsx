@@ -1,6 +1,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
 import { changeSortType } from '../../store/action';
+import { getCurrentSortType } from '../../store/offer-property/selectors';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
 
@@ -8,8 +9,8 @@ type SortOptionItemProps = {
   sortType: string,
 }
 
-const mapStateToProps = ({ OFFER }: State) => ({
-  currentSortType: OFFER.currentSortType,
+const mapStateToProps = (state: State) => ({
+  currentSortType: getCurrentSortType(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

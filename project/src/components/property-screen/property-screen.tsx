@@ -3,6 +3,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { AuthorizationStatus, offerTypeToReadable, MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES } from '../../const';
 import { fetchComments, fetchNearbyOffers, fetchOfferByIdAction } from '../../store/api-actions';
+import { getComments, getNearbyOffers, getOffer } from '../../store/offer-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 import { getRatingStarsWidth } from '../../uttils';
@@ -16,11 +18,11 @@ interface RouteParams {
   id: string
 }
 
-const mapStateToProps = ({ USER, DATA }: State) => ({
-  offer: DATA.offer,
-  authorizationStatus: USER.authorizationStatus,
-  nearbyOffers: DATA.nearbyOffers,
-  comments: DATA.comments,
+const mapStateToProps = (state: State) => ({
+  offer: getOffer(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  nearbyOffers: getNearbyOffers(state),
+  comments: getComments(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

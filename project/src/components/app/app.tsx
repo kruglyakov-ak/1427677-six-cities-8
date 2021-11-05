@@ -11,11 +11,13 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../uttils';
 import browserHistory from '../../browser-history';
 import PropertyScreen from '../property-screen/property-screen';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getLoadedDataStatus, getOffers } from '../../store/offer-data/selectors';
 
-const mapStateToProps = ({ USER, DATA }: State) => ({
-  authorizationStatus: USER.authorizationStatus,
-  isDataLoaded: DATA.isDataLoaded,
-  offers: DATA.offers,
+const mapStateToProps = (state: State) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  isDataLoaded: getLoadedDataStatus(state),
+  offers: getOffers(state),
 });
 
 const connector = connect(mapStateToProps);
