@@ -12,12 +12,12 @@ import { logoutAction } from '../../store/api-actions';
 import MainHeader from '../main-header/main-header';
 import { sortOffers } from '../../uttils';
 
-const mapStateToProps = ({ currentCity, offers, currentSortType, authorizationStatus, currentLogin }: State) => ({
-  currentCity,
-  offers,
-  currentSortType,
-  authorizationStatus,
-  currentLogin,
+const mapStateToProps = ({ OFFER, DATA, USER }: State) => ({
+  currentCity: OFFER.currentCity,
+  currentSortType: OFFER.currentSortType,
+  offers: DATA.offers,
+  authorizationStatus: USER.authorizationStatus,
+  currentLogin: USER.currentLogin,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

@@ -12,10 +12,10 @@ import { isCheckedAuth } from '../../uttils';
 import browserHistory from '../../browser-history';
 import PropertyScreen from '../property-screen/property-screen';
 
-const mapStateToProps = ({ authorizationStatus, isDataLoaded, offers }: State) => ({
-  authorizationStatus,
-  isDataLoaded,
-  offers,
+const mapStateToProps = ({ USER, DATA }: State) => ({
+  authorizationStatus: USER.authorizationStatus,
+  isDataLoaded: DATA.isDataLoaded,
+  offers: DATA.offers,
 });
 
 const connector = connect(mapStateToProps);

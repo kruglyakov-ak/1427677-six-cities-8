@@ -8,8 +8,8 @@ type SortOptionItemProps = {
   sortType: string,
 }
 
-const mapStateToProps = ({ currentSortType }: State) => ({
-  currentSortType,
+const mapStateToProps = ({ OFFER }: State) => ({
+  currentSortType: OFFER.currentSortType,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

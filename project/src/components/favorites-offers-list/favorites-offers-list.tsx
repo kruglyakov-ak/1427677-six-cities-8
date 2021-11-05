@@ -10,8 +10,8 @@ type FavoritesOffersLstProps = {
   location: string,
 }
 
-const mapStateToProps = ({ favoriteOffers }: State) => ({
-  favoriteOffers,
+const mapStateToProps = ({ DATA }: State) => ({
+  favoriteOffers: DATA.favoriteOffers,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

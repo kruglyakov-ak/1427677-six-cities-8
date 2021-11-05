@@ -3,8 +3,8 @@ import { State } from '../../types/state';
 import CitysList from '../citys-list/citys-list';
 import MainHeader from '../main-header/main-header';
 
-const mapStateToProps = ({ currentCity }: State) => ({
-  currentCity,
+const mapStateToProps = ({ OFFER }: State) => ({
+  currentCity: OFFER.currentCity,
 });
 
 const connector = connect(mapStateToProps);

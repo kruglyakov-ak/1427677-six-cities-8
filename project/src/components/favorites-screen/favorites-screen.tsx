@@ -9,8 +9,8 @@ import { ThunkAppDispatch } from '../../types/action';
 import { fetchFavorite } from '../../store/api-actions';
 import { useEffect } from 'react';
 
-const mapStateToProps = ({ favoriteOffers }: State) => ({
-  favoriteOffers,
+const mapStateToProps = ({ DATA }: State) => ({
+  favoriteOffers: DATA.favoriteOffers,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

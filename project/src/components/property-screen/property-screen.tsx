@@ -16,16 +16,11 @@ interface RouteParams {
   id: string
 }
 
-const mapStateToProps = (
-  { authorizationStatus,
-    offer,
-    nearbyOffers,
-    comments,
-  }: State) => ({
-  offer,
-  authorizationStatus,
-  nearbyOffers,
-  comments,
+const mapStateToProps = ({ USER, DATA }: State) => ({
+  offer: DATA.offer,
+  authorizationStatus: USER.authorizationStatus,
+  nearbyOffers: DATA.nearbyOffers,
+  comments: DATA.comments,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
