@@ -3,12 +3,12 @@ import { Review } from '../../types/review';
 import { State } from '../../types/state';
 import {NameSpace} from '../root-reducer';
 
-const getOffers = (state: State): Offer[] => state[NameSpace.data].offers;
-const getOffer = (state: State): Offer | null => state[NameSpace.data].offer;
-const getNearbyOffers= (state: State): Offer[] => state[NameSpace.data].nearbyOffers;
-const getComments = (state: State): Review[] => state[NameSpace.data].comments;
-const getFavoriteOffers = (state: State): Offer[] => state[NameSpace.data].favoriteOffers;
-const getLoadedDataStatus = (state: State): boolean => state[NameSpace.data].isDataLoaded;
+const getOffers = (state: State): Offer[] => state[NameSpace.Data].offers;
+const getOffer = (state: State): Offer | null => state[NameSpace.Data].offer;
+const getNearbyOffers= (state: State): Offer[] => state[NameSpace.Data].nearbyOffers;
+const getComments = (state: State): Review[] => state[NameSpace.Data].comments;
+const getFavoriteOffers = (state: State): Offer[] => state[NameSpace.Data].favoriteOffers;
+const getLoadedDataStatus = (state: State): boolean => state[NameSpace.Data].isDataLoaded;
 
 export {
   getOffers,
