@@ -1,5 +1,6 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MAX_COUNT_OFFER_IMAGES, MIN_COUNT_OFFER_IMAGES, offerTypeToReadable } from '../../const';
+import { changeFavoriteStatus } from '../../store/api-actions';
 import { getOffer } from '../../store/offer-data/selectors';
 import { getRatingStarsWidth } from '../../uttils';
 import MainPage404 from '../main-page-404/main-page-404';
@@ -7,7 +8,9 @@ import PropertyMap from '../property-map/property-map';
 import PropertyReviews from '../property-reviews/property-reviews';
 
 function PropertyOffer(): JSX.Element {
+  const dispatch = useDispatch();
   const offer = useSelector(getOffer);
+
   if (!offer) {
     return (
       <MainPage404 />
@@ -31,6 +34,10 @@ function PropertyOffer(): JSX.Element {
     id,
   } = offer;
 
+  const handleFavoriteClick = () => {
+    dispatch(changeFavoriteStatus(id, !isFavorite));
+  };
+
   return (
     <section className="property">
       <div className="property__gallery-container container">
@@ -52,7 +59,15 @@ function PropertyOffer(): JSX.Element {
             <h1 className="property__name">
               {title}
             </h1>
-            <button className={isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button  button'} type="button">
+            <button
+              className={
+                isFavorite
+                  ? 'property__bookmark-button property__bookmark-button--active button'
+                  : 'property__bookmark-button  button'
+              }
+              type="button"
+              onClick={handleFavoriteClick}
+            >
               <svg className="property__bookmark-icon" width="31" height="33">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>

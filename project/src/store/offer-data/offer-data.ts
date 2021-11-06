@@ -43,8 +43,11 @@ const offerData = createReducer(initialState, (builder) => {
     })
     .addCase(changeOferFavoriteStatus, (state, action) => {
       const { changedOffer } = action.payload;
-      state.offers.map((offer) => offer.id === changedOffer.id? offer.isFavorite = changedOffer.isFavorite : offer.isFavorite);
-      state.favoriteOffers.map((offer) => offer.id === changedOffer.id? offer.isFavorite = changedOffer.isFavorite : offer.isFavorite);
+      state.offers.map((offer) => offer.id === changedOffer.id ? offer.isFavorite = changedOffer.isFavorite : offer.isFavorite);
+      state.favoriteOffers.map((offer) => offer.id === changedOffer.id ? offer.isFavorite = changedOffer.isFavorite : offer.isFavorite);
+      if (state.offer && state.offer.id === changedOffer.id) {
+        state.offer.isFavorite = changedOffer.isFavorite;
+      }
     });
 });
 
