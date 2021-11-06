@@ -1,31 +1,17 @@
-import { connect, ConnectedProps } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeSortType } from '../../store/action';
-import { Actions } from '../../types/action';
-import { State } from '../../types/state';
+import { getCurrentSortType } from '../../store/offer-property/selectors';
 
 type SortOptionItemProps = {
   sortType: string,
 }
 
-const mapStateToProps = ({ currentSortType }: State) => ({
-  currentSortType,
-});
+function SortOptionItem({ sortType }: SortOptionItemProps): JSX.Element {
+  const currentSortType = useSelector(getCurrentSortType);
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onChangeSortType(type: string) {
-    dispatch(changeSortType(type));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & SortOptionItemProps;
-
-function SortOptionItem({ sortType, currentSortType, onChangeSortType }: ConnectedComponentProps): JSX.Element {
   const handleOptionClick = () => {
-    onChangeSortType(sortType);
+    dispatch(changeSortType(sortType));
   };
 
   return (
@@ -40,4 +26,4 @@ function SortOptionItem({ sortType, currentSortType, onChangeSortType }: Connect
   );
 }
 
-export default connector(SortOptionItem);
+export default SortOptionItem;

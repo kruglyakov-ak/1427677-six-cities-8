@@ -1,25 +1,13 @@
 import { useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { postComment } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
-import { CommentPost } from '../../types/comment-post';
 
 type SubmitCommentFormProps = {
   id: number,
 }
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(id: number, comment: CommentPost) {
-    dispatch(postComment(id, comment));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & SubmitCommentFormProps;
-
-function SubmitCommentForm({ id, onSubmit }: ConnectedComponentProps): JSX.Element {
+function SubmitCommentForm({ id }: SubmitCommentFormProps): JSX.Element {
+  const dispatch = useDispatch();
   const [commentStarValue, setCommentStarValue] = useState<string>('');
   const [commentTextValue, setCommentTextValue] = useState<string>('');
 
@@ -33,8 +21,7 @@ function SubmitCommentForm({ id, onSubmit }: ConnectedComponentProps): JSX.Eleme
 
   const handleSubmit = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     evt.preventDefault();
-    onSubmit(id, { comment: commentTextValue, rating: commentStarValue });
-
+    dispatch(postComment(id, { comment: commentTextValue, rating: commentStarValue }));
   };
 
   return (
@@ -100,5 +87,4 @@ function SubmitCommentForm({ id, onSubmit }: ConnectedComponentProps): JSX.Eleme
   );
 }
 
-export { SubmitCommentForm };
-export default connector(SubmitCommentForm);
+export default SubmitCommentForm;

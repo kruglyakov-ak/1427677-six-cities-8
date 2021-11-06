@@ -9,6 +9,7 @@ import { adaptComment, adaptOffer } from '../uttils';
 import {
   getCurrentLogin,
   loadComments,
+  loadFavoriteOffers,
   loadNearbyOffers,
   loadOfferById,
   loadOffers,
@@ -47,6 +48,12 @@ const postComment = (id: number, { comment, rating }: CommentPost): ThunkActionR
     dispatch(loadComments(data.map((review) => adaptComment(review))));
   };
 
+const fetchFavorite = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.get<DataOffer[]>(APIRoute.Favorite);
+    dispatch(loadFavoriteOffers(data.map((offer) => adaptOffer(offer))));
+  };
+
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login)
@@ -80,5 +87,6 @@ export {
   fetchOfferByIdAction,
   fetchNearbyOffers,
   fetchComments,
-  postComment
+  postComment,
+  fetchFavorite
 };

@@ -2,21 +2,22 @@ import FavoritesOffersLst from '../favorites-offers-list/favorites-offers-list';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import FavoritesScreenEmpty from '../favorites-screen-empty/favorites-screen-empty';
-import { State } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MainHeader from '../main-header/main-header';
+import { fetchFavorite } from '../../store/api-actions';
+import { useEffect } from 'react';
+import { getFavoriteOffers } from '../../store/offer-data/selectors';
 
-const mapStateToProps = ({ offers }: State) => ({
-  offers,
-});
+function FavoritesScreen(): JSX.Element {
+  const favoriteOffers = useSelector(getFavoriteOffers);
+  const dispatch = useDispatch();
 
-const connector = connect(mapStateToProps);
+  useEffect(() => {
+    dispatch(fetchFavorite());
+  }, [dispatch]);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function FavoritesScreen({ offers }: PropsFromRedux): JSX.Element {
   const favoriteLocations: Set<string> = new Set();
-  offers.forEach((offer) => {
+  favoriteOffers.forEach((offer) => {
     if (offer.isFavorite) {
       favoriteLocations.add(offer.cityName);
     }
@@ -37,7 +38,6 @@ function FavoritesScreen({ offers }: PropsFromRedux): JSX.Element {
             <ul className="favorites__list">
               {[...favoriteLocations].map((location) => (
                 <FavoritesOffersLst
-                  offers={offers}
                   location={location}
                   key={location}
                 />))}
@@ -54,5 +54,4 @@ function FavoritesScreen({ offers }: PropsFromRedux): JSX.Element {
   );
 }
 
-export { FavoritesScreen };
-export default connector(FavoritesScreen);
+export default FavoritesScreen;

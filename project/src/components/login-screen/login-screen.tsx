@@ -1,38 +1,24 @@
 import { FormEvent, useRef } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute, City } from '../../const';
 import { changeCity, getCurrentLogin } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
 import { AuthData } from '../../types/auth-data';
-import { State } from '../../types/state';
 import { getRandomNumberInRange } from '../../uttils';
 
-const mapStateToProps = ({ offers }: State) => ({
-  offers,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onChangeCurrentCity(city: string) {
-    dispatch(changeCity(city));
-  },
-  onSubmit(authData: AuthData) {
+function LoginScreen(): JSX.Element {
+  const dispatch = useDispatch();
+  const onSubmit = (authData: AuthData) => {
     dispatch(getCurrentLogin(authData.login));
     dispatch(loginAction(authData));
-  },
-});
+  };
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function LoginScreen({ onChangeCurrentCity, onSubmit }: PropsFromRedux): JSX.Element {
-  const getRandomCity = () => Object.keys(City)[getRandomNumberInRange(0, Object.keys(City).length)];
+  const getRandomCity = () => Object.keys(City)[getRandomNumberInRange(0, Object.keys(City).length - 1)];
   const randomCity = getRandomCity();
 
   const handleCityClick = () => {
-    onChangeCurrentCity(randomCity);
+    dispatch(changeCity(randomCity));
   };
 
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -115,5 +101,4 @@ function LoginScreen({ onChangeCurrentCity, onSubmit }: PropsFromRedux): JSX.Ele
   );
 }
 
-export { LoginScreen };
-export default connector(LoginScreen);
+export default LoginScreen;

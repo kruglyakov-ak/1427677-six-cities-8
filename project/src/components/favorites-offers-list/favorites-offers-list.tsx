@@ -1,32 +1,20 @@
-import { Offer } from '../../types/offer';
 import FavoritePlaceCard from '../favorite-place-card/favorite-place-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Dispatch } from 'redux';
-import { Actions } from '../../types/action';
 import { changeCity } from '../../store/action';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFavoriteOffers } from '../../store/offer-data/selectors';
 
 type FavoritesOffersLstProps = {
-  offers: Offer[],
   location: string,
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onChangeCurrentCity(city: string, offers: Offer[]) {
-    dispatch(changeCity(city));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & FavoritesOffersLstProps;
-
-function FavoritesOffersLst({ offers, location, onChangeCurrentCity }: ConnectedComponentProps): JSX.Element {
+function FavoritesOffersLst({ location }: FavoritesOffersLstProps): JSX.Element {
+  const favoriteOffers = useSelector(getFavoriteOffers);
+  const dispatch = useDispatch();
 
   const handleCityClick = () => {
-    onChangeCurrentCity(location, offers);
+    dispatch(changeCity(location));
   };
 
   return (
@@ -39,7 +27,7 @@ function FavoritesOffersLst({ offers, location, onChangeCurrentCity }: Connected
         </div>
       </div>
       <div className="favorites__places">
-        {offers
+        {favoriteOffers
           .filter((offer) => offer.cityName === location && offer.isFavorite)
           .map((offer) => <FavoritePlaceCard offer={offer} key={offer.id} />)}
       </div>
@@ -47,4 +35,4 @@ function FavoritesOffersLst({ offers, location, onChangeCurrentCity }: Connected
   );
 }
 
-export default connector(FavoritesOffersLst);
+export default FavoritesOffersLst;

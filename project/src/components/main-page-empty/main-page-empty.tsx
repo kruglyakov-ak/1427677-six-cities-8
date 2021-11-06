@@ -1,17 +1,11 @@
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../types/state';
+import { useSelector } from 'react-redux';
+import { getCurrentCity } from '../../store/offer-property/selectors';
 import CitysList from '../citys-list/citys-list';
 import MainHeader from '../main-header/main-header';
 
-const mapStateToProps = ({ currentCity }: State) => ({
-  currentCity,
-});
+function MainPageEmpty(): JSX.Element {
+  const currentCity = useSelector(getCurrentCity);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function MainPageEmpty({ currentCity }: PropsFromRedux): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <MainHeader />
@@ -37,5 +31,4 @@ function MainPageEmpty({ currentCity }: PropsFromRedux): JSX.Element {
   );
 }
 
-export { MainPageEmpty };
-export default connector(MainPageEmpty);
+export default MainPageEmpty;

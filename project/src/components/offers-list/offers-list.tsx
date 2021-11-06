@@ -7,8 +7,6 @@ type OffersListProps = {
 }
 
 function OffersList({ offers, handleActiveOfferSelect }: OffersListProps): JSX.Element {
-
-
   return (
     <>
       {offers.map((offer) => (
