@@ -14,7 +14,8 @@ enum ActionType {
   RedirectToRoute = 'offer/redirectToRoute',
   LoadNearbyOffers = 'data/loadNearbyOffers',
   LoadComments = 'data/loadComments',
-  LoadFavoriteOffers = 'data/loadFavoriteOffers'
+  LoadFavoriteOffers = 'data/loadFavoriteOffers',
+  ChangeOferFavoriteStatus = 'data/changeOferFavoriteStatus'
 }
 
 type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;

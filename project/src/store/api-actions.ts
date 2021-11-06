@@ -7,6 +7,7 @@ import { DataComment } from '../types/data-comment';
 import { DataOffer } from '../types/data-offer';
 import { adaptComment, adaptOffer } from '../uttils';
 import {
+  changeOferFavoriteStatus,
   getCurrentLogin,
   loadComments,
   loadFavoriteOffers,
@@ -54,6 +55,12 @@ const fetchFavorite = (): ThunkActionResult =>
     dispatch(loadFavoriteOffers(data.map((offer) => adaptOffer(offer))));
   };
 
+const changeFavoriteStatus = (id: number, status: boolean): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.post<DataOffer>(`${APIRoute.Favorite}/${id}/${+status}`);
+    dispatch(changeOferFavoriteStatus(adaptOffer(data)));
+  };
+
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login)
@@ -88,5 +95,6 @@ export {
   fetchNearbyOffers,
   fetchComments,
   postComment,
-  fetchFavorite
+  fetchFavorite,
+  changeFavoriteStatus
 };

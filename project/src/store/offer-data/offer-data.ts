@@ -1,6 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferData } from '../../types/state';
-import { loadComments, loadFavoriteOffers, loadNearbyOffers, loadOfferById, loadOffers } from '../action';
+import {
+  loadComments,
+  loadFavoriteOffers,
+  loadNearbyOffers,
+  loadOfferById,
+  loadOffers
+} from '../action';
 
 const initialState: OfferData = {
   offers: [],
