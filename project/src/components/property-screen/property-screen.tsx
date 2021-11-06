@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { AuthorizationStatus, offerTypeToReadable, MIN_COUNT_OFFER_IMAGES, MAX_COUNT_OFFER_IMAGES } from '../../const';
 import { fetchComments, fetchNearbyOffers, fetchOfferByIdAction } from '../../store/api-actions';
 import { getComments, getNearbyOffers, getOffer } from '../../store/offer-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { ThunkAppDispatch } from '../../types/action';
-import { State } from '../../types/state';
 import { getRatingStarsWidth } from '../../uttils';
 import CommentsList from '../comments-list/comments-list';
 import MainHeader from '../main-header/main-header';
@@ -18,32 +16,19 @@ interface RouteParams {
   id: string
 }
 
-const mapStateToProps = (state: State) => ({
-  offer: getOffer(state),
-  authorizationStatus: getAuthorizationStatus(state),
-  nearbyOffers: getNearbyOffers(state),
-  comments: getComments(state),
-});
+function PropertyScreen(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const offer = useSelector(getOffer);
+  const nearbyOffers = useSelector(getNearbyOffers);
+  const comments = useSelector(getComments);
+  const { id } = useParams<RouteParams>();
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onLoadPage(id: string) {
+  useEffect(() => {
     dispatch(fetchOfferByIdAction(id));
     dispatch(fetchNearbyOffers(id));
     dispatch(fetchComments(id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-
-function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments, onLoadPage }: PropsFromRedux): JSX.Element {
-  const { id } = useParams<RouteParams>();
-
-  useEffect(() => {
-    onLoadPage(id);
-  }, [onLoadPage, id]);
+  }, [id, dispatch]);
 
   if (!offer) {
     return (
@@ -183,6 +168,5 @@ function PropertyScreen({ authorizationStatus, offer, nearbyOffers, comments, on
 
 }
 
-export { PropertyScreen };
-export default connector(PropertyScreen);
+export default PropertyScreen;
 

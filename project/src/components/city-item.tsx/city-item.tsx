@@ -1,34 +1,19 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Dispatch } from 'redux';
 import { AppRoute } from '../../const';
 import { changeCity } from '../../store/action';
 import { getCurrentCity } from '../../store/offer-property/selectors';
-import { Actions } from '../../types/action';
-import { State } from '../../types/state';
 
 type CityItemProps = {
   city: string;
 }
 
-const mapStateToProps = (state: State) => ({
-  currentCity: getCurrentCity(state),
-});
+function CityItem({ city }: CityItemProps): JSX.Element {
+  const currentCity = useSelector(getCurrentCity);
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onChangeCurrentCity(city: string) {
-    dispatch(changeCity(city));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & CityItemProps;
-
-function CityItem({ city, currentCity, onChangeCurrentCity }: ConnectedComponentProps): JSX.Element {
   const handleCityClick = () => {
-    onChangeCurrentCity(city);
+    dispatch(changeCity(city));
   };
 
   return (
@@ -45,7 +30,6 @@ function CityItem({ city, currentCity, onChangeCurrentCity }: ConnectedComponent
   );
 }
 
-export { CityItem };
-export default connector(CityItem);
+export default CityItem;
 
 

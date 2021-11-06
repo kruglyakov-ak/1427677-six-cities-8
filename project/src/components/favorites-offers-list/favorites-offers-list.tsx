@@ -1,35 +1,20 @@
 import FavoritePlaceCard from '../favorite-place-card/favorite-place-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { ThunkAppDispatch } from '../../types/action';
 import { changeCity } from '../../store/action';
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../types/state';
+import { useDispatch, useSelector } from 'react-redux';
 import { getFavoriteOffers } from '../../store/offer-data/selectors';
 
 type FavoritesOffersLstProps = {
   location: string,
 }
 
-const mapStateToProps = (state: State) => ({
-  favoriteOffers: getFavoriteOffers(state),
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onChangeCurrentCity(city: string) {
-    dispatch(changeCity(city));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & FavoritesOffersLstProps;
-
-function FavoritesOffersLst({ favoriteOffers, location, onChangeCurrentCity }: ConnectedComponentProps): JSX.Element {
+function FavoritesOffersLst({ location }: FavoritesOffersLstProps): JSX.Element {
+  const favoriteOffers = useSelector(getFavoriteOffers);
+  const dispatch = useDispatch();
 
   const handleCityClick = () => {
-    onChangeCurrentCity(location);
+    dispatch(changeCity(location));
   };
 
   return (
@@ -50,4 +35,4 @@ function FavoritesOffersLst({ favoriteOffers, location, onChangeCurrentCity }: C
   );
 }
 
-export default connector(FavoritesOffersLst);
+export default FavoritesOffersLst;

@@ -2,43 +2,19 @@ import OffersList from '../offers-list/offers-list';
 import { Offer } from '../../types/offer';
 import Map from '../map/map';
 import { useEffect, useState } from 'react';
-import { State } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import CitysList from '../citys-list/citys-list';
 import MainPageEmpty from '../main-page-empty/main-page-empty';
 import SortOptionsList from '../sort-options-list/sort-options-list';
-import { ThunkAppDispatch } from '../../types/action';
-import { logoutAction } from '../../store/api-actions';
 import MainHeader from '../main-header/main-header';
 import { sortOffers } from '../../uttils';
 import { getCurrentCity, getCurrentSortType } from '../../store/offer-property/selectors';
 import { getOffers } from '../../store/offer-data/selectors';
-import { getAuthorizationStatus, getCurrentLogin } from '../../store/user-process/selectors';
 
-const mapStateToProps = (state: State) => ({
-  currentCity: getCurrentCity(state),
-  currentSortType: getCurrentSortType(state),
-  offers: getOffers(state),
-  authorizationStatus: getAuthorizationStatus(state),
-  currentLogin: getCurrentLogin(state),
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onLogout() {
-    dispatch(logoutAction());
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function MainPage(props: PropsFromRedux): JSX.Element {
-  const {
-    currentCity,
-    offers,
-    currentSortType,
-  } = props;
+function MainPage(): JSX.Element {
+  const currentCity = useSelector(getCurrentCity);
+  const offers = useSelector(getOffers);
+  const currentSortType = useSelector(getCurrentSortType);
 
   const offersByCity = offers.filter((offer) => offer.cityName === currentCity);
 
@@ -100,4 +76,4 @@ function MainPage(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(MainPage);
+export default MainPage;

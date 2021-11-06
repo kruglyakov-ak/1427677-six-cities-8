@@ -1,27 +1,17 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus, getCurrentLogin } from '../../store/user-process/selectors';
-import { ThunkAppDispatch } from '../../types/action';
-import { State } from '../../types/state';
 
-const mapStateToProps = (state: State) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-  currentLogin: getCurrentLogin(state),
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onLogout() {
+function MainHeader(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const currentLogin = useSelector(getCurrentLogin);
+  const dispatch = useDispatch();
+  const onLogout = () => {
     dispatch(logoutAction());
-  },
-});
+  };
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function MainHeader({ authorizationStatus, onLogout, currentLogin }: PropsFromRedux): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -62,5 +52,4 @@ function MainHeader({ authorizationStatus, onLogout, currentLogin }: PropsFromRe
   );
 }
 
-export { MainHeader };
-export default connector(MainHeader);
+export default MainHeader;

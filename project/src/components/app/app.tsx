@@ -5,26 +5,19 @@ import MainPage from '../main-page/main-page';
 import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import MainPage404 from '../main-page-404/main-page-404';
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../types/state';
+import { useSelector } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../uttils';
 import browserHistory from '../../browser-history';
 import PropertyScreen from '../property-screen/property-screen';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getLoadedDataStatus, getOffers } from '../../store/offer-data/selectors';
+import { getLoadedDataStatus } from '../../store/offer-data/selectors';
 
-const mapStateToProps = (state: State) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-  isDataLoaded: getLoadedDataStatus(state),
-  offers: getOffers(state),
-});
+function App(): JSX.Element {
 
-const connector = connect(mapStateToProps);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isDataLoaded = useSelector(getLoadedDataStatus);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function App({ authorizationStatus, isDataLoaded }: PropsFromRedux): JSX.Element {
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
@@ -59,5 +52,4 @@ function App({ authorizationStatus, isDataLoaded }: PropsFromRedux): JSX.Element
   );
 }
 
-export { App };
-export default connector(App);
+export default App;

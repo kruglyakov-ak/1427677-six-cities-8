@@ -1,5 +1,6 @@
-import { Actions, ActionType } from '../../types/action';
+import { createReducer } from '@reduxjs/toolkit';
 import { OfferData } from '../../types/state';
+import { loadComments, loadFavoriteOffers, loadNearbyOffers, loadOfferById, loadOffers } from '../action';
 
 const initialState: OfferData = {
   offers: [],
@@ -10,32 +11,29 @@ const initialState: OfferData = {
   favoriteOffers: [],
 };
 
-const offerData = (state = initialState, action: Actions): OfferData => {
-  switch (action.type) {
-    case ActionType.LoadOffers: {
+const offerData = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loadOffers, (state, action) => {
       const { offers } = action.payload;
-      return { ...state, offers, isDataLoaded: true };
-    }
-    case ActionType.LoadOfferById: {
+      state.offers = offers;
+      state.isDataLoaded = true;
+    })
+    .addCase(loadOfferById, (state, action) => {
       const { offer } = action.payload;
-      return { ...state, offer: offer };
-    }
-    case ActionType.LoadNearbyOffers: {
+      state.offer = offer;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
       const { nearbyOffers } = action.payload;
-      return { ...state, nearbyOffers: nearbyOffers };
-    }
-    case ActionType.LoadComments: {
+      state.nearbyOffers = nearbyOffers;
+    })
+    .addCase(loadComments, (state, action) => {
       const { comments } = action.payload;
-      return { ...state, comments: comments };
-    }
-    case ActionType.LoadFavoriteOffers: {
+      state.comments = comments;
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
       const { favoriteOffers } = action.payload;
-      return { ...state, favoriteOffers: favoriteOffers };
-    }
-    default: {
-      return state;
-    }
-  }
-};
+      state.favoriteOffers = favoriteOffers;
+    });
+});
 
 export { offerData };
