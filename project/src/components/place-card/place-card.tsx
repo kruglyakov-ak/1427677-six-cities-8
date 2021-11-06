@@ -1,9 +1,11 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { getRatingStarsWidth } from '../../uttils';
-import { AppRoute } from '../../const';
-import { useDispatch } from 'react-redux';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeFavoriteStatus } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { redirectToRoute } from '../../store/action';
 
 type PlaceCardProps = {
   offer: Offer,
@@ -11,6 +13,7 @@ type PlaceCardProps = {
 }
 function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
   const dispatch = useDispatch();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const {
     isPremium,
@@ -24,7 +27,10 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
   } = offer;
 
   const handleFavoriteClick = () => {
-    dispatch(changeFavoriteStatus(id, isFavorite));
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
+    dispatch(changeFavoriteStatus(id, !isFavorite));
   };
 
   const handleCardSelect = () => {
