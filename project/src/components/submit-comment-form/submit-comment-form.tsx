@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { MAX_COMMENT_CHARACTERS, MIN_COMMENT_CHARACTERS } from '../../const';
 import { postComment } from '../../store/api-actions';
 
 type SubmitCommentFormProps = {
@@ -10,6 +11,7 @@ function SubmitCommentForm({ id }: SubmitCommentFormProps): JSX.Element {
   const dispatch = useDispatch();
   const [commentStarValue, setCommentStarValue] = useState<string>('');
   const [commentTextValue, setCommentTextValue] = useState<string>('');
+  const [isDisabledSubmitButton, setIsDisabledSubmitButton] = useState<boolean>(true);
 
   const handleRatingInputChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setCommentStarValue(target.value);
@@ -17,12 +19,22 @@ function SubmitCommentForm({ id }: SubmitCommentFormProps): JSX.Element {
 
   const handleCommentChange = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCommentTextValue(target.value);
+    // eslint-disable-next-line no-console
+    console.log(commentTextValue.length);
   };
 
   const handleSubmit = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     evt.preventDefault();
     dispatch(postComment(id, { comment: commentTextValue, rating: commentStarValue }));
   };
+
+  useEffect(() => {
+    commentTextValue.length >= MIN_COMMENT_CHARACTERS &&
+    commentTextValue.length <= MAX_COMMENT_CHARACTERS &&
+    commentStarValue !== ''
+      ? setIsDisabledSubmitButton(false)
+      : setIsDisabledSubmitButton(true);
+  }, [commentStarValue, commentTextValue.length, isDisabledSubmitButton]);
 
   return (
     <form className="reviews__form form" action="#" method="post">
@@ -79,9 +91,16 @@ function SubmitCommentForm({ id }: SubmitCommentFormProps): JSX.Element {
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_COMMENT_CHARACTERS} characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" onClick={handleSubmit}>Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          onClick={handleSubmit}
+          disabled={isDisabledSubmitButton}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );
