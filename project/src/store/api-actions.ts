@@ -6,7 +6,9 @@ import { CommentPost } from '../types/comment-post';
 import { DataComment } from '../types/data-comment';
 import { DataOffer } from '../types/data-offer';
 import { adaptComment, adaptOffer } from '../uttils';
+import { toast } from 'react-toastify';
 import {
+  changeOferFavoriteStatus,
   getCurrentLogin,
   loadComments,
   loadFavoriteOffers,
@@ -42,16 +44,34 @@ const fetchComments = (id: string): ThunkActionResult =>
     dispatch(loadComments(data.map((comment) => adaptComment(comment))));
   };
 
-const postComment = (id: number, { comment, rating }: CommentPost): ThunkActionResult =>
+const postComment = (
+  id: number,
+  { comment, rating }: CommentPost,
+  setDisabledForm: (isDisabled: boolean) => void,
+  onSucsses: () => void,
+): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const { data } = await api.post<DataComment[]>(`${APIRoute.Comments}/${id}`, { comment, rating });
-    dispatch(loadComments(data.map((review) => adaptComment(review))));
+    try {
+      const { data } = await api.post<DataComment[]>(`${APIRoute.Comments}/${id}`, { comment, rating });
+      await dispatch(loadComments(data.map((review) => adaptComment(review))));
+      onSucsses();
+      setDisabledForm(false);
+    } catch (error) {
+      toast.info(`${error}`);
+      setDisabledForm(false);
+    }
   };
 
 const fetchFavorite = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<DataOffer[]>(APIRoute.Favorite);
     dispatch(loadFavoriteOffers(data.map((offer) => adaptOffer(offer))));
+  };
+
+const changeFavoriteStatus = (id: number, status: boolean): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.post<DataOffer>(`${APIRoute.Favorite}/${id}/${+status}`);
+    dispatch(changeOferFavoriteStatus(adaptOffer(data)));
   };
 
 const checkAuthAction = (): ThunkActionResult =>
@@ -88,5 +108,6 @@ export {
   fetchNearbyOffers,
   fetchComments,
   postComment,
-  fetchFavorite
+  fetchFavorite,
+  changeFavoriteStatus
 };

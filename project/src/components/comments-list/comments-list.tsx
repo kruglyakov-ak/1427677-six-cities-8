@@ -8,7 +8,13 @@ type CommentsListProps = {
 function CommentsList({ comments }: CommentsListProps): JSX.Element {
   return (
     <>
-      {comments.map((comment) => (<PlaceComment review={comment} key={comment.id} />))}
+      {
+        comments
+          .slice()
+          .sort((prev, next) => new Date(next.date).getTime() - new Date(prev.date).getTime())
+          .slice(0, 10)
+          .map((comment) => (<PlaceComment review={comment} key={comment.id} />))
+      }
     </>
   );
 }

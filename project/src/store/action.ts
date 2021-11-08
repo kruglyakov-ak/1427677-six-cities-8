@@ -88,6 +88,15 @@ const loadFavoriteOffers = createAction(
   }),
 );
 
+const changeOferFavoriteStatus = createAction(
+  ActionType.ChangeOferFavoriteStatus,
+  (changedOffer: Offer) => ({
+    payload: {
+      changedOffer,
+    },
+  }),
+);
+
 export {
   changeCity,
   changeSortType,
@@ -99,5 +108,6 @@ export {
   redirectToRoute,
   loadNearbyOffers,
   loadComments,
-  loadFavoriteOffers
+  loadFavoriteOffers,
+  changeOferFavoriteStatus
 };

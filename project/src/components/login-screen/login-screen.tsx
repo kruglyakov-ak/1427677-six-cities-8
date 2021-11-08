@@ -4,16 +4,10 @@ import { Link } from 'react-router-dom';
 import { AppRoute, City } from '../../const';
 import { changeCity, getCurrentLogin } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
-import { AuthData } from '../../types/auth-data';
 import { getRandomNumberInRange } from '../../uttils';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
-  const onSubmit = (authData: AuthData) => {
-    dispatch(getCurrentLogin(authData.login));
-    dispatch(loginAction(authData));
-  };
-
   const getRandomCity = () => Object.keys(City)[getRandomNumberInRange(0, Object.keys(City).length - 1)];
   const randomCity = getRandomCity();
 
@@ -28,10 +22,11 @@ function LoginScreen(): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
+      dispatch(getCurrentLogin(loginRef.current.value));
+      dispatch(loginAction({
         login: loginRef.current.value,
         password: passwordRef.current.value,
-      });
+      }));
     }
   };
 

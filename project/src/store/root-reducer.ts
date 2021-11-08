@@ -1,18 +1,21 @@
-import {combineReducers} from 'redux';
-import {userProcess} from './user-process/user-process';
+import { combineReducers } from 'redux';
+import { userProcess } from './user-process/user-process';
 import { offerProperty } from './offer-property/offer-property';
 import { offerData } from './offer-data/offer-data';
 
-export enum NameSpace {
-  data = 'DATA',
-  offer = 'OFFER',
-  user = 'USER',
+enum NameSpace {
+  Data = 'DATA',
+  Offer = 'OFFER',
+  User = 'USER',
 }
 
-export const rootReducer = combineReducers({
-  [NameSpace.data]: offerData,
-  [NameSpace.offer]: offerProperty,
-  [NameSpace.user]: userProcess,
+const rootReducer = combineReducers({
+  [NameSpace.Data]: offerData,
+  [NameSpace.Offer]: offerProperty,
+  [NameSpace.User]: userProcess,
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+type RootState = ReturnType<typeof rootReducer>;
+
+export { NameSpace, rootReducer };
+export type { RootState };

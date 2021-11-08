@@ -8,6 +8,7 @@ import { Offer } from '../../types/offer';
 type MapProps = {
   offers: Offer[],
   activePlaceCard: Offer | null;
+  currentOffer?: Offer | null;
 };
 
 const defaultCustomIcon = new Icon({
@@ -23,7 +24,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { activePlaceCard, offers } = props;
+  const { activePlaceCard, offers, currentOffer } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0]);
 
@@ -36,7 +37,6 @@ function Map(props: MapProps): JSX.Element {
           lat: offer.latitude,
           lng: offer.longitude,
         });
-
         markers.push(marker);
         marker
           .setIcon(
@@ -47,8 +47,18 @@ function Map(props: MapProps): JSX.Element {
           .addTo(map);
       });
     }
+    if (map && currentOffer) {
+      const marker = new Marker({
+        lat: currentOffer.latitude,
+        lng: currentOffer.longitude,
+      });
+      markers.push(marker);
+      marker
+        .setIcon(currentCustomIcon)
+        .addTo(map);
+    }
     return () => markers.forEach((marker) => marker.remove());
-  }, [map, offers, activePlaceCard]);
+  }, [map, offers, activePlaceCard, currentOffer]);
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
