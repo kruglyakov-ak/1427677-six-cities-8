@@ -1,3 +1,4 @@
+import { MAX_COUNT_COMMENTS, MIN_COUNT_COMMENTS } from '../../const';
 import { Review } from '../../types/review';
 import PlaceComment from '../place-comment/place-comment';
 
@@ -12,7 +13,7 @@ function CommentsList({ comments }: CommentsListProps): JSX.Element {
         comments
           .slice()
           .sort((prev, next) => new Date(next.date).getTime() - new Date(prev.date).getTime())
-          .slice(0, 10)
+          .slice(MIN_COUNT_COMMENTS, MAX_COUNT_COMMENTS)
           .map((comment) => (<PlaceComment review={comment} key={comment.id} />))
       }
     </>
