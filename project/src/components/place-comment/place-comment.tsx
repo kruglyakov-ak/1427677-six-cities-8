@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Review } from '../../types/review';
-import { getRatingStarsWidth } from '../../uttils';
+import { getRatingStarsWidth } from '../../utils/uttils';
 
 type PlaceCommentProps = {
   review: Review;

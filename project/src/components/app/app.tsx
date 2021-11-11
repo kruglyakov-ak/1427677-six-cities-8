@@ -7,7 +7,7 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import MainPage404 from '../main-page-404/main-page-404';
 import { useSelector } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { isCheckedAuth } from '../../uttils';
+import { isCheckedAuth } from '../../utils/uttils';
 import browserHistory from '../../browser-history';
 import PropertyScreen from '../property-screen/property-screen';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';

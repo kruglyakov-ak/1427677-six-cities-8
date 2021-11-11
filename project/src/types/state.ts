@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus, SortType } from '../const';
 import { RootState } from '../store/root-reducer';
 import { Offer } from './offer';
 import { Review } from './review';
@@ -7,7 +7,7 @@ type State = RootState;
 
 type OfferProperty = {
     currentCity: string
-    currentSortType: string,
+    currentSortType: SortType,
 }
 
 type UserProcess = {

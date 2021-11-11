@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus, SortType } from '../const';
 import { ActionType } from '../types/action';
 import { Offer } from '../types/offer';
 import { Review } from '../types/review';
@@ -13,7 +13,7 @@ const changeCity = createAction(
 
 const changeSortType = createAction(
   ActionType.ChangeSortType,
-  (type: string) => ({
+  (type: SortType) => ({
     payload: type,
   }),
 );

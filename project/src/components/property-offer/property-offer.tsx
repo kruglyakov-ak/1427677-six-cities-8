@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MAX_COUNT_OFFER_IMAGES, MIN_COUNT_OFFER_IMAGES, offerTypeToReadable } from '../../const';
 import { changeFavoriteStatus } from '../../store/api-actions';
 import { getOffer } from '../../store/offer-data/selectors';
-import { getRatingStarsWidth } from '../../uttils';
+import { getRatingStarsWidth } from '../../utils/uttils';
 import MainPage404 from '../main-page-404/main-page-404';
 import PropertyMap from '../property-map/property-map';
 import PropertyReviews from '../property-reviews/property-reviews';

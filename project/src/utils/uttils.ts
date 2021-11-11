@@ -1,8 +1,8 @@
-import { AuthorizationStatus, SortType } from './const';
-import { DataComment } from './types/data-comment';
-import { DataOffer } from './types/data-offer';
-import { Offer } from './types/offer';
-import { Review } from './types/review';
+import { AuthorizationStatus, SortType } from '../const';
+import { DataComment } from '../types/data-comment';
+import { DataOffer } from '../types/data-offer';
+import { Offer } from '../types/offer';
+import { Review } from '../types/review';
 
 const getRatingStarsWidth = (rating: number): number => (20 * Math.round(rating));
 
@@ -13,7 +13,7 @@ const getRandomNumberInRange = (min = 0, max = 1, numberSymbolsAfterComma = 0): 
   return Number(randomNumber.toFixed(numberSymbolsAfterComma));
 };
 
-const sortOffers = (sortType: string, offers: Offer[]): Offer[] => {
+const sortOffers = (sortType: SortType, offers: Offer[]): Offer[] => {
   switch (sortType) {
     case SortType.LowToHighPrice: {
       return offers.slice().sort((prev, next) => prev.price - next.price);

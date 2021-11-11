@@ -7,7 +7,7 @@ import CitysList from '../citys-list/citys-list';
 import MainPageEmpty from '../main-page-empty/main-page-empty';
 import SortOptionsList from '../sort-options-list/sort-options-list';
 import MainHeader from '../main-header/main-header';
-import { sortOffers } from '../../uttils';
+import { sortOffers } from '../../utils/uttils';
 import { getCurrentCity, getCurrentSortType } from '../../store/offer-property/selectors';
 import { getOffers } from '../../store/offer-data/selectors';
 

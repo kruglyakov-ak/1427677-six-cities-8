@@ -5,7 +5,7 @@ import { AuthData } from '../types/auth-data';
 import { CommentPost } from '../types/comment-post';
 import { DataComment } from '../types/data-comment';
 import { DataOffer } from '../types/data-offer';
-import { adaptComment, adaptOffer } from '../uttils';
+import { adaptComment, adaptOffer } from '../utils/uttils';
 import { toast } from 'react-toastify';
 import {
   changeOferFavoriteStatus,
