@@ -7,7 +7,7 @@ const comments = makeFakeReviews();
 
 describe('Reducer: offerData', () => {
   it('without additional parameters should return initial state', () => {
-    expect(offerData(void 0, {type: 'UNKNOWN_ACTION'}))
+    expect(offerData(void 0, { type: 'UNKNOWN_ACTION' }))
       .toEqual({
         offers: [],
         isDataLoaded: false,
@@ -99,28 +99,26 @@ describe('Reducer: offerData', () => {
   });
 
   it('should update isFavorite in offer wherever it is contained', () => {
-    const offerWithoutChangedFavoriteStatus = offers;
-
     const state = {
-      offers: offerWithoutChangedFavoriteStatus,
+      offers: offers,
       isDataLoaded: false,
-      offer: offerWithoutChangedFavoriteStatus[1],
+      offer: offers[1],
       nearbyOffers: [],
       comments: [],
-      favoriteOffers: offerWithoutChangedFavoriteStatus,
+      favoriteOffers: offers,
     };
 
-    const offerWithChangedFavoriteStatus = offerWithoutChangedFavoriteStatus;
-    offerWithChangedFavoriteStatus[0].isFavorite = !offerWithChangedFavoriteStatus[0].isFavorite;
-
-    expect(offerData(state, changeOferFavoriteStatus(offerWithChangedFavoriteStatus[0])))
+    const offerWithChangedFavoriteStatus = Object.assign({}, offers[0]);
+    offerWithChangedFavoriteStatus.isFavorite = !offerWithChangedFavoriteStatus.isFavorite;
+    const changedOffers = state.offers.map((offer) => offer.id === offerWithChangedFavoriteStatus.id ? offerWithChangedFavoriteStatus : offer);
+    expect(offerData(state, changeOferFavoriteStatus(offerWithChangedFavoriteStatus)))
       .toEqual({
-        offers: offerWithChangedFavoriteStatus,
+        offers: changedOffers,
         isDataLoaded: false,
-        offer: offerWithChangedFavoriteStatus[0],
+        offer: offerWithChangedFavoriteStatus,
         nearbyOffers: [],
         comments: [],
-        favoriteOffers: offerWithChangedFavoriteStatus,
+        favoriteOffers: changedOffers,
       });
   });
 });
