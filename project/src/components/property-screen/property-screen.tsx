@@ -14,9 +14,9 @@ function PropertyScreen(): JSX.Element {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchOfferByIdAction(id));
-    dispatch(fetchNearbyOffers(id));
-    dispatch(fetchComments(id));
+    dispatch(fetchOfferByIdAction(+id));
+    dispatch(fetchNearbyOffers(+id));
+    dispatch(fetchComments(+id));
   }, [id, dispatch]);
 
   return (

@@ -1,6 +1,6 @@
 type Review = {
   comment: string,
-  date: string | Date,
+  date: string,
   id: number,
   rating: number,
   userAvatarUrl: string,

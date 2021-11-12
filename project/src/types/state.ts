@@ -12,7 +12,7 @@ type OfferProperty = {
 
 type UserProcess = {
   authorizationStatus: AuthorizationStatus,
-  currentLogin: string,
+  currentLogin: string | undefined,
 };
 
 type OfferData = {

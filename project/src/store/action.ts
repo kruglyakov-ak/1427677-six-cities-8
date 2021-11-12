@@ -67,7 +67,7 @@ const requireLogout = createAction(
 
 const getCurrentLogin = createAction(
   ActionType.GetCurrentLogin,
-  (login: string) => ({
+  (login: string | undefined) => ({
     payload: login,
   }),
 );
