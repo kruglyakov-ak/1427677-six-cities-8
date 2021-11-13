@@ -5,20 +5,12 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { State } from '../types/state';
 import { Action } from 'redux';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
-import {
-  changeFavoriteStatus,
-  checkAuthAction,
-  fetchComments,
-  fetchFavorite,
-  fetchNearbyOffers,
-  fetchOfferByIdAction,
-  fetchOffersAction,
-  loginAction
-} from './api-actions';
+import { changeFavoriteStatus, checkAuthAction, fetchComments, fetchFavorite, fetchNearbyOffers, fetchOfferByIdAction, fetchOffersAction, loginAction, postComment } from './api-actions';
 import { changeOferFavoriteStatus, getCurrentLogin, loadComments, loadFavoriteOffers, loadNearbyOffers, loadOfferById, loadOffers, redirectToRoute, requireAuthorization } from './action';
 import { AuthData } from '../types/auth-data';
 import { makeFakeDataComments, makeFakeDataOffers } from '../utils/moks';
 import { adaptComment, adaptOffer } from '../utils/uttils';
+import { CommentPost } from '../types/comment-post';
 
 const mockDataOffers = makeFakeDataOffers();
 const mockDataComments = makeFakeDataComments();
@@ -150,6 +142,24 @@ describe('Async actions', () => {
 
     expect(store.getActions()).toEqual([
       loadComments(adaptComments),
+    ]);
+  });
+
+  it('should dispatch loadComments when POST /comments/:hotel_id', async () => {
+    const fakeComment: CommentPost = { comment: 'qwerty', rating: '1' };
+
+    const onSucsses = jest.fn();
+    const setDisabledForm = jest.fn();
+
+    mockAPI
+      .onPost(`${APIRoute.Comments}/${id}`, fakeComment)
+      .reply(200, { mockDataComments });
+
+    const store = mockStore();
+    await store.dispatch(postComment(id, fakeComment, setDisabledForm, onSucsses));
+
+    expect(store.getActions()).toEqual([
+      await store.dispatch(loadComments(adaptComments)),
     ]);
   });
 
