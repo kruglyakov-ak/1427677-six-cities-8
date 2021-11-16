@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { SortType } from '../../const';
 import { changeSortType } from '../../store/action';
 import { getCurrentSortType } from '../../store/offer-property/selectors';
 
 type SortOptionItemProps = {
-  sortType: string,
+  sortType: SortType,
 }
 
 function SortOptionItem({ sortType }: SortOptionItemProps): JSX.Element {

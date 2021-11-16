@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, City } from '../../const';
 import { changeCity, getCurrentLogin } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
-import { getRandomNumberInRange } from '../../uttils';
+import { getRandomNumberInRange } from '../../utils/uttils';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();

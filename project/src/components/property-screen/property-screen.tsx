@@ -5,7 +5,7 @@ import { fetchComments, fetchNearbyOffers, fetchOfferByIdAction } from '../../st
 import MainHeader from '../main-header/main-header';
 import PropertyNearPlaces from '../property-near-places/property-near-places';
 import PropertyOffer from '../property-offer/property-offer';
-interface RouteParams {
+type RouteParams = {
   id: string
 }
 
@@ -14,9 +14,9 @@ function PropertyScreen(): JSX.Element {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchOfferByIdAction(id));
-    dispatch(fetchNearbyOffers(id));
-    dispatch(fetchComments(id));
+    dispatch(fetchOfferByIdAction(+id));
+    dispatch(fetchNearbyOffers(+id));
+    dispatch(fetchComments(+id));
   }, [id, dispatch]);
 
   return (

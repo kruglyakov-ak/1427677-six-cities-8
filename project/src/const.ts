@@ -2,6 +2,8 @@ const MIN_COUNT_OFFER_IMAGES = 0;
 const MAX_COUNT_OFFER_IMAGES = 6;
 const MIN_COMMENT_CHARACTERS = 50;
 const MAX_COMMENT_CHARACTERS = 300;
+const MIN_COUNT_COMMENTS = 0;
+const MAX_COUNT_COMMENTS = 10;
 
 const enum MarkerIconUrl {
   MarkerDefault = 'img/pin.svg',
@@ -65,6 +67,8 @@ export {
   MAX_COUNT_OFFER_IMAGES,
   MIN_COMMENT_CHARACTERS,
   MAX_COMMENT_CHARACTERS,
+  MIN_COUNT_COMMENTS,
+  MAX_COUNT_COMMENTS,
   OfferType,
   AppRoute,
   AuthorizationStatus,

@@ -30,9 +30,9 @@ function SubmitCommentForm({ id }: SubmitCommentFormProps): JSX.Element {
       : setIsDisabledSubmitButton(true);
   }, [isDisabledSubmitButton, commentTextValue, commentStarValue]);
 
-  const setDisabledForm = (isDisabled: boolean) => setIsDisabledFormInputs(isDisabled);
+  const handleFormDisabled = (isDisabled: boolean) => setIsDisabledFormInputs(isDisabled);
 
-  const resetForm = () => {
+  const handleFormReset  = () => {
     setCommentTextValue('');
     setCommentStarValue('');
   };
@@ -40,8 +40,8 @@ function SubmitCommentForm({ id }: SubmitCommentFormProps): JSX.Element {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const data = { comment: commentTextValue, rating: commentStarValue };
-    dispatch(postComment(id, data, setDisabledForm, resetForm));
-    setDisabledForm(true);
+    dispatch(postComment(id, data, handleFormDisabled, handleFormReset));
+    handleFormDisabled(true);
   };
 
 

@@ -5,7 +5,7 @@ import { AuthData } from '../types/auth-data';
 import { CommentPost } from '../types/comment-post';
 import { DataComment } from '../types/data-comment';
 import { DataOffer } from '../types/data-offer';
-import { adaptComment, adaptOffer } from '../uttils';
+import { adaptComment, adaptOffer } from '../utils/uttils';
 import { toast } from 'react-toastify';
 import {
   changeOferFavoriteStatus,
@@ -26,19 +26,19 @@ const fetchOffersAction = (): ThunkActionResult =>
     dispatch(loadOffers(data.map((offer) => adaptOffer(offer))));
   };
 
-const fetchOfferByIdAction = (id: string): ThunkActionResult =>
+const fetchOfferByIdAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<DataOffer>(`${APIRoute.Hotels}/${id}`);
     dispatch(loadOfferById(adaptOffer(data)));
   };
 
-const fetchNearbyOffers = (id: string): ThunkActionResult =>
+const fetchNearbyOffers = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<DataOffer[]>(`${APIRoute.Hotels}/${id}/nearby`);
     dispatch(loadNearbyOffers(data.map((offer) => adaptOffer(offer))));
   };
 
-const fetchComments = (id: string): ThunkActionResult =>
+const fetchComments = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const { data } = await api.get<DataComment[]>(`${APIRoute.Comments}/${id}`);
     dispatch(loadComments(data.map((comment) => adaptComment(comment))));
@@ -76,11 +76,9 @@ const changeFavoriteStatus = (id: number, status: boolean): ThunkActionResult =>
 
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login)
-      .then((response): void => {
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-        dispatch(getCurrentLogin(response.data.email));
-      });
+    const { data: { login } } = await api.get(APIRoute.Login);
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(getCurrentLogin(login));
   };
 
 const loginAction = ({ login: email, password }: AuthData): ThunkActionResult =>

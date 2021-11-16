@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Review } from '../../types/review';
-import { getRatingStarsWidth } from '../../uttils';
+import { getRatingStarsWidth } from '../../utils/uttils';
 
 type PlaceCommentProps = {
   review: Review;
@@ -37,7 +37,7 @@ function PlaceComment({ review }: PlaceCommentProps): JSX.Element {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date}>{dayjs(date).format('MMMM YYYY')}</time>
+        <time className="reviews__time" dateTime={`${date}`}>{dayjs(date).format('MMMM YYYY')}</time>
       </div>
     </li>
   );

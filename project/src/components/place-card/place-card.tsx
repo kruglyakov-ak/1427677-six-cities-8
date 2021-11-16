@@ -1,6 +1,6 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
-import { getRatingStarsWidth } from '../../uttils';
+import { getRatingStarsWidth } from '../../utils/uttils';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeFavoriteStatus } from '../../store/api-actions';
