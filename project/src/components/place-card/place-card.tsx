@@ -66,7 +66,7 @@ function PlaceCard({ offer, onPlaceCardSelect }: PlaceCardProps): JSX.Element {
           </div>
           <button
             className={
-              isFavorite
+              isFavorite && authorizationStatus === AuthorizationStatus.Auth
                 ? 'place-card__bookmark-button place-card__bookmark-button--active button'
                 : 'place-card__bookmark-button  button'
             }
