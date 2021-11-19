@@ -7,9 +7,11 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { State } from '../../types/state';
 import { Action } from 'redux';
 import { Provider } from 'react-redux';
-import { AuthorizationStatus } from '../../const';
-import FavoritesScreenEmpty from './favorites-screen-empty';
+import { City, SortType } from '../../const';
+import MainPage from './main-page';
+import { makeFakeOffers } from '../../utils/moks';
 
+const mockOffers = makeFakeOffers();
 const history = createMemoryHistory();
 const onFakeUnauthorized = jest.fn();
 const api = createAPI(onFakeUnauthorized());
@@ -21,20 +23,23 @@ const mockStore = configureMockStore<
 >(middlewares);
 
 const store = mockStore({
-  USER: { authorizationStatus: AuthorizationStatus.Auth },
+  OFFER: { currentSortType: SortType.TopRated, currentCity: City.Paris },
+  DATA: { offers: mockOffers },
 });
 
-describe('Component: FavoritesScreenEmpty', () => {
+describe('Component: MainPage', () => {
 
   it('should render correctly', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <FavoritesScreenEmpty />
+          <MainPage />
         </Router>
       </Provider>);
 
-    expect(screen.getByText(/Nothing yet saved./i)).toBeInTheDocument();
+    expect(screen.getByText(/Places/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/Sort by/i)).toBeInTheDocument();
+    expect(screen.getByText(mockOffers[0].title)).toBeInTheDocument();
   });
 
 });
