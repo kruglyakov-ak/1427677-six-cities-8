@@ -34,7 +34,7 @@ describe('Async actions', () => {
     const store = mockStore();
     mockAPI
       .onGet(APIRoute.Login)
-      .reply(200, { login: 'login' });
+      .reply(200, { email: 'login' });
 
     expect(store.getActions()).toEqual([]);
 

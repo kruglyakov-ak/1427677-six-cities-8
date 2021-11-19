@@ -77,8 +77,6 @@ const changeFavoriteStatus = (id: number, status: boolean): ThunkActionResult =>
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     const { data: { email } } = await api.get(APIRoute.Login);
-    // eslint-disable-next-line no-console
-    console.log(email);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(getCurrentLogin(email));
   };
