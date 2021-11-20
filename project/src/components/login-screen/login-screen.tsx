@@ -7,7 +7,7 @@ import { loginAction } from '../../store/api-actions';
 import { getRandomNumberInRange } from '../../utils/uttils';
 import { toast } from 'react-toastify';
 
-const VALIDATION_FAIL_MESSAGE = 'Please enter your email address and password. The password must be at least 1 letter and 1 number.';
+const VALIDATION_FAIL_MESSAGE = 'Please enter your email address and password. The password must be at least 1 letter(a-z) and 1 number(0-9).';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
