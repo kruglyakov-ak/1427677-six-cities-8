@@ -1,18 +1,18 @@
 import { render, screen } from '@testing-library/react';
-import { makeFakeOffers } from '../../utils/moks';
+import { makeFakeOffers, makeFakeReviews } from '../../utils/moks';
 import { createAPI } from '../../services/api';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { State } from '../../types/state';
 import { Action } from 'redux';
 import { Provider } from 'react-redux';
-import PropertyNearPlaces from './property-near-places';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import { createMemoryHistory } from 'history';
-import { Route, Router, Switch } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
+import { Router } from 'react-router-dom';
+import PropertyScreen from './property-screen';
 
 const mockOffers = makeFakeOffers().slice(0, 1);
+const mockComments = makeFakeReviews().slice(0, 1);
 const history = createMemoryHistory();
 const onFakeUnauthorized = jest.fn();
 const api = createAPI(onFakeUnauthorized());
@@ -25,43 +25,22 @@ const mockStore = configureMockStore<
 
 const store = mockStore({
   USER: { authorizationStatus: AuthorizationStatus.Auth },
-  DATA: { nearbyOffers: mockOffers },
+  DATA: { nearbyOffers: mockOffers, offer: mockOffers[0], comments: mockComments },
 });
 
-describe('Component: PropertyNearPlaces', () => {
+describe('Component: PropertyScreen', () => {
 
   it('should render correctly', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <PropertyNearPlaces />
+          <PropertyScreen />
         </Router>
       </Provider>);
 
     expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
+    expect(screen.getByText(/To submit review please make sure to set/i)).toBeInTheDocument();
     expect(screen.getByText(mockOffers[0].title)).toBeInTheDocument();
-  });
-
-  it('should redirect to offer/:id url when user clicked to link', () => {
-    history.push('/fake');
-    render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Switch>
-            <Route path={AppRoute.Offer} exact>
-              <h1>This is offer card</h1>
-            </Route>
-            <Route>
-              <PropertyNearPlaces />
-            </Route>
-          </Switch>
-        </Router>
-      </Provider>);
-
-
-    expect(screen.queryByText(/This is offer card/i)).not.toBeInTheDocument();
-    userEvent.click(screen.getByAltText('Place card'));
-    expect(screen.queryByText(/This is offer card/i)).toBeInTheDocument();
   });
 
 });
