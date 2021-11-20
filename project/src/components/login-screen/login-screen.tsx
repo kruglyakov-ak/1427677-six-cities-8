@@ -5,6 +5,9 @@ import { AppRoute, City } from '../../const';
 import { changeCity, getCurrentLogin } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
 import { getRandomNumberInRange } from '../../utils/uttils';
+import { toast } from 'react-toastify';
+
+const VALIDATION_FAIL_MESSAGE = 'Please enter your email address and password. The password must be at least 1 letter and 1 number.';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
@@ -42,7 +45,10 @@ function LoginScreen(): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value,
       }));
+      return;
     }
+
+    toast.info(VALIDATION_FAIL_MESSAGE);
   };
 
   return (
