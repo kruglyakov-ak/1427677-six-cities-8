@@ -76,9 +76,9 @@ const changeFavoriteStatus = (id: number, status: boolean): ThunkActionResult =>
 
 const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const { data: { login } } = await api.get(APIRoute.Login);
+    const { data: { email } } = await api.get(APIRoute.Login);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(getCurrentLogin(login));
+    dispatch(getCurrentLogin(email));
   };
 
 const loginAction = ({ login: email, password }: AuthData): ThunkActionResult =>

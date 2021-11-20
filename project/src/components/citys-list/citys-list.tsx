@@ -1,5 +1,5 @@
 import { City } from '../../const';
-import CityItem from '../city-item.tsx/city-item';
+import CityItem from '../city-item/city-item';
 
 function CitysList(): JSX.Element {
   return (

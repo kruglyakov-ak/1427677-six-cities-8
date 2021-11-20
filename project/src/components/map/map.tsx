@@ -60,7 +60,7 @@ function Map(props: MapProps): JSX.Element {
     return () => markers.forEach((marker) => marker.remove());
   }, [map, offers, activePlaceCard, currentOffer]);
 
-  return <div style={{height: '100%'}} ref={mapRef}></div>;
+  return <div style={{height: '100%'}} ref={mapRef} role="dialog"></div>;
 }
 
 export default Map;

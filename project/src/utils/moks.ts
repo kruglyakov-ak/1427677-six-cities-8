@@ -4,9 +4,10 @@ import { Offer } from '../types/offer';
 import { Review } from '../types/review';
 import { DataOffer } from '../types/data-offer';
 import { DataComment } from '../types/data-comment';
+import { getRandomNumberInRange } from './uttils';
 
 const makeFakeOffers = (): Offer[] => (
-  new Array(datatype.number(10)).fill(null).map(() => ({
+  new Array(getRandomNumberInRange(1, 5)).fill(null).map(() => ({
     bedrooms: datatype.number(5),
     cityName: address.cityName(),
     cityLatitude: +address.latitude(),
@@ -23,7 +24,7 @@ const makeFakeOffers = (): Offer[] => (
     hostName: name.firstName(),
     id: datatype.number(15),
     images: new Array(datatype.number(10)).fill(null).map(() => image.imageUrl()),
-    isFavorite: datatype.boolean(),
+    isFavorite: true,
     isPremium: datatype.boolean(),
     maxAdults: datatype.number(10),
     previewImage: image.imageUrl(),
@@ -35,7 +36,7 @@ const makeFakeOffers = (): Offer[] => (
 );
 
 const makeFakeReviews = (): Review[] => (
-  new Array(datatype.number(10)).fill(null).map(() => ({
+  new Array(getRandomNumberInRange(1, 5)).fill(null).map(() => ({
     comment: lorem.sentence(),
     date: `${date.past()}`,
     id: datatype.number(15),
@@ -48,7 +49,7 @@ const makeFakeReviews = (): Review[] => (
 );
 
 const makeFakeDataOffers = (): DataOffer[] => (
-  new Array(datatype.number(10)).fill(null).map(() => ({
+  new Array(getRandomNumberInRange(1, 5)).fill(null).map(() => ({
     'bedrooms': datatype.number(15),
     'city': {
       'name': address.cityName(),
@@ -85,7 +86,7 @@ const makeFakeDataOffers = (): DataOffer[] => (
 );
 
 const makeFakeDataComments = (): DataComment[] => (
-  new Array(datatype.number(10)).fill(null).map(() => ({
+  new Array(getRandomNumberInRange(1, 5)).fill(null).map(() => ({
     'comment': lorem.sentences(),
     'date': `${date.past()}`,
     'id': datatype.number(15),
