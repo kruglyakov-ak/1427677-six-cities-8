@@ -18,10 +18,25 @@ function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const validateForm = () => {
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    const passwordPattern = /[0-9]+[a-z]+|[a-z]+[0-9]+/;
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      const isValidEmail = emailPattern.test(String(loginRef.current.value).toLowerCase());
+      const isValidPassword = passwordPattern.test(String(passwordRef.current.value).toLowerCase());
+
+      return isValidEmail && isValidPassword;
+    }
+
+    return false;
+  };
+
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const isValidForm = validateForm();
+    if (isValidForm && loginRef.current !== null && passwordRef.current !== null) {
       dispatch(getCurrentLogin(loginRef.current.value));
       dispatch(loginAction({
         login: loginRef.current.value,
