@@ -7,7 +7,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { State } from '../../types/state';
 import { Action } from 'redux';
 import { Provider } from 'react-redux';
-import { City, SortType } from '../../const';
+import { AuthorizationStatus, SortType } from '../../const';
 import MainPage from './main-page';
 import { makeFakeOffers } from '../../utils/moks';
 
@@ -23,7 +23,8 @@ const mockStore = configureMockStore<
 >(middlewares);
 
 const store = mockStore({
-  OFFER: { currentSortType: SortType.TopRated, currentCity: City.Paris },
+  USER: { authorizationStatus: AuthorizationStatus.Auth },
+  OFFER: { currentSortType: SortType.TopRated, currentCity: mockOffers[0].cityName},
   DATA: { offers: mockOffers },
 });
 
@@ -37,8 +38,8 @@ describe('Component: MainPage', () => {
         </Router>
       </Provider>);
 
-    expect(screen.getByText(/Places/i)).toBeInTheDocument();
-    expect(screen.getByAltText(/Sort by/i)).toBeInTheDocument();
+    expect(screen.getByText(/places to stay in/i)).toBeInTheDocument();
+    expect(screen.getByText(/Sort by/i)).toBeInTheDocument();
     expect(screen.getByText(mockOffers[0].title)).toBeInTheDocument();
   });
 

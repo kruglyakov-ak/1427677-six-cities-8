@@ -12,7 +12,7 @@ import FavoritesScreen from './favorites-screen';
 import { AuthorizationStatus } from '../../const';
 
 const history = createMemoryHistory();
-const mockOffers = makeFakeOffers();
+const mockOffers = makeFakeOffers().slice(0, 1);
 const onFakeUnauthorized = jest.fn();
 const api = createAPI(onFakeUnauthorized());
 const middlewares = [thunk.withExtraArgument(api)];
@@ -37,7 +37,7 @@ describe('Component: FavoritesScreen', () => {
         </Router>
       </Provider>);
 
-    expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
+    expect(screen.getByText('Saved listing')).toBeInTheDocument();
   });
 
 });

@@ -23,7 +23,7 @@ const makeFakeOffers = (): Offer[] => (
     hostName: name.firstName(),
     id: datatype.number(15),
     images: new Array(datatype.number(10)).fill(null).map(() => image.imageUrl()),
-    isFavorite: datatype.boolean(),
+    isFavorite: true,
     isPremium: datatype.boolean(),
     maxAdults: datatype.number(10),
     previewImage: image.imageUrl(),
