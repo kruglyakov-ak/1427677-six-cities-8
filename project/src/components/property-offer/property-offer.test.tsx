@@ -12,7 +12,7 @@ import { AuthorizationStatus } from '../../const';
 import PropertyOffer from './property-offer';
 
 const history = createMemoryHistory();
-const mockOffers = makeFakeOffers().slice(0, 1);
+const mockOffers = makeFakeOffers();
 const mockComments = makeFakeReviews().slice(0, 1);
 const onFakeUnauthorized = jest.fn();
 const api = createAPI(onFakeUnauthorized());
@@ -25,7 +25,7 @@ const mockStore = configureMockStore<
 
 const store = mockStore({
   USER: { authorizationStatus: AuthorizationStatus.Auth },
-  DATA: { offer: mockOffers[0], comments: mockComments, nearbyOffers: mockOffers },
+  DATA: { offer: mockOffers[0], comments: mockComments, nearbyOffers: mockOffers.slice(1, 2)},
 });
 
 describe('Component: PropertyOffer', () => {

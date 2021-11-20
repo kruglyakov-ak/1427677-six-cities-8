@@ -11,7 +11,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import PropertyScreen from './property-screen';
 
-const mockOffers = makeFakeOffers().slice(0, 1);
+const mockOffers = makeFakeOffers();
 const mockComments = makeFakeReviews().slice(0, 1);
 const history = createMemoryHistory();
 const onFakeUnauthorized = jest.fn();
@@ -25,7 +25,7 @@ const mockStore = configureMockStore<
 
 const store = mockStore({
   USER: { authorizationStatus: AuthorizationStatus.Auth },
-  DATA: { nearbyOffers: mockOffers, offer: mockOffers[0], comments: mockComments },
+  DATA: { nearbyOffers: mockOffers.slice(1, 2), offer: mockOffers[0], comments: mockComments },
 });
 
 describe('Component: PropertyScreen', () => {
