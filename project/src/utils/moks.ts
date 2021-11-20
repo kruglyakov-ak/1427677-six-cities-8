@@ -7,93 +7,93 @@ import { DataComment } from '../types/data-comment';
 import { getRandomNumberInRange } from './uttils';
 
 const makeFakeOffers = (): Offer[] => (
-  new Array(getRandomNumberInRange(0, 3)).fill(null).map(() => ({
-    bedrooms: getRandomNumberInRange(0, 5),
+  new Array(getRandomNumberInRange(1, 5)).fill(null).map(() => ({
+    bedrooms: datatype.number(5),
     cityName: address.cityName(),
     cityLatitude: +address.latitude(),
     cityLongitude: +address.longitude(),
-    cityZoom: getRandomNumberInRange(0, 15),
+    cityZoom: datatype.number(15),
     latitude: +address.latitude(),
     longitude: +address.longitude(),
-    zoom: getRandomNumberInRange(0, 15),
+    zoom: datatype.number(15),
     description: lorem.sentences(),
-    goods: new Array(getRandomNumberInRange(0, 10)).fill(null).map(() => lorem.word()),
+    goods: new Array(datatype.number(10)).fill(null).map(() => lorem.word()),
     hostAvatarUrl: image.avatar(),
-    hostId: getRandomNumberInRange(0, 15),
-    hostIsPro: true,
+    hostId: datatype.number(15),
+    hostIsPro: datatype.boolean(),
     hostName: name.firstName(),
-    id: getRandomNumberInRange(0, 15),
-    images: new Array(getRandomNumberInRange(0, 10)).fill(null).map(() => image.imageUrl()),
+    id: datatype.number(15),
+    images: new Array(datatype.number(10)).fill(null).map(() => image.imageUrl()),
     isFavorite: true,
-    isPremium: true,
-    maxAdults: getRandomNumberInRange(0, 15),
+    isPremium: datatype.boolean(),
+    maxAdults: datatype.number(10),
     previewImage: image.imageUrl(),
-    price: getRandomNumberInRange(100, 5000),
-    rating: getRandomNumberInRange(0, 5),
-    title: lorem.sentence(),
+    price: datatype.number(500),
+    rating: datatype.number(5),
+    title: lorem.words(),
     type: OfferType.Apartment,
   }))
 );
 
 const makeFakeReviews = (): Review[] => (
-  new Array(getRandomNumberInRange(0, 3)).fill(null).map(() => ({
-    comment: lorem.sentences(),
+  new Array(getRandomNumberInRange(1, 5)).fill(null).map(() => ({
+    comment: lorem.sentence(),
     date: `${date.past()}`,
-    id: getRandomNumberInRange(0, 15),
-    rating: getRandomNumberInRange(0, 5),
+    id: datatype.number(15),
+    rating: datatype.number(5),
     userAvatarUrl: image.imageUrl(),
-    userId: getRandomNumberInRange(0, 15),
+    userId: datatype.number(15),
     userIsPro: datatype.boolean(),
     userName: name.firstName(),
   }))
 );
 
 const makeFakeDataOffers = (): DataOffer[] => (
-  new Array(getRandomNumberInRange(0, 3)).fill(null).map(() => ({
-    'bedrooms': getRandomNumberInRange(0, 15),
+  new Array(getRandomNumberInRange(1, 5)).fill(null).map(() => ({
+    'bedrooms': datatype.number(15),
     'city': {
       'name': address.cityName(),
       'location': {
         'latitude': +address.latitude(),
         'longitude': +address.longitude(),
-        'zoom': getRandomNumberInRange(0, 15),
+        'zoom': datatype.number(15),
       },
     },
     'location': {
       'latitude': +address.latitude(),
       'longitude': +address.longitude(),
-      'zoom': getRandomNumberInRange(0, 15),
+      'zoom': datatype.number(15),
     },
     'description': lorem.sentences(),
-    'goods': new Array(getRandomNumberInRange(0, 10)).fill(null).map(() => lorem.word()),
+    'goods': new Array(datatype.number(10)).fill(null).map(() => lorem.word()),
     'host': {
       'avatar_url': image.imageUrl(),
-      'id': getRandomNumberInRange(0, 15),
+      'id': datatype.number(15),
       'is_pro': datatype.boolean(),
       'name': name.firstName(),
     },
-    'id': getRandomNumberInRange(0, 15),
-    'images': new Array(getRandomNumberInRange(0, 10)).fill(null).map(() => image.imageUrl()),
+    'id': datatype.number(15),
+    'images': new Array(datatype.number(10)).fill(null).map(() => image.imageUrl()),
     'is_favorite': datatype.boolean(),
     'is_premium': datatype.boolean(),
-    'max_adults': getRandomNumberInRange(0, 15),
+    'max_adults': datatype.number(15),
     'preview_image': image.imageUrl(),
-    'price': getRandomNumberInRange(0, 15),
-    'rating': getRandomNumberInRange(0, 15),
+    'price': datatype.number(15),
+    'rating': datatype.number(15),
     'title': lorem.words(),
     'type': OfferType.Apartment,
   }))
 );
 
 const makeFakeDataComments = (): DataComment[] => (
-  new Array(getRandomNumberInRange(0, 3)).fill(null).map(() => ({
+  new Array(getRandomNumberInRange(1, 5)).fill(null).map(() => ({
     'comment': lorem.sentences(),
     'date': `${date.past()}`,
-    'id': getRandomNumberInRange(0, 15),
-    'rating': getRandomNumberInRange(0, 15),
+    'id': datatype.number(15),
+    'rating': datatype.number(15),
     'user': {
       'avatar_url': image.imageUrl(),
-      'id': getRandomNumberInRange(0, 15),
+      'id': datatype.number(15),
       'is_pro': datatype.boolean(),
       'name': name.firstName(),
     },
