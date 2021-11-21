@@ -5,6 +5,9 @@ import { AppRoute, City } from '../../const';
 import { changeCity, getCurrentLogin } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
 import { getRandomNumberInRange } from '../../utils/uttils';
+import { toast } from 'react-toastify';
+
+const VALIDATION_FAIL_MESSAGE = 'Please enter your email address and password. The password must be at least 1 letter(a-z) and 1 number(0-9).';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
@@ -18,16 +21,34 @@ function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const validateForm = () => {
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    const passwordPattern = /[0-9]+[a-z]+|[a-z]+[0-9]+/;
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      const isValidEmail = emailPattern.test(String(loginRef.current.value).toLowerCase());
+      const isValidPassword = passwordPattern.test(String(passwordRef.current.value).toLowerCase());
+
+      return isValidEmail && isValidPassword;
+    }
+
+    return false;
+  };
+
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const isValidForm = validateForm();
+    if (isValidForm && loginRef.current !== null && passwordRef.current !== null) {
       dispatch(getCurrentLogin(loginRef.current.value));
       dispatch(loginAction({
         login: loginRef.current.value,
         password: passwordRef.current.value,
       }));
+      return;
     }
+
+    toast.info(VALIDATION_FAIL_MESSAGE);
   };
 
   return (
