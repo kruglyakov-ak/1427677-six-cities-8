@@ -1,5 +1,5 @@
 import { makeFakeOffers, makeFakeReviews } from '../../utils/moks';
-import { changeOferFavoriteStatus, loadComments, loadNearbyOffers, loadOfferById, loadOffers } from '../action';
+import { changeOferFavoriteStatus, loadComments, loadFavoriteOffers, loadNearbyOffers, loadOfferById, loadOffers } from '../action';
 import { offerData } from './offer-data';
 
 const offers = makeFakeOffers();
@@ -75,6 +75,26 @@ describe('Reducer: offerData', () => {
         nearbyOffers: offers,
         comments: [],
         favoriteOffers: [],
+      });
+  });
+
+  it('should update favoriteOffers by load favorite offers', () => {
+    const state = {
+      offers: [],
+      isDataLoaded: false,
+      offer: null,
+      nearbyOffers: [],
+      comments: [],
+      favoriteOffers: [],
+    };
+    expect(offerData(state, loadFavoriteOffers(offers)))
+      .toEqual({
+        offers: [],
+        isDataLoaded: false,
+        offer: null,
+        nearbyOffers: [],
+        comments: [],
+        favoriteOffers: offers,
       });
   });
 
