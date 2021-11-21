@@ -45,6 +45,23 @@ describe('Reducer: user', () => {
       });
   });
 
+  it('should update authorizationStatus to "NO_AUTH" after logout', () => {
+    const state = {
+      authorizationStatus: AuthorizationStatus.Auth,
+      currentLogin: '',
+    };
+    const requiredLogoutAction = {
+      type: ActionType.RequireLogout,
+      payload: AuthorizationStatus.NoAuth,
+    };
+
+    expect(userProcess(state, requiredLogoutAction))
+      .toEqual({
+        authorizationStatus: AuthorizationStatus.NoAuth,
+        currentLogin: '',
+      });
+  });
+
   it('should update currentLogin', () => {
     const state = {
       authorizationStatus: AuthorizationStatus.NoAuth,
